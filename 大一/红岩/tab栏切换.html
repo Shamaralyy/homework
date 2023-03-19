@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .tab ul li {
+            float: left;
+            list-style: none;
+            color: rgb(80, 80, 80);
+            margin-left: 30px;
+        }
+
+        .tab_list {
+            background-color: aquamarine;
+            width: 2500px;
+            height: 100px;
+        }
+
+        .tab ul li:hover {
+            color: black;
+        }
+
+        .current {
+            font-size: 20px;
+            color: black;
+            border-bottom: 3px solid red;
+        }
+
+        .item {
+            display: none;
+            width: 100px;
+            height: 200px;
+            background-color: rgb(212, 185, 185);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tab">
+        <div class="tab_list">
+            <ul>
+                <li class="current">个性推荐</li>
+                <li>专属定制</li>
+                <li>歌单</li>
+                <li>排行榜</li>
+                <li>最新音乐</li>
+            </ul>
+        </div>
+        <div class="tab_con">
+            <div class="item" style="display: block">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+        </div>
+        <script>
+            var tab_list = document.querySelector('.tab_list');
+            var lis = tab_list.querySelectorAll('li');
+            var items = document.querySelectorAll('.item');
+
+            for (let i = 0; i < lis.length; i++) {
+                lis[i].onclick = function () {
+                    for (let j = 0; j < lis.length; j++) {
+                        lis[j].className = '';
+                        items[j].style.display = 'none';
+                    }
+                    this.className = 'current';
+                    items[i].style.display = 'block';
+                }
+            }
+
+
+
+        // for(var i = 0; i < lis.length; i++){
+        //     lis[i].setAttribute('index',i);
+        //     lis[i].onclick = function(){
+        //         for(var i = 0; i< lis.length; i++){
+        //             lis[i].className = '';
+        //         }
+        //         this.className = 'current';
+        //         var index = this.getAttribute('index');
+        //         console.log(index);
+        //         for(var i = 0; i< items.length;i++){
+        //             items[i].style.display = 'none';
+        //         }
+        //         items[index].style.display = 'block';
+        //     }
+        // }
+        </script>
+</body>
+
+</html>

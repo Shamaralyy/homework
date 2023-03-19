@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="echarts.js"></script>
+    <style>
+        .box {
+            width: 400px;
+            height: 400px;
+            background-color: aliceblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+
+    <script>
+        let myCharts = echarts.init(document.querySelector('.box'));
+
+        // prettier-ignore
+        let data = [
+            ["09-06", 1.23],
+            ["09-07", 1.67],
+            ["09-08", 1.55],
+            ["09-08", 1.89],
+            ["09-08", 2.37],
+            ["09-08", 1.95],
+        ]
+        const dateList = data.map(function (item) {
+            return item[0];
+        });
+        const valueList = data.map(function (item) {
+            return item[1];
+        });
+        option = {
+            // Make gradient line here
+            visualMap: [
+
+                {
+                    show: false,
+                    type: 'continuous',
+                    seriesIndex: 1,
+                    dimension: 0,
+                    min: 0,
+                    max: dateList.length - 1
+                }
+            ],
+            title: [
+                {
+                    left: 'center',
+                    text: 'Gradient along the x axis'
+                }
+            ],
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: [
+                {},
+                {
+                    data: dateList,
+                    gridIndex: 1
+                }
+            ],
+            yAxis: [
+                {},
+                {
+                    gridIndex: 1
+                }
+            ],
+            grid: [
+                {
+                },
+                {
+                }
+            ],
+            series: [
+                {
+                    type: 'line',
+                },
+                {
+                    type: 'line',
+                    showSymbol: false,
+                    data: valueList,
+                    xAxisIndex: 1,
+                    yAxisIndex: 1
+                }
+            ]
+        };
+
+        myCharts.setOption(option);
+
+        console.log(window.innerWidth);
+    </script>
+</body>
+
+</html>

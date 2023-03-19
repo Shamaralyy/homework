@@ -1,0 +1,133 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=UTF-8"utf-8">
+  <title>æ³¨å†Œ - layuiAdmin</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" tppabs="https://www.layui.com/admin/std/dist/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" tppabs="https://www.layui.com/admin/std/dist/layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/login.css" tppabs="https://www.layui.com/admin/std/dist/layuiadmin/style/login.css" media="all">
+</head>
+<body>
+
+
+  <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+    <div class="layadmin-user-login-main">
+      <div class="layadmin-user-login-box layadmin-user-login-header">
+        <h2>layuiAdmin</h2>
+        <p>layui å®˜æ–¹å‡ºå“çš„å•é¡µé¢åå°ç®¡ç†æ¨¡æ¿ç³»ç»Ÿ</p>
+      </div>
+      <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+        <div class="layui-form-item">
+          <label class="layadmin-user-login-icon layui-icon layui-icon-cellphone" for="LAY-user-login-cellphone"></label>
+          <input type="text" name="cellphone" id="LAY-user-login-cellphone" lay-verify="phone" placeholder="æ‰‹æœº" class="layui-input">
+        </div>
+        <div class="layui-form-item">
+          <div class="layui-row">
+            <div class="layui-col-xs7">
+              <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
+              <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required" placeholder="éªŒè¯ç " class="layui-input">
+            </div>
+            <div class="layui-col-xs5">
+              <div style="margin-left: 10px;">
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-fluid" id="LAY-user-getsmscode">è·å–éªŒè¯ç </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
+          <input type="password" name="password" id="LAY-user-login-password" lay-verify="pass" placeholder="å¯†ç " class="layui-input">
+        </div>
+        <div class="layui-form-item">
+          <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-repass"></label>
+          <input type="password" name="repass" id="LAY-user-login-repass" lay-verify="required" placeholder="ç¡®è®¤å¯†ç " class="layui-input">
+        </div>
+        <div class="layui-form-item">
+          <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-nickname"></label>
+          <input type="text" name="nickname" id="LAY-user-login-nickname" lay-verify="nickname" placeholder="æ˜µç§°" class="layui-input">
+        </div>
+        <div class="layui-form-item">
+          <input type="checkbox" name="agreement" lay-skin="primary" title="åŒæ„ç”¨æˆ·åè®®" checked>
+        </div>
+        <div class="layui-form-item">
+          <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-reg-submit">æ³¨ å†Œ</button>
+        </div>
+        <div class="layui-trans layui-form-item layadmin-user-login-other">
+          <label>ç¤¾äº¤è´¦å·æ³¨å†Œ</label>
+          <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
+          <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
+          <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
+          
+          <a href="login.html" tppabs="https://www.layui.com/admin/std/dist/views/user/login.html" class="layadmin-user-jump-change layadmin-link layui-hide-xs">ç”¨å·²æœ‰å¸å·ç™»å…¥</a>
+          <a href="login.html" tppabs="https://www.layui.com/admin/std/dist/views/user/login.html" class="layadmin-user-jump-change layadmin-link layui-hide-sm layui-show-xs-inline-block">ç™»å…¥</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="layui-trans layadmin-user-login-footer">
+      
+      <p>Â© 2018 <a href="javascript:if(confirm('http://www.layui.com/  \n\n¸ÃÎÄ¼şÎŞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·şÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.layui.com/'" tppabs="http://www.layui.com/" target="_blank">layui.com</a></p>
+      <p>
+        <span><a href="javascript:if(confirm('http://www.layui.com/admin/  \n\n¸ÃÎÄ¼şÎŞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·şÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.layui.com/admin/#get'" tppabs="http://www.layui.com/admin/#get" target="_blank">è·å–æˆæƒ</a></span>
+        <span><a href="javascript:if(confirm('http://www.layui.com/admin/pro/  \n\n¸ÃÎÄ¼şÎŞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·şÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.layui.com/admin/pro/'" tppabs="http://www.layui.com/admin/pro/" target="_blank">åœ¨çº¿æ¼”ç¤º</a></span>
+        <span><a href="javascript:if(confirm('http://www.layui.com/admin/  \n\n¸ÃÎÄ¼şÎŞ·¨ÓÃ Teleport Ultra ÏÂÔØ, ÒòÎª ËüÊÇÒ»¸öÓò»òÂ·¾¶Íâ²¿±»ÉèÖÃÎªËüµÄÆôÊ¼µØÖ·µÄµØÖ·¡£  \n\nÄãÏëÔÚ·şÎñÆ÷ÉÏ´ò¿ªËü?'))window.location='http://www.layui.com/admin/'" tppabs="http://www.layui.com/admin/" target="_blank">å‰å¾€å®˜ç½‘</a></span>
+      </p>
+    </div>
+
+  </div>
+
+  <script src="../../layuiadmin/layui/layui.js" tppabs="https://www.layui.com/admin/std/dist/layuiadmin/layui/layui.js"></script>  
+  <script>
+  layui.config({
+    base: '../../layuiadmin/' //é™æ€èµ„æºæ‰€åœ¨è·¯å¾„
+  }).extend({
+    index: 'lib/index' //ä¸»å…¥å£æ¨¡å—
+  }).use(['index', 'user'], function(){
+    var $ = layui.$
+    ,setter = layui.setter
+    ,admin = layui.admin
+    ,form = layui.form
+    ,router = layui.router();
+
+    form.render();
+
+    //æäº¤
+    form.on('submit(LAY-user-reg-submit)', function(obj){
+      var field = obj.field;
+      
+      //ç¡®è®¤å¯†ç 
+      if(field.password !== field.repass){
+        return layer.msg('ä¸¤æ¬¡å¯†ç è¾“å…¥ä¸ä¸€è‡´');
+      }
+      
+      //æ˜¯å¦åŒæ„ç”¨æˆ·åè®®
+      if(!field.agreement){
+        return layer.msg('ä½ å¿…é¡»åŒæ„ç”¨æˆ·åè®®æ‰èƒ½æ³¨å†Œ');
+      }
+      
+      //è¯·æ±‚æ¥å£
+      admin.req({
+        url: layui.setter.base + 'json/user/reg.js' //å®é™…ä½¿ç”¨è¯·æ”¹æˆæœåŠ¡ç«¯çœŸå®æ¥å£
+        ,data: field
+        ,done: function(res){        
+          layer.msg('æ³¨å†ŒæˆåŠŸ', {
+            offset: '15px'
+            ,icon: 1
+            ,time: 1000
+          }, function(){
+            location.hash = '/user/login'; //è·³è½¬åˆ°ç™»å…¥é¡µ
+          });
+        }
+      });
+      
+      return false;
+    });
+  });
+  </script>
+</body>
+</html>

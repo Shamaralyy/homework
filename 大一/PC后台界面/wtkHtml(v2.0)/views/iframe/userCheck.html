@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>检查记录明细</title>
+		<meta name="renderer" content="webkit">
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+		<style>
+			.details_span{
+				margin-right: 10px;
+			}
+			.details_red{
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+
+
+		<div class="layui-fluid">
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md12">
+					<div class="layui-card">
+							<table class="layui-hide" id="table-toolbar" lay-filter="table-toolbar">
+								<thead>
+									<tr>
+										<th lay-data="{field:'eye',templet : '#templetEyeMode',sort: true,align: 'center'}">眼别</th>
+										<th lay-data="{field:'degree',templet:'<div>±{{d.degree}}D</div>',align: 'center'}">镜片</th>
+										<th lay-data="{field:'optotype',align: 'center'}">视标</th>
+										<th lay-data="{field:'cycle',templet:'#templetCycle',align: 'center'}">检查数</th>
+										<th lay-data="{field:'forward',templet:'#templetForward',align: 'center'}">调节灵敏度</th>
+										<th lay-data="{field:'forwardTime',templet:'#templetForwardTime',align: 'center'}">调节时长</th>
+										<th lay-data="{field:'reversalTime',templet:'#templetReversalTime',align: 'center'}">放松时长</th>
+										<th lay-data="{field:'fTor',templet:'#templetFTor',align: 'center'}">调节放松比</th>
+										
+									</tr>
+								</thead>
+							</table>
+
+						</div>
+					</div>
+			</div>
+
+
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md12">
+					<div class="layui-card">
+						<table class="layui-table">
+							<colgroup>
+								<col width="100">
+								<col width="100">
+								<col>
+							</colgroup>
+							<tbody id="checkForward">
+
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+				</div>
+			</div>
+
+		<!-- 性别格式化 -->
+		<script type="text/html" id="templetEyeMode">
+					{{# if(d.eyeMode == '1'){ }}
+			右眼
+		  {{# } else if(d.eyeMode == '2'){ }}
+			左眼
+			{{# } else if(d.eyeMode == '3'){ }}
+			双眼
+		 {{#  } else { }}
+		   未知
+		  {{#  } }}
+		</script>
+		<!-- 检查数格式化 -->
+		<script type="text/html" id="templetCycle">
+			{{# if(d.isPassed == '0'){ }}
+			{{(Number(d.forwardCycle)+Number(d.reversalCycle))/2}}C
+		 {{#  } else { }}
+		   /
+		  {{#  } }}
+		</script>
+		<!-- 调节灵敏度格式化 -->
+		<script type="text/html" id="templetForward">
+			{{# if(d.isPassed == '0'){ }}
+				{{d.forward}}cpm
+			{{# } else if(d.isPassed == '1'){ }},
+				 +不通过
+			{{# } else if(d.isPassed == '2'){ }}
+				-不通过
+			{{# } else if(d.isPassed == '3'){ }}
+				±不通过
+			{{#  } }}
+		  
+		  
+		</script>
+		<!-- 调节时长格式化 -->
+		<script type="text/html" id="templetForwardTime">
+			{{# if(d.isPassed == '0'){ }}
+				{{(d.forwardTime/1000).toFixed(2)}}s
+			{{#  } else { }}
+			  /
+			 {{#  } }}
+		</script>
+		<!-- 放松时长格式化 -->
+		<script type="text/html" id="templetReversalTime">
+			{{# if(d.isPassed == '0'){ }}
+				{{(d.reversalTime/1000).toFixed(2)}}s
+			{{#  } else { }}
+			  /
+			 {{#  } }}
+		</script>
+		<!-- 调节放松比 -->
+		<script type="text/html" id="templetFTor">
+			{{# if(d.isPassed == '0'){ }}
+				{{(d.forwardTime/d.reversalTime).toFixed(2)}}
+			{{#  } else { }}
+			  /
+			 {{#  } }}
+		</script>
+		
+		<script src="../../layuiadmin/layui/layui.js"></script>
+		<script>
+			layui.config({
+				base: '../../layuiadmin/' //静态资源所在路径
+			}).extend({
+				index: 'lib/index' //主入口模块
+			}).use(['index', 'table', 'form', 'laydate'	,'address'], function() {
+				var admin = layui.admin,
+					table = layui.table,
+					$ = layui.$;
+				var adminIndex = 0;
+				var id = layui.lserver.getQueryVariable("id");
+				table.init('table-toolbar', {
+					elem: "#table-toolbar" //指定原始 table 容器的选择器或 DOM
+						,
+					title: "用户检查记录明细" //定义 table 的大标题（在文件导出等地方会用到）
+							,
+					url: layui.setter.url + 'comp/queryCheckInfoDetails?checkId='+id+'&token='+layui.lserver.layAdminSession("layAdmin").token //异步数据接口相关参数
+						,
+					minWidth: 60,
+					page: false,
+					parseData:function (res) {
+						var strHtml = "";
+						console.log(res.data)
+						for(var i=0;i<res.data.length;i++){
+							var eyeMode = ""//眼别
+							var forwardDetails = []//调节明细
+							var reversalDetails = []//放松明细
+
+							var forward = "";
+							var reversal = "";
+							if(res.data[i].forwardDetails != null && res.data[i].forwardDetails != ""){
+								 forwardDetails = res.data[i].forwardDetails.split("|")//调节明细
+							}
+
+							if(res.data[i].reversalDetails != null && res.data[i].reversalDetails != ""){
+								 reversalDetails = res.data[i].reversalDetails.split("|")//放松明细
+							}
+
+							if(res.data[i].eyeMode == "1"){
+								eyeMode = "右眼"
+							}else if(res.data[i].eyeMode == "2"){
+								eyeMode = "左眼"
+							}else{
+								eyeMode = "双眼"
+							}
+							for(var j=0;j<forwardDetails.length;j++){
+								if(forwardDetails[j].substring(0,1) == "-" || forwardDetails[j].substring(0,1) == "*"){
+									forward += "<span class='details_span details_red'>"+Math.abs(forwardDetails[j])+"</span>"
+								}else{
+									forward += "<span class='details_span'>"+forwardDetails[j]+"</span>"
+								}
+							}
+
+							for(var j=0;j<reversalDetails.length;j++){
+								if(reversalDetails[j].substring(0,1) == "-" || reversalDetails[j].substring(0,1) == "*"){
+									reversal += "<span class='details_span details_red'>"+Math.abs(reversalDetails[j])+"</span>"
+								}else{
+									reversal += "<span class='details_span'>"+reversalDetails[j]+"</span>"
+								}
+							}
+							strHtml += '<tr>\n' +
+									'\t\t\t\t\t\t\t\t<td rowspan="2">'+eyeMode+'</td>\n' +
+									'\t\t\t\t\t\t\t\t<td style="width:85px">调节时长(ms)</td>\n' +
+									'\t\t\t\t\t\t\t\t<td>'+forward+'</td>\n' +
+									'\t\t\t\t\t\t\t</tr>\n' +
+									'\t\t\t\t\t\t\t<tr>\n' +
+									'\t\t\t\t\t\t\t\t<td style="width:85px">放松时长(ms)</td>\n' +
+									'\t\t\t\t\t\t\t\t<td>'+reversal+'</td>\n' +
+									'\t\t\t\t\t\t\t</tr>'
+						}
+
+						$("#checkForward").html(strHtml)
+					}
+				});
+
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "npm-lyy",
+  "version": "1.0.0",
+  "description": "运用promise封装ajax",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shamaralyy/task.git"
+  },
+  "keywords": [
+    "shamaralyy"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shamaralyy/task/issues"
+  },
+  "homepage": "https://github.com/Shamaralyy/task#readme"
+}

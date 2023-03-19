@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        Function.prototype.myCall = function () {
+            const args = Array.prototype.slice.call(arguments);
+            const t = args.shift();
+            t.fn = this;
+            // console.log('args:',args);
+            const res = t.fn(...args);
+            delete t.fn;
+            return res;
+        }
+
+        function fn(a, b) {
+            console.log('a:', a);
+            console.log('b:', b);
+            console.log('this:', this);
+        }
+
+        fn.myCall({ x: 10 }, 20, 30);
+    </script>
+</body>
+
+</html>

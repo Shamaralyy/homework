@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.5.0",
+    "react-router-dom": "^5.3.3",
+    "rxjs": "^7.5.6"
+  }
+}

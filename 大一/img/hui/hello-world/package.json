@@ -1,0 +1,18 @@
+{
+  "name": "hello-world",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@hsui/core": "^1.6.1",
+    "echarts": "^5.3.3",
+    "h_ui": "^1.45.0",
+    "vue": "^2.7.4",
+    "vue-router": "^3.5.2"
+  },
+  "devDependencies": {
+    "@hsui/plugin-lint": "^1.0.0",
+    "@hsui/plugin-micro-app": "^1.8.0",
+    "@hsui/plugin-sass": "^1.5.0",
+    "vue-template-compiler": "^2.7.4"
+  }
+}

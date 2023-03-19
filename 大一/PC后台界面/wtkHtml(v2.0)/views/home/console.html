@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=UTF-8"utf-8">
+		<title>数据中心</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+		<style>
+			.my-company-body{
+		height: 450px !important;
+	}
+</style>
+	</head>
+	<body>
+
+		<div class="layui-fluid">
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md6">
+					<div class="layui-card">
+						<div class="layui-card-header">设备汇总<span style="float: right;" id="deviceTotal"></span></div>
+						<div class="layui-card-body">
+							<div id="device-echart" style="width: 100%;height:450px;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md6">
+					<div class="layui-card">
+						<div class="layui-card-header">用户汇总<span style="float: right;" id="userTotal"></span></div>
+						<div class="layui-card-body">
+							<div id="user-echart" style="width: 100%;height:450px;"></div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md6">
+					<div class="layui-card">
+						<div class="layui-card-header">检查汇总<span style="float: right;" id="checksTotal"></span></div>
+						<div class="layui-card-body">
+							<div id="check-echart" style="width: 100%;height:450px;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md6">
+					<div class="layui-card">
+						<div class="layui-card-header">训练汇总<span style="float: right;" id="trainTotal"></span></div>
+						<div class="layui-card-body">
+							<div id="train-echart" style="width: 100%;height:450px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="../../layuiadmin/layui/layui.js"></script>
+		<script src="../../layuiadmin/echarts.min.js"></script>
+		<script>
+			layui.config({
+				base: '../../layuiadmin/' //静态资源所在路径
+			}).extend({
+				index: 'lib/index' //主入口模块
+			}).use(['index'], function() {
+				$ = layui.$;
+				var layAdmin = JSON.parse(sessionStorage.getItem("layAdmin"))
+				var adminIndex = 0;
+				let checkChart = echarts.init(document.getElementById('check-echart'));
+				let deviceChart = echarts.init(document.getElementById('device-echart'));
+				let userChart = echarts.init(document.getElementById('user-echart'));
+				let trainChart = echarts.init(document.getElementById('train-echart'));
+				let checkOption = {
+					baseOption: {
+						color: ['#3398DB'],
+						timeline: {
+							axisType: 'category',
+							autoPlay: false,
+							symbolSize: 8,
+							currentIndex: 0, //当前选中项
+							//标记文本样式
+							label: {
+								formatter: function(s) {
+									return (new Date(s)).getFullYear();
+								}
+							},
+							//轴线样式
+							lineStyle: {
+								type: 'dotted'
+							},
+							//当前项图形样式
+							checkpointStyle: {
+								color: '#3398DB',
+								borderColor: '#3398DB',
+								symbolSize:8
+							},
+							//控制按钮样式
+							controlStyle: {
+								showPlayBtn:false,
+								itemSize:15
+								// color:'#3398DB',
+								// borderColor:'#3398DB'
+							},
+							emphasis: {
+								itemStyle: {
+									color: '#3398DB',
+									borderColor: '#3398DB'
+								},
+								checkpointStyle: {
+				
+								},
+								controlStyle: {
+									color: '#3398DB',
+									borderColor: '#3398DB'
+								}
+							},
+							data: [
+							]
+						},
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: { // 坐标轴指示器，坐标轴触发有效
+								type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+							}
+						},
+						grid: {
+							left: '3%',
+							right: '4%',
+							containLabel: true
+						},
+						xAxis: [{
+							type: 'category',
+							data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+							axisTick: {
+								alignWithLabel: true
+							}
+						}],
+						yAxis: [{
+							type: 'value'
+						}],
+						series: [{
+							name: '检查人次',
+							type: 'bar',
+							barWidth: '60%'
+						}]
+					},
+					options: [
+					]
+				}
+				let deviceOption = {
+					baseOption: {
+						color: ['#3398DB'],
+						timeline: {
+							axisType: 'category',
+							autoPlay: false,
+							symbolSize: 8,
+							currentIndex: 0, //当前选中项
+							//标记文本样式
+							label: {
+								formatter: function(s) {
+									return (new Date(s)).getFullYear();
+								}
+							},
+							//轴线样式
+							lineStyle: {
+								type: 'dotted'
+							},
+							//当前项图形样式
+							checkpointStyle: {
+								color: '#3398DB',
+								borderColor: '#3398DB',
+								symbolSize:8
+							},
+							//控制按钮样式
+							controlStyle: {
+								showPlayBtn:false,
+								itemSize:15
+								// color:'#3398DB',
+								// borderColor:'#3398DB'
+							},
+							emphasis: {
+								itemStyle: {
+									color: '#3398DB',
+									borderColor: '#3398DB'
+								},
+								checkpointStyle: {
+				
+								},
+								controlStyle: {
+									color: '#3398DB',
+									borderColor: '#3398DB'
+								}
+							},
+							data: [
+							]
+						},
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: { // 坐标轴指示器，坐标轴触发有效
+								type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+							}
+						},
+						grid: {
+							left: '3%',
+							right: '4%',
+							containLabel: true
+						},
+						xAxis: [{
+							type: 'category',
+							data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+							axisTick: {
+								alignWithLabel: true
+							}
+						}],
+						yAxis: [{
+							type: 'value'
+						}],
+						series: [{
+							name: '设备绑定数量',
+							type: 'bar',
+							barWidth: '60%'
+						}]
+					},
+					options: [
+					]
+				}
+				let userOption={
+					baseOption: {
+						color: ['#3398DB'],
+						timeline: {
+							axisType: 'category',
+							autoPlay: false,
+							symbolSize: 8,
+							currentIndex: 0, //当前选中项
+							//标记文本样式
+							label: {
+								formatter: function(s) {
+									return (new Date(s)).getFullYear();
+								}
+							},
+							//轴线样式
+							lineStyle: {
+								type: 'dotted'
+							},
+							//当前项图形样式
+							checkpointStyle: {
+								color: '#3398DB',
+								borderColor: '#3398DB',
+								symbolSize:8
+							},
+							//控制按钮样式
+							controlStyle: {
+								showPlayBtn:false,
+								itemSize:15
+								// color:'#3398DB',
+								// borderColor:'#3398DB'
+							},
+							emphasis: {
+								itemStyle: {
+									color: '#3398DB',
+									borderColor: '#3398DB'
+								},
+								checkpointStyle: {
+				
+								},
+								controlStyle: {
+									color: '#3398DB',
+									borderColor: '#3398DB'
+								}
+							},
+							data: [
+							]
+						},
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: { // 坐标轴指示器，坐标轴触发有效
+								type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+							}
+						},
+						grid: {
+							left: '3%',
+							right: '4%',
+							containLabel: true
+						},
+						xAxis: [{
+							type: 'category',
+							data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+							axisTick: {
+								alignWithLabel: true
+							}
+						}],
+						yAxis: [{
+							type: 'value'
+						}],
+						series: [{
+							name: '用户数量',
+							type: 'bar',
+							barWidth: '60%'
+						}]
+					},
+					options: [
+					]
+				}
+				let trainOption={
+					baseOption: {
+						color: ['#3398DB'],
+						timeline: {
+							axisType: 'category',
+							autoPlay: false,
+							symbolSize: 8,
+							currentIndex: 0, //当前选中项
+							//标记文本样式
+							label: {
+								formatter: function(s) {
+									return (new Date(s)).getFullYear();
+								}
+							},
+							//轴线样式
+							lineStyle: {
+								type: 'dotted'
+							},
+							//当前项图形样式
+							checkpointStyle: {
+								color: '#3398DB',
+								borderColor: '#3398DB',
+								symbolSize:8
+							},
+							//控制按钮样式
+							controlStyle: {
+								showPlayBtn:false,
+								itemSize:15
+								// color:'#3398DB',
+								// borderColor:'#3398DB'
+							},
+							emphasis: {
+								itemStyle: {
+									color: '#3398DB',
+									borderColor: '#3398DB'
+								},
+								checkpointStyle: {
+				
+								},
+								controlStyle: {
+									color: '#3398DB',
+									borderColor: '#3398DB'
+								}
+							},
+							data: [
+							]
+						},
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: { // 坐标轴指示器，坐标轴触发有效
+								type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+							}
+						},
+						grid: {
+							left: '3%',
+							right: '4%',
+							containLabel: true
+						},
+						xAxis: [{
+							type: 'category',
+							data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+							axisTick: {
+								alignWithLabel: true
+							}
+						}],
+						yAxis: [{
+							type: 'value'
+						}],
+						series: [{
+							name: '训练人次',
+							type: 'bar',
+							barWidth: '60%'
+						}]
+					},
+					options: [
+					]
+				}
+				//初始化检查汇总
+				layui.lserver.getFormInput("",layui.setter.url + 'comp/totalchecks', {compID:layui.lserver.layAdminSession("layAdmin").compId},function(data){
+						let checksYearList=data.data.details
+						$("#checksTotal").html("检查人次:"+data.data.totle)
+						for(let i=0;i<checksYearList.length;i++){
+							checkOption.baseOption.timeline.data.push(checksYearList[i].year)
+							let checksMonthList=checksYearList[i].details
+							let myJson={
+								series: [{
+									data: []
+								}]
+							}
+							for(let j=0;j<checksMonthList.length;j++){
+								myJson.series[0].data.push(checksMonthList[j].total)
+							}
+							checkOption.options.push(myJson)
+						}
+						checkOption.baseOption.timeline.currentIndex=checksYearList.length-1
+						checkChart.setOption(checkOption);
+				});
+				//初始化设备汇总
+				layui.lserver.getFormInput("",layui.setter.url + 'comp/totaldevices', {compID:layui.lserver.layAdminSession("layAdmin").compId},function(data){
+						let devicesYearList=data.data.details
+						$("#deviceTotal").html("绑定数量:"+data.data.totle)
+						for(let i=0;i<devicesYearList.length;i++){
+							deviceOption.baseOption.timeline.data.push(devicesYearList[i].year)
+							let deviceMonthList=devicesYearList[i].details
+							let myJson={
+								series: [{
+									data: []
+								}]
+							}
+							for(let j=0;j<deviceMonthList.length;j++){
+								myJson.series[0].data.push(deviceMonthList[j].total)
+							}
+							deviceOption.options.push(myJson)
+						}
+						deviceOption.baseOption.timeline.currentIndex=devicesYearList.length-1
+						deviceChart.setOption(deviceOption);
+				});
+				//初始化用户汇总
+				layui.lserver.getFormInput("",layui.setter.url + 'comp/totalusers', {compID:layui.lserver.layAdminSession("layAdmin").compId},function(data){
+						console.log(data)
+						let usersYearList=data.data.details
+						$("#userTotal").html("用户数量:"+data.data.totle)
+						for(let i=0;i<usersYearList.length;i++){
+							userOption.baseOption.timeline.data.push(usersYearList[i].year)
+							let userMonthList=usersYearList[i].details
+							let myJson={
+								series: [{
+									data: []
+								}]
+							}
+							for(let j=0;j<userMonthList.length;j++){
+								myJson.series[0].data.push(userMonthList[j].total)
+							}
+							userOption.options.push(myJson)
+						}
+						userOption.baseOption.timeline.currentIndex=usersYearList.length-1
+						userChart.setOption(userOption);
+				});
+				//初始化训练汇总
+				layui.lserver.getFormInput("",layui.setter.url + 'comp/totaltrains', {compID:layui.lserver.layAdminSession("layAdmin").compId},function(data){
+						console.log(data)
+						let trainsYearList=data.data.details
+						$("#trainTotal").html("训练人次:"+data.data.totle)
+						for(let i=0;i<trainsYearList.length;i++){
+							trainOption.baseOption.timeline.data.push(trainsYearList[i].year)
+							let trainMonthList=trainsYearList[i].details
+								console.log("checksMonthList:"+JSON.stringify(trainMonthList))
+							let myJson={
+								series: [{
+									data: []
+								}]
+							}
+							for(let j=0;j<trainMonthList.length;j++){
+								myJson.series[0].data.push(trainMonthList[j].total)
+							}
+							console.log(myJson)
+							trainOption.options.push(myJson)
+						}
+						trainOption.baseOption.timeline.currentIndex=trainsYearList.length-1
+						console.log(trainOption)
+						trainChart.setOption(trainOption);
+				});
+			});
+		</script>
+
+	</body>
+</html>

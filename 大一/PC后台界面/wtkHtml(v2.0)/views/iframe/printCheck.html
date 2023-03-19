@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>检查报告打印</title>
+		<meta name="renderer" content="webkit">
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+	</head>
+	<body>
+		<div id="printArea">
+			<div style="text-align: center;font-size: 22px;font-weight: bolder;margin-top: 20px;">
+				<div style="position: absolute;left: 350px;display:none" id='img'>
+					<img id="compLogo" style="width: 40px;height: 40px;" src="../res/images/zhizhuan.png">
+				</div>
+				<span class="title-txt1" id="checkCompanyName"></span> 
+				<span style="font-size: 16px;display: block;">
+					调节灵敏度检测报告
+				</span>
+				<input id="jcId" value="" style="display: none">
+			</div>
+			<div style="margin-top: 40px;border-top: ridge;padding: 10px;">
+				<span>姓名：</span> <span id="checkUserName"></span> <span style="margin-left: 24px;">性别:</span>
+				<span id="checkUserGender"></span> <span style="margin-left: 24px;">出生日期:</span> <span id="checkUserBirth"></span>
+				<span style="margin-left: 24px;">联系方式:</span> <span id="checkUserPhone"></span>
+				<hr>
+			</div>
+			<div id="table_jl">
+				<table style="width: 100%;font-size:12px;" align="center" cellspacing="0" cellpadding="2">
+					<tbody id="htmlStr">
+						<tr>
+							<th style="text-align: center;">检查眼别</th>
+							<th style="text-align: center;">镜片度数</th>
+							<th style="text-align: center;">视标大小</th>
+							<th style="text-align: center;">检查数</th>
+							<th style="text-align: center;">调节灵敏度</th>
+							<th style="text-align: center;">调节时长</th>
+							<th style="text-align: center;">放松时长</th>
+							<th style="text-align: center;">调节放松比</th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div style="margin-top: 25px;font-size:12px;" id='comparative'>
+			</div>
+			<div style="clear: both;">
+			</div>
+			<div id='remark' style="display: none;padding: 20px 0 0 50px;">
+				<div>调节近点&nbsp;<span>OD</span><span style="margin-left: 50px;margin-right: 50px;">OS</span><span>OU</span></div>
+				<div style="line-height: 50px;">集合近点&nbsp;OU</div>
+			</div>
+			<div>
+				<hr>
+				<div style="margin-top: 40px;">
+					<!-- <div style="width: 55%;float:left;">
+						<img style="width: 12%;margin-left: 20px;" src="../res/images/logo-print.png"><span style="margin-left: 10px;">调节灵敏度检测系统</span>
+					</div> -->
+					<div style="width: 45%;float:right;">
+						<span style="display:block;width: 50%;float:left;">
+							检测人：
+						</span>
+						 <span style="display:block;width: 50%;float:right;">检测时间: <span id="checkStartTime"></span></span>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+			<div class="btn" style="position: absolute;left: 50%;bottom: 10%;"><button id="btn_dy">确定打印</button></div>
+		<script src="../../layuiadmin/jquery.js"></script>
+		<script src="../../layuiadmin/layui/layui.js"></script>
+		<script src="../../layuiadmin/lib/jquery.PrintArea.js"></script>
+		<script>
+			layui.config({
+				base: '../../layuiadmin/' //静态资源所在路径
+			}).extend({
+				index: 'lib/index' //主入口模块
+			}).use(['index', 'form'], function() {
+				var admin = layui.admin,
+					form = layui.form,
+					$ = layui.$;
+				var adminIndex = 0;
+				
+				var checkId = layui.lserver.getQueryVariable("checkId")//检查记录ID
+				var checkStartTime = new Date(layui.lserver.getQueryVariable("checkStartTime")).Format("yyyy-MM-dd");  //检查时间
+				var checkUserName = layui.lserver.getQueryVariable("checkUserName")//用户姓名
+				var checkUserGender = layui.lserver.getQueryVariable("checkUserGender")//用户性别
+				var checkUserPhone = layui.lserver.getQueryVariable("checkUserPhone")//电话号码
+				var checkUserBirth = layui.lserver.getQueryVariable("checkUserBirth")//出生日期
+				var checkCompanyName = layui.lserver.getQueryVariable("checkCompanyName")//检查单位
+				var checkcompAName = layui.lserver.getQueryVariable("checkcompAName")//检查人员
+				var compLogo = layui.lserver.getQueryVariable("compLogo")// 检查单位 logo
+				var compPrintComment = layui.lserver.getQueryVariable("compPrintComment")// 是否开启打印备注，0关闭，1开启。默认值为0
+				$("#checkUserName").html(checkUserName);$("#checkUserGender").html(checkUserGender == 1 ? "男" : "女");$("#checkUserPhone").html(checkUserPhone);$("#checkUserPhone").html();
+				$("#checkUserBirth").html(checkUserBirth);$("#checkStartTime").html(checkStartTime);$("#checkCompanyName").html(checkCompanyName);
+				if(compLogo != null && compLogo != '' && compLogo != 'undefined' && compLogo != 'null'){
+					$("#img").show();//显示div    
+					var urlTemp = layui.setter.url;
+					$("#compLogo").attr("src",urlTemp.substring(0, urlTemp.indexOf("iflipManager/"))+compLogo)
+				}
+				if(compPrintComment == '1'){
+					$("#remark").show()
+				}
+				//查询检查数据
+				layui.lserver.getFormInput("",layui.setter.url + 'comp/queryCheckInfoDetails', {checkId:checkId,limit:2000},function(data){
+					console.log(data)
+						var htmlStr = ""//检查明细表格html字符串
+						var comparative=""//对比分析html字符串
+						var hasleft=false,hasright=false,hasdouble=false
+						var leftData='',rightData='',doubleData=''
+						for(var i=0;i<data.data.length;i++){
+							var eye = "",cpm='',at='',rt='',arMin='',arMax=''
+							if(data.data[i].eyeMode == 1){
+								eye = "右眼";
+								rightData=data.data[i]
+								cpm=rightData.standard.rcpm
+								at=rightData.standard.rat
+								rt=rightData.standard.rrt
+								arMin=rightData.standard.RarMin
+								arMax=rightData.standard.RarMax
+							}else if(data.data[i].eyeMode == 2){
+								eye = "左眼";
+								leftData=data.data[i]
+								cpm=leftData.standard.lcpm
+								at=leftData.standard.lat
+								rt=leftData.standard.lrt
+								arMin=leftData.standard.LarMin
+								arMax=leftData.standard.LarMax
+							}else if(data.data[i].eyeMode == 3){
+								eye = "双眼";
+								doubleData=data.data[i]
+								cpm=doubleData.standard.bcpm
+								at=doubleData.standard.bat
+								rt=doubleData.standard.brt
+								arMin=doubleData.standard.BarMin
+								arMax=doubleData.standard.BarMax
+							}
+							var cpm_str=''
+							var cycle_str='/'
+							var forwardTime_str='/'
+							var reversalTime_str='/'
+							var fTor_str='/'
+							if(data.data[i].isPassed=='0'){
+								 //周期数
+								 cycle_str=Number((Number(data.data[i].forwardCycle)+Number(data.data[i].reversalCycle))/2).toFixed(2)
+								 //调节灵敏度
+								 cpm_str=data.data[i].forward+'cpm(≥'+cpm+')'
+								 if(Number(data.data[i].forward) < Number(cpm)){
+									 cpm_str+='<img style="width: 5px;margin-left: 3px;" src="../res/images/arrow_down.png" />'
+								 }
+								 //调节时长
+								 forwardTime_str=Number(data.data[i].forwardTime/1000).toFixed(2)+'s(≤'+at+')'
+								 if((Number(data.data[i].forwardTime)/1000) > Number(at)){
+								 	forwardTime_str+='<img style="width: 5px;margin-left: 3px;" src="../res/images/arrow_up.png" />'
+								 }
+								 //放松时长
+								 reversalTime_str=Number(data.data[i].reversalTime/1000).toFixed(2)+'s(≤'+rt+')'
+								 if((Number(data.data[i].reversalTime)/1000) > Number(rt)){
+								 	reversalTime_str+='<img style="width: 5px;margin-left: 3px;" src="../res/images/arrow_up.png" />'
+								 }
+								 //调节放松比
+								 fTor_str=Number(data.data[i].forwardTime/data.data[i].reversalTime).toFixed(2)+'('+arMin+'~'+arMax+')'
+								 if(Number(data.data[i].forwardTime)/Number(data.data[i].reversalTime) < Number(arMin)){
+								 	fTor_str+='<img style="width: 5px;margin-left: 3px;" src="../res/images/arrow_down.png" />'
+								 }
+								 else if(Number(data.data[i].forwardTime)/Number(data.data[i].reversalTime) > Number(arMax)){
+								 	fTor_str+='<img style="width: 5px;margin-left: 3px;" src="../res/images/arrow_up.png" />'
+								 }
+							}
+							else if(data.data[i].isPassed=='1'){
+								 cpm_str='+不通过'
+							}
+							else if(data.data[i].isPassed=='2'){
+								 cpm_str='﹣不通过'
+							}
+							else if(data.data[i].isPassed=='3'){
+								 cpm_str='±不通过'
+							}
+							htmlStr += '<tr style="height: 20px;">'+
+							'<td style="text-align: center;">'+eye+'</td>'+
+							'<td style="text-align: center;">±'+data.data[i].degree+'D</td>'+
+							'<td style="text-align: center;">'+data.data[i].optotype+'</td>'+
+							'<td style="text-align: center;">'+cycle_str+'</td>'+
+							'<td style="text-align: center;">'+cpm_str+'</td>'+
+							'<td style="text-align: center;">'+forwardTime_str+'</td>'+
+							'<td style="text-align: center;">'+reversalTime_str+'</td>'+
+							'<td style="text-align: center;">'+fTor_str+'</td>'+
+						'</tr>';
+						}
+						$("#htmlStr").append(htmlStr)
+						//动态添加对比分析html
+						if(leftData.isPassed=='0'  && rightData.isPassed=='0'){
+							comparative +='<div style="float:left;margin-left:50px ;position:relative;">'+
+							'<div style="top: 13px;left:-8px;position:absolute;display:block;background:#666;border-radius:50%;width:4px;height:4px;"></div><div style="height: 30px;line-height: 30px;">左眼右眼同频性'+Number(leftData.forward/rightData.forward).toFixed(2)+'('+leftData.standard.LRaMin+'~'+leftData.standard.LRaMax+')</div>'+
+							'<div style="top: 37px;left:-8px;position:absolute;display:block;background:#666;border-radius:50%;width:4px;height:4px;"></div><div style="height: 20px;line-height: 20px;">左眼右眼同比性'+Number((leftData.forwardTime/leftData.reversalTime)/(rightData.forwardTime/rightData.reversalTime)).toFixed(2)+'('+leftData.standard.LRarMin+'~'+leftData.standard.LRarMax+')</div>'+
+							'</div>'
+						}	    
+    
+						if(leftData.isPassed=='0' && rightData.isPassed=='0' && doubleData.isPassed=='0'){
+							comparative +='<div style="float:left;margin-left:50px ;position:relative;">'+
+							'<div style="top: 13px;left:-8px;position:absolute;display:block;background:#666;border-radius:50%;width:4px;height:4px;"></div><div style="height: 30px;line-height: 30px;">双眼集合相关性'+Number(((Number(leftData.forwardTime|0)+Number(rightData.forwardTime|0))/2)/doubleData.forwardTime).toFixed(2)+'(≥'+leftData.standard.LRBatMin+')</div>'+
+							'<div style="top: 37px;left:-8px;position:absolute;display:block;background:#666;border-radius:50%;width:4px;height:4px;"></div><div style="height: 20px;line-height: 20px;">双眼散开相关性'+Number(((Number(leftData.reversalTime|0)+Number(rightData.reversalTime|0))/2)/doubleData.reversalTime).toFixed(2)+'(≥'+leftData.standard.LRBrtMin+')</div>'+
+							'</div>'
+						}
+						$("#comparative").html(comparative);
+				})
+					
+					//点击打印
+				$("#btn_dy").click(function(){
+					$("#printArea").printArea();
+				});
+				
+			});
+			// 对Date的扩展，将 Date 转化为指定格式的String
+			// 月(M)、日(d)、小时(H)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，   
+			// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)   
+			// 例子：   
+			// (new Date()).Format("yyyy-MM-dd HH:mm:ss.S") ==> 2006-07-02 08:09:04.423   
+			// (new Date()).Format("yyyy-M-d H:m:s.S")      ==> 2006-7-2 8:9:4.18   
+			Date.prototype.Format = function(fmt)   
+			{ //author: meizz   
+			  var o = {   
+			    "M+" : this.getMonth()+1,                 //月份   
+			    "d+" : this.getDate(),                    //日   
+			    "h+" : this.getHours(),                   //小时   
+			    "m+" : this.getMinutes(),                 //分   
+			    "s+" : this.getSeconds(),                 //秒   
+			    "q+" : Math.floor((this.getMonth()+3)/3), //季度   
+			    "S"  : this.getMilliseconds()             //毫秒   
+			  };   
+			  if(/(y+)/.test(fmt))   
+			    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
+			  for(var k in o)   
+			    if(new RegExp("("+ k +")").test(fmt))   
+			  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+			  return fmt;   
+			}
+		</script>
+	</body>
+</html>

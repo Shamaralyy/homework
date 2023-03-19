@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let func = function () {
+            console.log(2);
+        }
+
+        let constructor = function (originFun, before, after) {
+            function aop() {
+                before.apply(this, arguments);
+                originFun.apply(this, arguments);
+                after.apply(this, arguments);
+            }
+        }
+
+        let cons = constructor(func, function (a = 1) { console.log(a) }, function (b = 3) { console.log(b) });
+        cons();
+//实现func.before()以及func.after()
+
+// // originFun为原函数，before和after为增强方法
+// function constructor(originFun, before, after){
+//         function _class(){
+//             before.apply(this, arguments);
+//             originFun.apply(this, arguments);
+//             after.apply(this, arguments);
+//         }
+//         return _class;
+//     }
+
+// // 加法运算，作为测试的原函数
+//     function calcAdd(a,b){
+//         console.log(a + "+" + b + "=" + (a + b));
+//         return a+b;
+//     }
+//     // AOP增强
+//     calcAdd = constructor(calcAdd, function(a=1){console.log(a)}, function(b=3){console.log(b)});
+//     // 调用方法进行测试
+//     calcAdd(2, 3);
+    </script>
+</body>
+
+</html>

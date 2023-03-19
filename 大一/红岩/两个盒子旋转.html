@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            height: 300px;
+            width: 300px;
+            border: 5px solid black;
+            margin: 200px auto;
+        }
+        p{
+            width: 100px;
+            height: 100px;
+            background-color: cornflowerblue;
+            margin-top: 100px;
+            margin-left: 100px;
+            
+        }
+        p:hover {
+            transition: 1s;
+            transform: rotate(360deg);
+        }
+        div:hover {
+            transition: 1s;
+            transform: rotate(360deg);
+        }
+    </style>
+</head>
+<body>
+    <script>
+
+        function max(arr) {
+            var max = arr[0];
+            for (var i = 1; i <= arr.length; i++) {
+                if (max < arr[i]) {
+                    max = arr[i];
+                }
+            }
+            return max;
+        }
+        max(arr);
+        var re = max([1, 2, 3, 4, 5]);
+        console.log(re);
+    </script>
+    <div>
+        <p></p>
+
+    </div>
+</body>
+</html>

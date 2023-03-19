@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>用户统计</title>
+		<meta name="renderer" content="webkit">
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+	</head>
+	<body>
+
+		<div class="layui-card layadmin-header">
+			<div class="layui-breadcrumb" lay-filter="breadcrumb">
+				<a lay-href="">主页</a>
+				<a><cite>组件</cite></a>
+				<a><cite>数据表格</cite></a>
+				<a><cite>开启头部工具栏</cite></a>
+			</div>
+		</div>
+
+		<div class="layui-fluid">
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md12">
+					<div class="layui-card">
+						<div class="layui-card-header">用户统计</div>
+						<div class="layui-card-body">
+							<!-- <div class="layui-form-item">
+								<label class="layui-form-label">关键字</label>
+								<div class="layui-input-inline">
+									<input type="text" name="checkUserName" placeholder="单位名称/用户姓名/用户手机号" class="layui-input">
+								</div>
+								<button class="layui-btn" id="queryAdmin">查询</button>
+							</div>
+ -->
+							<table class="layui-hide" id="table-toolbar" lay-filter="table-toolbar">
+								<thead>
+									<tr>
+										<th lay-data="{type:'checkbox',field:'checkId'}">checkId</th>
+										<th lay-data="{field:'checkStartTime',width:200}">检查时间</th>
+										<th lay-data="{field:'checkUserName',width:150}">姓名</th>
+										<th lay-data="{field:'checkUserGender',templet : '#templetGender',width:100}">性别</th>
+										<th lay-data="{field:'checkUserBirth',width:150}">出生日期</th>
+										<th lay-data="{field:'checkUserPhone',width:150}">电话</th>
+										<th lay-data="{field:'checkCompanyName',width:150}">单位</th>
+										<th lay-data="{field:'rightEye',width:350}">右眼</th>
+										<th lay-data="{field:'leftEye',width:350}">左眼</th>
+										<th lay-data="{field:'binoculus',width:350}">双眼</th>
+										<th lay-data="{fixed: 'right',toolbar: '#table-toolbar-bar',width:100}">操作</th>
+									</tr>
+								</thead>
+							</table>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<script type="text/html" id="templetGender">
+			{{# if(d.checkUserGender == '1'){ }}
+	男
+  {{# } else if(d.checkUserGender == '2'){ }}
+	女
+ {{#  } else { }}
+    未知
+  {{#  } }}
+</script>
+
+		<script type="text/html" id="table-toolbar-bar">
+			<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+	</script>
+		<script src="../../layuiadmin/layui/layui.js"></script>
+
+		<script>
+			layui.config({
+				base: '../../layuiadmin/' //静态资源所在路径
+			}).extend({
+				index: 'lib/index' //主入口模块
+			}).use(['index', 'table', 'form', 'laydate'], function() {
+				var admin = layui.admin,
+					table = layui.table,
+					form = layui.form,
+					laydate = layui.laydate,
+					$ = layui.$;
+					var adminIndex = 0;
+				table.init('table-toolbar', {
+					elem: "#table-toolbar" //指定原始 table 容器的选择器或 DOM
+						,
+					title: "检查记录" //定义 table 的大标题（在文件导出等地方会用到）
+						,
+					limit: 20 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
+						,
+					url: layui.setter.url + 'comp/queryCheckInfo' //异步数据接口相关参数
+						,
+					// toolbar: "#table-toolbar-toolbar",
+					page: true,
+					where:{
+						token : layui.lserver.layAdminSession("layAdmin").token
+					}
+				});
+
+
+				//头工具栏事件
+				table.on('toolbar(table-toolbar)', function(obj) {
+					var checkStatus = table.checkStatus(obj.config.id);
+					switch (obj.event) {
+						case 'addAdmin':
+						document.getElementById("admin_from").reset();//清空值
+							
+							
+							break;
+					};
+				});
+
+				//监听行工具事件
+				table.on('tool(table-toolbar)', function(obj) {
+					var data = obj.data;
+				   if (obj.event === 'detail') {
+						form.val("updateAdmin", data)
+						adminIndex = layer.open({
+							type: 2, 
+							title: data.checkUserName+" 检查记录明细",
+							area: ['1000px', '650px'],
+							id: "userCheck",
+							shadeClose: true,
+							content: "../iframe/userCheck.html?id="+data.checkId
+						});
+					}
+				});
+
+				form.on('submit(submitAdmin)', function(data) {
+					layui.lserver.submitForm(layui.setter.url + 'user/doCompanyAdmin', data.field, function() {
+						layer.close(adminIndex)
+						reloadTable('table-toolbar', 1)
+					});
+					return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+				});
+
+
+				/**
+				 * 点击搜索
+				 */
+				$(document).on('click', '#queryAdmin', function() {
+					reloadTable('table-toolbar', 1)
+				});
+
+
+
+				/**重新加载table
+				 * @param {Object} id table中的ID
+				 * @param {Object} data 条件数据
+				 */
+				function reloadTable(id, curr) {
+
+					if (curr == "" || curr == null) curr = 1
+					var data = {
+						adminUserName: $("input[name='whereName']").val()
+					};
+					table.reload(id, {
+						where: {
+							data
+						}, //设定异步数据接口的额外参数
+						page: {
+							curr: curr //重新从第 1 页开始
+						}
+					}); //只重载数据
+				}
+
+				//时间
+				laydate.render({
+					elem: '#time1'
+				});
+
+			});
+		</script>
+	</body>
+</html>

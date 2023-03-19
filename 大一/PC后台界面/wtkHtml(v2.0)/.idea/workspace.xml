@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3d78903e-509e-4b2d-ad57-e764219ae735" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/views/amber/userCheckList.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/layuiadmin/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/layuiadmin/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.html" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1ZTra9ZFg1Rv8J0u3kzioneUioR" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\15楼科技\hospitalHtml\views" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Desktop\15楼科技\WTK赛事\wtkHtml\views\amber" />
+      <recent name="D:\Program\工作空间\15楼科技\WTK赛事\WTK赛事\wtkHtml\views\amber" />
+      <recent name="D:\Program\工作空间\15楼科技\WTK赛事\WTK赛事\wtkHtml\layuiadmin\modules" />
+      <recent name="D:\Program\工作空间\new2019\amber\hospitalHtml\views\amber" />
+      <recent name="D:\15楼科技\hospitalHtml\views\amber" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\小谢\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3d78903e-509e-4b2d-ad57-e764219ae735" name="Default Changelist" comment="" />
+      <created>1584873985310</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1584873985310</updated>
+      <workItem from="1584873987786" duration="274000" />
+      <workItem from="1584874328313" duration="10230000" />
+      <workItem from="1585130070915" duration="1859000" />
+      <workItem from="1585376637473" duration="7476000" />
+      <workItem from="1585401125873" duration="175000" />
+      <workItem from="1585639182348" duration="43000" />
+      <workItem from="1585650072796" duration="1807000" />
+      <workItem from="1585795804867" duration="5374000" />
+      <workItem from="1585880174635" duration="2848000" />
+      <workItem from="1586228728818" duration="4230000" />
+      <workItem from="1587102297471" duration="1706000" />
+      <workItem from="1587695013997" duration="9450000" />
+      <workItem from="1587866844373" duration="30000" />
+      <workItem from="1588832335839" duration="662000" />
+      <workItem from="1589449596223" duration="9181000" />
+      <workItem from="1589508263508" duration="2391000" />
+      <workItem from="1590591893209" duration="8427000" />
+      <workItem from="1591064128779" duration="48000" />
+      <workItem from="1591365846844" duration="1600000" />
+      <workItem from="1592206108113" duration="670000" />
+      <workItem from="1593762595733" duration="5196000" />
+      <workItem from="1595855735940" duration="1512000" />
+      <workItem from="1614400719184" duration="1073000" />
+      <workItem from="1615695884392" duration="806000" />
+      <workItem from="1615714219355" duration="3756000" />
+      <workItem from="1615777930318" duration="7367000" />
+      <workItem from="1615796278880" duration="13756000" />
+      <workItem from="1615884493171" duration="8419000" />
+      <workItem from="1615952023167" duration="4779000" />
+      <workItem from="1616038593926" duration="5745000" />
+      <workItem from="1616068248797" duration="599000" />
+      <workItem from="1616208420443" duration="41632000" />
+      <workItem from="1616472033442" duration="3984000" />
+      <workItem from="1616680772748" duration="1000" />
+      <workItem from="1616680833327" duration="11764000" />
+      <workItem from="1616837599632" duration="2124000" />
+      <workItem from="1617005972259" duration="13537000" />
+      <workItem from="1618022251078" duration="3120000" />
+      <workItem from="1618037361979" duration="65000" />
+      <workItem from="1618625768294" duration="19883000" />
+      <workItem from="1618908341045" duration="11745000" />
+      <workItem from="1618972013925" duration="465000" />
+      <workItem from="1618973930664" duration="1216000" />
+      <workItem from="1620957065380" duration="8836000" />
+      <workItem from="1621318481804" duration="2649000" />
+      <workItem from="1622623391427" duration="1806000" />
+      <workItem from="1624515619677" duration="618000" />
+      <workItem from="1624584644688" duration="1181000" />
+      <workItem from="1624968258974" duration="1207000" />
+      <workItem from="1625560782917" duration="1545000" />
+      <workItem from="1626316540987" duration="638000" />
+      <workItem from="1627540625178" duration="1244000" />
+      <workItem from="1628993454930" duration="7194000" />
+      <workItem from="1637470234360" duration="487000" />
+      <workItem from="1638615356563" duration="5531000" />
+      <workItem from="1638844155774" duration="4693000" />
+      <workItem from="1639665475218" duration="978000" />
+      <workItem from="1640170713998" duration="197000" />
+      <workItem from="1640245893991" duration="1030000" />
+      <workItem from="1640407704030" duration="973000" />
+      <workItem from="1640776215745" duration="1115000" />
+      <workItem from="1640833625929" duration="3088000" />
+      <workItem from="1640923732696" duration="801000" />
+      <workItem from="1640934491505" duration="2465000" />
+      <workItem from="1646669113597" duration="238000" />
+      <workItem from="1647052662978" duration="61000" />
+      <workItem from="1647400972026" duration="966000" />
+      <workItem from="1649835883815" duration="2857000" />
+      <workItem from="1654058173569" duration="784000" />
+    </task>
+    <task id="LOCAL-00001" summary="修改bug">
+      <created>1585798368434</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1585798368434</updated>
+    </task>
+    <task id="LOCAL-00002" summary="修改tree结构">
+      <created>1585882846402</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1585882846403</updated>
+    </task>
+    <task id="LOCAL-00003" summary="修改用户app更新">
+      <created>1586229897820</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1586229897820</updated>
+    </task>
+    <task id="LOCAL-00004" summary="修改用户app更新页面问题">
+      <created>1586240212151</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1586240212151</updated>
+    </task>
+    <task id="LOCAL-00005" summary="修改单位新增按钮显示问题">
+      <created>1587103399398</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1587103399398</updated>
+    </task>
+    <task id="LOCAL-00006" summary="修改单位图片">
+      <created>1589509914223</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1589509914223</updated>
+    </task>
+    <task id="LOCAL-00007" summary="修改单位图片">
+      <created>1590628462687</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1590628462687</updated>
+    </task>
+    <task id="LOCAL-00008" summary="修改表格数据">
+      <created>1590633649462</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1590633649462</updated>
+    </task>
+    <task id="LOCAL-00009" summary="修改表格数据">
+      <created>1590717250606</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1590717250606</updated>
+    </task>
+    <task id="LOCAL-00010" summary="修改表格数据">
+      <created>1592206176965</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1592206176965</updated>
+    </task>
+    <task id="LOCAL-00011" summary="修改是否开启打印备注">
+      <created>1593765887373</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1593765887373</updated>
+    </task>
+    <task id="LOCAL-00012" summary="修改是否开启打印备注">
+      <created>1593769509917</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1593769509917</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="修改bug" />
+    <MESSAGE value="修改tree结构" />
+    <MESSAGE value="修改用户app更新" />
+    <MESSAGE value="修改用户app更新页面问题" />
+    <MESSAGE value="修改单位新增按钮显示问题" />
+    <MESSAGE value="修改单位图片" />
+    <MESSAGE value="修改表格数据" />
+    <MESSAGE value="修改是否开启打印备注" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改是否开启打印备注" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="457" y="167" width="621" height="490" key="find.popup" timestamp="1629013497843">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="457" y="167" width="621" height="490" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1629013497843" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/views/home/checkList.html</url>
+          <line>236</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

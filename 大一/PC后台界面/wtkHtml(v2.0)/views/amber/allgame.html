@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>赛事规格管理</title>
+		<meta name="renderer" content="webkit">
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+	</head>
+	<body>
+
+		<div class="layui-card layadmin-header">
+			<div class="layui-breadcrumb" lay-filter="breadcrumb">
+				<a lay-href="">主页</a>
+				<a><cite>组件</cite></a>
+				<a><cite>数据表格</cite></a>
+				<a><cite>开启头部工具栏</cite></a>
+			</div>
+		</div>
+
+		<div class="layui-fluid">
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md12">
+					<div class="layui-card">
+						<div class="layui-card-header">赛事列表</div>
+						<div class="layui-card-body">
+							<table class="layui-hide" id="table-toolbar" lay-filter="table-toolbar">
+								<thead>
+									<tr>
+										<th lay-data="{type:'radio',field:'id'}"></th>
+										<th lay-data="{field:'title',align: 'center',width:340}">赛事名称</th>
+										<th lay-data="{field:'address',align: 'center',width:300}">比赛地址</th>
+										<th lay-data="{field:'linkman',align: 'center',width:120}">创建人</th>
+										<th lay-data="{field:'linkmancell',align: 'center',width:120}">联系电话</th>
+<!--										<th lay-data="{field:'status',align: 'center',width:120}">返佣比例</th>-->
+
+										<th lay-data="{field:'setTime',beginTime: 'center',width:160}">报名开始</th>
+										<th lay-data="{field:'setTime',endTime: 'center',width:160}">报名结束</th>
+										<th lay-data="{field:'competitionTime',align: 'center',width:160}">比赛开始</th>
+										<th lay-data="{field:'competitionEndTime',align: 'center',width:160}">比赛结束</th>
+
+										<th lay-data="{field:'setTime',align: 'center',width:160}">创建时间</th>
+
+										<th lay-data="{field:'zhuban',align: 'center',width:160}">主办单位</th>
+										<th lay-data="{field:'chenban',align: 'center',width:160}">承办单位</th>
+										<th lay-data="{field:'xieban',align: 'center',width:160}">协办单位</th>
+										<th lay-data="{field:'zhidao',align: 'center',width:160}">指导单位</th>
+										<th lay-data="{field:'pwd',align: 'center',width:160}">密码</th>
+										<th
+											lay-data="{field:'status',align: 'center',width:100,templet : '#templetStatus'}">
+											状态</th>
+										<th lay-data="{field:'comment',align: 'center',width:160}">备注</th>
+										<th
+											lay-data="{fixed: 'right',toolbar: '#table-toolbar-bar',align: 'center',width:500}">
+											操作</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 返佣比利弹出层 -->
+		<div id="adminLAY" style="display: none;">
+			<form class="layui-form" id="admin_from" action="">
+				<div class="layui-inline" style="display: none;">
+					<input type="text" name="id" class="layui-input">
+				</div>
+
+				<table class="layui-hide" id="test" lay-filter="test">
+					<!-- <thead>
+						<tr>
+							<th lay-data="{field:'name',align: 'center',width:340}">机构名称</th>
+							<th lay-data="{field:'organizationName',align: 'center',width:120}">联系人</th>
+							<th lay-data="{field:'linkman',align: 'center',width:120}">返佣价格（或比例）</th>
+							<th lay-data="{fixed: 'right',,align: 'center',width:180}">操作</th>
+						</tr>
+					</thead> -->
+
+				</table>
+
+				<div class="layui-form-item">
+					<div class="layui-input-block" style="margin-left: calc(50% - 50px); width: 100px;">
+						<button class="layui-btn" lay-submit="" lay-filter="submitAdmin">立即提交</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+
+
+		<div id="adminfan" style="display: none;">
+			<form class="layui-form" id="admin_fan" action="" lay-filter="updateAdmin">
+				<div class="layui-inline" style="display: none;">
+					<input type="text" name="id" class="layui-input">
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label style="width: 90px;" class="layui-form-label">赛事名称</label>
+						<div class="layui-inline">
+							<input type="text" name="title" autocomplete="off" class="layui-input"
+								lay-verify="required">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label style="width: 90px;" class="layui-form-label">状态</label>
+						<div class="layui-input-inline">
+							<select name="status" lay-verify="">
+								<option value="1">待审核</option>
+								<option value="2">审核过通过</option>
+								<option value="3">报名中</option>
+								<option value="4">报名截至</option>
+								<option value="5">比赛中</option>
+								<option value="6">已完成</option>
+								<option value="7">审核不过通过</option>
+								<option value="0">停用</option>
+							</select>
+
+						</div>
+					</div>
+
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label style="width: 90px;" class="layui-form-label">报名开始时间</label>
+						<div class="layui-input-inline">
+							<input type="text" name="beginTime" class="layui-input" id="time1"
+								placeholder="yyyy-MM-dd HH:mm:ss">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label style="width: 90px;" class="layui-form-label">报名结束时间</label>
+						<div class="layui-input-inline">
+							<input type="text" name="endTime" class="layui-input" id="time2"
+								placeholder="yyyy-MM-dd HH:mm:ss">
+						</div>
+					</div>
+
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label style="width: 90px;" class="layui-form-label">比赛开始时间</label>
+						<div class="layui-input-inline">
+							<input type="text" name="competitionTime" class="layui-input" id="time3"
+								placeholder="yyyy-MM-dd HH:mm:ss">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label style="width: 90px;" class="layui-form-label">比赛结束时间</label>
+						<div class="layui-input-inline">
+							<input type="text" name="competitionEndTime" class="layui-input" id="time4"
+								lay-verify="required" placeholder="yyyy-MM-dd HH:mm:ss">
+						</div>
+					</div>
+
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label style="width: 90px;" class="layui-form-label">主办单位</label>
+						<div class="layui-input-inline">
+							<input type="text" name="zhuban" class="layui-input" id="zhuban"
+								   placeholder="主办单位">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label style="width: 90px;" class="layui-form-label">承办单位</label>
+						<div class="layui-input-inline">
+							<input type="text" name="chenban" class="layui-input" id="chenban"
+								   lay-verify="required" placeholder="承办单位">
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label style="width: 90px;" class="layui-form-label">协办单位</label>
+						<div class="layui-input-inline">
+							<input type="text" name="xieban" class="layui-input" id="xieban"
+								   placeholder="协办单位">
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label style="width: 90px;" class="layui-form-label">指导单位</label>
+						<div class="layui-input-inline">
+							<input type="text" name="zhidao" class="layui-input" id="zhidao"
+								   placeholder="协办单位">
+						</div>
+					</div>
+
+
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label style="width: 90px;" class="layui-form-label">密码</label>
+						<div class="layui-input-inline">
+							<input type="number" name="pwd" class="layui-input" id="pwd"
+								   placeholder="密码">
+						</div>
+					</div>
+
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-input-block" style="margin-left: calc(50% - 50px); width: 100px;">
+						<button class="layui-btn" lay-submit="" lay-filter="submitAdminfan">立即提交</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<!-- 	<script type="text/html" id="table-toolbar-toolbar">
+		<div class="layui-btn-container">
+			<button class="layui-btn layui-btn-sm" lay-event="addAdmin">新增</button>
+			<button class="layui-btn layui-btn-sm" style="background-color:#FF5722" lay-event="blockUp">停用</button>
+			<button class="layui-btn layui-btn-sm" style="background-color:#5FB878" lay-event="blockStart">启用</button>
+		  </div>
+		</script> -->
+
+		<script type="text/html" id="templetStatus">
+		{{# if(d.status == '1'){ }}
+			待审核
+			{{# } else if (d.status == '2') { }}
+				审核过通过
+				{{# } else if (d.status == '3') { }}
+					报名中
+					{{# } else if (d.status == '4') { }}
+						报名截至
+						{{# } else if (d.status == '5') { }}
+							比赛中
+							{{# } else if (d.status == '6') { }}
+								已完成
+								{{# } else if (d.status == '7') { }}
+									审核不过通过
+									{{# } else if (d.status == '0') { }}
+										停用
+										{{# } }}
+		</script>
+
+		<script type="text/html" id="caozuo">
+			<a class="layui-btn layui-btn-xs" lay-event="edit">同步所有</a>
+		</script>
+
+		<script type="text/html" id="table-toolbar-bar">
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="shuju">比配对战数据</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="detail">编辑</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="doAnewFightList">重新排序</a>
+			<a class="layui-btn layui-btn-xs" lay-event="edit">设置返佣比例</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delAnewFightList">删除已经匹配过的数</a>
+		</script>
+		<script src="../../layuiadmin/jquery.js"></script>
+		<script src="../../layuiadmin/layui/layui.js"></script>
+		<script src="../../layuiadmin/Jquery.md5.js"></script>
+		<script>
+			var competitionId;
+			var item;
+			layui.config({
+				base: '../../layuiadmin/' //静态资源所在路径
+			}).extend({
+				index: 'lib/index' //主入口模块
+			}).use(['index', 'table', 'form', 'laydate'], function() {
+				var admin = layui.admin,
+					table = layui.table,
+					form = layui.form,
+					laydate = layui.laydate,
+					$ = layui.$;
+				var adminIndex = 0;
+				table.init('table-toolbar', {
+					elem: "#table-toolbar" //指定原始 table 容器的选择器或 DOM
+						,
+					title: "赛事列表" //定义 table 的大标题（在文件导出等地方会用到）
+						,
+					page: true,
+					limit: 20 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
+						,
+					url: layui.setter.url + 'admin/getCompetitionByName' //异步数据接口相关参数
+						,
+					toolbar: "#table-toolbar-toolbar",
+
+				});
+
+				//日期时间选择器
+				laydate.render({
+					elem: '#time1',
+					type: 'datetime'
+				});
+				//日期时间选择器
+				laydate.render({
+					elem: '#time2',
+					type: 'datetime'
+				});
+				//日期时间选择器
+				laydate.render({
+					elem: '#time3',
+					type: 'datetime'
+				});
+				//日期时间选择器
+				laydate.render({
+					elem: '#time4',
+					type: 'datetime'
+				});
+
+
+				// /admin/doCompetitionOrganizationProfit
+				//监听行工具事件
+				table.on('tool(table-toolbar)', function(obj) {
+					var data = obj.data;
+					competitionId = obj.data.id
+					if (obj.event === 'edit') {
+
+						adminIndex = layer.open({
+							type: 1,
+							title: "设置返佣比例",
+							area: ['700px', '550px'],
+							id: "adminLayer",
+							shadeClose: true,
+							content: $('#adminLAY')
+						});
+
+						table.render({
+							height: 430,
+							elem: '#test',
+							url: layui.setter.url + 'admin/getCompetitionOrganizationProfitById?id=' +
+								competitionId,
+							cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+								,
+							cols: [
+								[{
+									field: 'organizationName',
+									title: '机构名称',
+									align: 'center',
+									width: 280
+								}, {
+									field: 'userName',
+									title: '联系人',
+									align: 'center',
+									width: 120,
+									totalRow: true
+								}, {
+									field: 'proportion',
+									title: '返佣比例',
+									edit: 'text',
+									align: 'center',
+									width: 160,
+								}, {
+									fixed: 'right',
+									title: '操作',
+									width: 100,
+									align: 'center',
+									toolbar: "#caozuo"
+								}]
+							]
+						});
+					}
+
+					if(obj.event  === 'doAnewFightList'){
+						var idnexja = layer.msg('排序中', {
+							icon: 16
+							,shade: 0.1
+							,time:0
+						});
+						$.ajax({
+							url: layui.setter.url + 'admin/doAnewFightList',
+							type: "POST",
+							data: {
+								"id": competitionId
+							},
+							dataType: "json",
+							success: function(data) {
+								layer.close(idnexja)
+								if (data.code == 0) {
+									layer.close(adminIndex)
+									//关闭弹框
+									layer.msg("排序成功", {
+										icon: 6
+									});
+
+								} else {
+									layer.msg("排序失败", {
+										icon: 5
+									});
+								}
+							}
+
+						});
+					}
+					if(obj.event  === 'delAnewFightList'){
+						var idnexja = layer.msg('删除中...', {
+							icon: 16
+							,shade: 0.1
+							,time:0
+						});
+						$.ajax({
+							url: layui.setter.url + 'admin/delCompetitionFightById',
+							type: "POST",
+							data: {
+								"id": competitionId
+							},
+							dataType: "json",
+							success: function(data) {
+								layer.close(idnexja)
+								if (data.code == 0) {
+									layer.close(adminIndex)
+									//关闭弹框
+									layer.msg("删除成功", {
+										icon: 6
+									});
+
+								} else {
+									layer.alert(data.msg);
+								}
+							}
+
+						});
+					}
+
+
+					if (obj.event === 'detail') {
+						console.log(data)
+						form.val("updateAdmin", data)
+
+						adminIndex = layer.open({
+							type: 1,
+							title: "编辑",
+							area: '700px',
+							id: "adminLayer",
+							shadeClose: true,
+							content: $('#adminfan')
+						});
+						item = data
+					}
+
+					if(obj.event === 'shuju'){
+
+						layer.confirm('是否比配对战数据？', {
+							btn: ['确定','取消'] //按钮
+						}, function(){
+
+							var idnexja = layer.msg('比配对战数据中...', {
+								icon: 16
+								,shade: 0.1
+								,time:0
+							});
+							$.ajax({
+								url: layui.setter.url + 'admin/doCompetitionFightById',
+								type: "POST",
+								data: {
+									"id": competitionId
+								},
+								dataType: "json",
+								success: function(data) {
+									layer.close(idnexja)
+									if (data.code == 0) {
+										layer.close(adminIndex)
+										//关闭弹框
+										layer.msg("比配成功", {
+											icon: 6
+										});
+										reloadTable('table-toolbar', 1)
+									} else {
+										layer.alert(data.msg);
+									}
+								}
+							});
+
+
+						});
+
+					}
+
+
+				});
+
+				// 点击同步
+				table.on('tool(test)', function(obj) {
+					console.log(obj.data.proportion)
+					var val = obj.data.proportion
+					var s = layui.table.cache["test"]
+					for (var i = 0; i < s.length; i++) {
+						s[i].proportion = val
+						s[i].competitionId = competitionId
+					}
+
+					$.ajax({
+						url: layui.setter.url + 'admin/doCompetitionOrganizationProfit',
+						type: "POST",
+						data: {
+							"competition": JSON.stringify(s)
+						},
+						dataType: "json",
+						success: function(data) {
+							console.log(data)
+							if (data.code == 0) {
+								layer.close(adminIndex)
+								//关闭弹框
+								layer.msg("修改成功", {
+									icon: 6
+								});
+
+							} else {
+								layer.msg("修改失败", {
+									icon: 5
+								});
+							}
+						}
+
+					});
+
+				})
+				form.on('submit(submitAdminfan)', function(data) {
+					console.log(data.field)
+					$.ajax({
+						url: layui.setter.url + 'admin/updateCompetitionMsg',
+						type: "POST",
+						data: {
+							id: data.field.id,
+							beginTime: data.field.beginTime,
+							competitionEndTime: data.field.competitionEndTime,
+							competitionTime: data.field.competitionTime,
+							endTime: data.field.endTime,
+							status: data.field.status,
+							zhuban:data.field.zhuban,
+							chenban:data.field.chenban,
+							xieban:data.field.xieban,
+							zhidao:data.field.zhidao,
+							pwd:data.field.pwd,
+						},
+						dataType: "json",
+						success: function(data) {
+							console.log(data)
+							if (data.code == 0) {
+								layer.close(adminIndex)
+								//关闭弹框
+								layer.msg("修改成功", {
+									icon: 6
+								});
+				
+							} else {
+								layer.alert(data.msg);
+							}
+						}
+				
+					});
+				});
+				form.on('submit(submitAdmin)', function(data) {
+					var s = layui.table.cache["test"]
+					for (var i = 0; i < s.length; i++) {
+						s[i].competitionId = competitionId
+					}
+					$.ajax({
+						url: layui.setter.url + 'admin/doCompetitionOrganizationProfit',
+						type: "POST",
+						data: {
+							"competition": JSON.stringify(s)
+						},
+						dataType: "json",
+						success: function(data) {
+							console.log(data)
+							if (data.code == 0) {
+								layer.close(adminIndex)
+								//关闭弹框
+								layer.msg("修改成功", {
+									icon: 6
+								});
+
+							} else {
+								layer.msg("修改失败", {
+									icon: 5
+								});
+							}
+						}
+
+					});
+				});
+
+
+
+
+
+
+				/**重新加载table
+				 * @param {Object} id table中的ID
+				 * @param {Object} data 条件数据
+				 */
+				function reloadTable(id, curr) {
+
+					if (curr == "" || curr == null) curr = 1
+					table.reload(id, {
+						where: {
+
+						}, //设定异步数据接口的额外参数
+						page: {
+							curr: curr //重新从第 1 页开始
+						}
+					}); //只重载数据
+				}
+
+				//时间
+				laydate.render({
+					elem: '#time1'
+				});
+
+			});
+		</script>
+	</body>
+</html>

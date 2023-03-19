@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let arr = [3,4,5,6,7];
+
+        // 1.map方法
+        Array.prototype.mapArray = function(fn,thisArgs) {
+            if(Object.prototype.toString.call(fn) !== "[object Function]") {
+                throw('Error in params')
+            };
+            let resArray = [];
+            let curArray = this;
+            for(let i = 0;i<curArray.length;i++) {
+                resArray[i] = fn.call(thisArgs,curArray[i],i,curArray)
+            };
+            return resArray;
+        }
+        let newArr1 = arr.mapArray((item,index,arr) => {return item+1});
+        console.log('res1:',newArr1);
+
+        // 2.filter方法
+        Array.prototype.filterArr = function(fn,thisArgs) {
+            if(Object.prototype.toString.call(fn) !== "[object Function]") {
+                throw('Error in params')
+            };
+            let resArr = [];
+            let curArr = this;
+            for(let i = 0;i<curArr.length;i++) {
+                if(fn.call(thisArgs,curArr[i],i,curArr)) {
+                    resArr.push(curArr[i])
+                }
+            };
+            return resArr;
+        }
+        let newArr2 = arr.filterArr(item => {return item>5});
+        console.log('res2:',newArr2);
+
+        // 3.some方法
+        Array.prototype.newSome = function(fn) {
+            if(Object.prototype.toString.call(fn) !== "[object Function]") {
+                throw('Error in params')
+            };
+            let curArr = this;
+            for(let i = 0;i<curArr.length;i++) {
+                if(fn(curArr[i],i,curArr)) {
+                    return true;
+                }
+            };
+            return false;
+        }
+        let newArr3 = arr.newSome((item,index,arr) => {return item>5});
+        console.log('res3:',newArr3);
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+body {
+    padding: 20px;
+}
+
+.red {
+    width: 150px;
+    border: 1px #f00 solid;
+}
+
+.blue {
+    order: 1;
+    width: 150px;
+    height: 200px;
+    border: 1px rgb(0, 255, 30) solid;
+}
+
+.one {
+    order: 2;
+    height: 120px;
+}
+
+.two {
+    order: 3;
+    height: 100px;
+}
+
+.three {
+    order: 4;
+    height: 40px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}

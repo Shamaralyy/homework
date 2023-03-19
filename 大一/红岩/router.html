@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="D:\刘懿莹\vue.js"></script>
+    <script src="D:\刘懿莹\vue-router.global.js"></script>
+</head>
+<body>
+    <!-- <div id="app">
+        <div style="background-color: red; width:300px; height:500px; margin-top: 20px"></div>
+        <div style="background-color: red; width:300px; height:500px; margin-top: 20px"></div>
+        <div style="background-color: red; width:300px; height:500px; margin-top: 20px"></div>
+        <p>
+            <router-link to="https://router.vuejs.org/zh/guide/#router-view">Go to Home</router-link>
+        </p>
+    </div> -->
+
+    <script>
+        const Home = {template: '<div>Home</div>'}
+        const About = {template: '<div>About</div>'}
+
+        const routes = [
+            {path: '/',component: Home},
+            {path: '/about',component: About},
+        ]
+
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes:routes
+        })
+
+        const app = Vue.createApp({})
+
+        app.use(router)
+        app.mount('#app')
+    </script>
+</body>
+</html>

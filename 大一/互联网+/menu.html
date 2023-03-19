@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu {
+            width: 300px;
+            height: 700px;
+            background-color: rgb(2, 0, 30);
+            color: white;
+
+        }
+
+        .menu a {
+            color: white;
+
+            text-decoration: none;
+        }
+
+        .menu ul {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .menu li {
+            list-style: none;
+            margin-top: 10px;
+            background-color: rgb(66, 66, 78);
+        }
+        
+
+        /* 鼠标悬停下拉菜单 */
+        .dropdown,.item {
+            display: none;
+        }
+
+        .item:hover .dropdown {
+            display: block;
+        }
+
+       .main_item:hover .item {
+            display: block;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="menu">
+        <button>点击添加</button>
+        <ul>
+            <li class="main_item"><a href="javascript:;">工序管理</a></li>
+
+            <div class="item">
+                <li>
+                    <a href="javascript:;">项目1</a>
+                    <div class="dropdown">
+                        <ul>
+                            <li class="procedure"><a href="javascript:;">工序</a></li>
+
+                        </ul>
+                    </div>
+                </li>
+            </div>
+
+            <div class="item">
+                <li>
+                    <a href="javascript:;">项目2</a>
+                    <div class="dropdown">
+                        <ul>
+                            <li class="procedure"><a href="javascript:;">工序</a></li>
+
+                        </ul>
+                    </div>
+            </div>
+
+
+            </li>
+            <div class="item">
+                <li>
+                    <a href="javascript:;">项目3</a>
+                    <div class="dropdown">
+                        <ul>
+                            <li class="procedure"><a href="javascript:;">工序</a></li>
+
+                        </ul>
+                    </div>
+
+                </li>
+            </div>
+
+            <div class="item">
+                <li>
+                    <a href="javascript:;">项目4</a>
+                    <div class="dropdown">
+                        <ul>
+                            <li class="procedure"><a href="javascript:;">工序</a></li>
+
+                        </ul>
+                    </div>
+
+                </li>
+            </div>
+
+        </ul>
+    </div>
+
+    <script>
+        var main_item = document.querySelector(".main_item");
+        var item = document.querySelectorAll(".item>a");
+        var dropdown = document.querySelectorAll(".dropdown");
+        var procedure = document.querySelectorAll(".procedure");
+
+// 点击实现菜单下拉
+// main_item.onclick = () => {
+
+//     for(let i = 0;i<item.length;i++) {
+//         item[i].style.display = 'block';
+//     }
+// }
+
+    // 增添工序
+        var btn = document.querySelector("button");
+        btn.onclick = () => {
+            var newPro = document.createElement("li");
+            newPro.innerHTML = `<a href="javascript:;">工序</a>`;
+            dropdown[0].appendChild(newPro);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let obj1 = {
+            name: 'obj1'
+        }
+        let obj2 = {
+            name: 'obj2'
+        }
+        function getName(a,b) {
+            console.log(this);
+            console.log(this.name);
+            console.log(a);
+            console.log(b);
+        }
+        Function.prototype.myBind = function (context) {
+            let _self = this;
+            // console.log('第一个函数', arguments);
+            let args = Array.prototype.slice.call(arguments,1);
+
+            function fn() {
+                console.log('111:',this);
+                // console.log('第二个函数', arguments);
+                let bindArgs = Array.prototype.slice.call(arguments);
+                // console.log(args.concat(bindArgs));
+                _self.apply(this instanceof _self? this : context,args.concat(bindArgs));
+            }
+            let _tempObj = function() {};
+            _tempObj.prototype = _self.prototype;
+            fn.prototype = new _tempObj();
+            // console.log(fn.prototype);
+            return fn;
+        }
+        let arr = [10, 20, 30]
+        let _f = getName.myBind(obj2, [1, 2, 3]);
+        _f('投币');
+        let aa = new _f('投币');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+body {
+    padding: 20px;
+}
+
+.red {
+    width: 150px;
+    border: 1px #f00 solid;
+}
+
+.blue {
+    width: 150px;
+    height: 200px;
+    border: 1px rgb(47, 0, 255) solid;
+}
+
+.one {
+    height: 120px;
+}
+
+.two {
+    height: 100px;
+}
+
+.three {
+    height: 40px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+}

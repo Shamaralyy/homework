@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="D:\刘懿莹\jquery1.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <ul>
+    <li class="lv1">
+      <a href="#">春</a>
+      <ul class="lv2">
+        <li>内容</li>        <li>内容</li>        <li>内容</li>        <li>内容</li>
+      </ul>
+    </li>
+    <li class="lv1">
+      <a href="#">夏</a>
+      <ul class="lv2">
+        <li>内容</li>        <li>内容</li>        <li>内容</li>        <li>内容</li>
+      </ul>
+    </li>
+    <li class="lv1">
+      <a href="#">秋</a>
+      <ul class="lv2">
+        <li>内容</li>        <li>内容</li>        <li>内容</li>        <li>内容</li>
+      </ul>
+    </li>
+    <li class="lv1">
+      <a href="#">冬</a>
+      <ul class="lv2">
+        <li>内容</li>        <li>内容</li>        <li>内容</li>        <li>内容</li>
+      </ul>
+    </li>
+  </ul>
+
+  <script>
+    $(function() {
+      $(".lv1>a").click(function() {
+        $(this).addClass("current").next().show()
+        .parent().siblings().children("a").removeClass("current").next().hide();
+        return false;
+      })
+    })
+  </script>
+</body>
+</html>

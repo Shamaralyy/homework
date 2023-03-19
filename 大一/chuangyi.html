@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://cdn.bootcss.com/vue/2.6.6/vue.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100px;
+            background-color: #000;
+        }
+
+        h1 {
+            color: transparent;
+            font-size: 3em;
+            background: linear-gradient(to right, #000, #fff, #000);
+            -webkit-background-clip: text;
+            background-size: 80%;
+            background-repeat: no-repeat;
+            animation: move 3s linear infinite;
+        }
+
+        @keyframes move {
+            0% {
+                background-position: -500%;
+            }
+
+            100% {
+                background-position: 500%;
+            }
+        }
+
+        html,
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav {
+            margin-left: 720px;
+            margin-bottom: 50px;
+        }
+
+        ul {
+            display: flex;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        ul li a {
+            position: relative;
+            display: block;
+            padding: 10px 20px;
+            margin: 20px 0;
+            text-decoration: none;
+            text-transform: uppercase;
+            color: #262626;
+            font-weight: bold;
+            transition: .5s;
+        }
+
+        ul li a:hover {
+            color: #000;
+        }
+
+        ul li a:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-top: 1px solid #fff;
+            border-bottom: 1px solid #fff;
+            transform: scaleY(2);
+            opacity: 0;
+            transition: .5s;
+        }
+
+        ul li a:hover:before {
+            transform: scaleY(1.2);
+            opacity: 1;
+        }
+
+        ul li a:after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            transform: scale(0);
+            transition: .5s;
+            z-index: -1;
+        }
+
+        ul li a:hover:after {
+            transform: scale(1);
+        }
+
+        #app {
+            width: 500px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .xcprogress {
+            width: 300px;
+            height: 20px;
+            background: #e5e5e5;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .xcprogress-bar {
+            width: 0;
+            height: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            background: cornflowerblue;
+            background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 75%, transparent 75%);
+            background-size: 40px 40px;
+            transition: width .6s ease;
+            border-radius: 4px;
+            animation: xcprogress-bar-anim 2s linear infinite;
+        }
+
+        .xcprogress-bar-value {
+            font-size: 13px;
+            font-weight: bold;
+            color: white;
+            margin-right: 5px;
+        }
+
+        @keyframes xcprogress-bar-anim {
+            from {
+                background-position: 40px 0;
+            }
+
+            to {
+                background-position: 0 0;
+            }
+        }
+
+        .button {
+            position: relative;
+            height: 50px;
+            width: 170px;
+            margin: 0 35px;
+            border-radius: 50px;
+            border: none;
+            background: #111;
+            color: #fff;
+            font-size: 15px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .button:first-child:hover {
+            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a94f);
+            background-size: 400%;
+        }
+
+        .button:last-child:hover {
+            background: linear-gradient(90deg, #fa7199, #f5ce62, #e43603, #fa7199);
+            background-size: 400%;
+        }
+
+        .button:first-child:before,
+        .button:last-child:before {
+            content: '';
+            position: absolute;
+            background: inherit;
+            top: -5px;
+            right: -5px;
+            bottom: -5px;
+            left: -5px;
+            border-radius: 50px;
+            filter: blur(20px);
+            transition: opacity 0.5s;
+        }
+
+        .button:first-child:hover:before,
+        .button:last-child:hover:before {
+            opacity: 1;
+            z-index: -1;
+        }
+
+        .button:hover {
+            z-index: 1;
+            animation: glow 8s linear infinite;
+        }
+
+        @keyframes glow {
+            0% {
+                background-position: 0%;
+            }
+
+            100% {
+                background-position: 400%;
+            }
+        }
+
+        :root {
+            --color-main: peru;
+            --head-height: 50px;
+        }
+
+        .dog {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            display: inline-block;
+            filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.15));
+        }
+
+        .dog {
+            transform-origin: center bottom;
+            transform: scale(0.9);
+        }
+
+        .dog .head {
+            width: 75px;
+            height: var(--head-height);
+            position: absolute;
+            bottom: 149px;
+            left: 50%;
+            border-radius: 0 8px 25px 0;
+            background: radial-gradient(circle at right top, #222 20%, transparent 21%), var(--color-main);
+        }
+
+        .dog .head:before {
+            content: '';
+            width: 70%;
+            height: 25px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(-98%);
+            background: radial-gradient(circle at 40% 40%, #222 10%, transparent 12%),
+                radial-gradient(circle at 70% 40%, #222 10%, transparent 10%),
+                var(--color-main);
+        }
+
+        /* 耳朵 */
+        .dog .head:after {
+            content: '';
+            width: 70%;
+            height: 25px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(-195%);
+            background: radial-gradient(circle at left bottom, var(--color-main) 25%, transparent 25%),
+                radial-gradient(circle at right bottom, var(--color-main) 25%, transparent 25%);
+        }
+
+        .dog .body {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            bottom: 0;
+            left: 0;
+            border-radius: 75% 0 100% 0;
+            background: radial-gradient(circle at right 60%, rgba(255, 255, 255, 0.1) 35%, transparent 35%), var(--color-main);
+        }
+
+        .dog .body:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 15px;
+            bottom: 0;
+            left: 0;
+            border-radius: 20px 0 0;
+            transform: translateX(-30%);
+            background: var(--color-main);
+        }
+
+        .dog .legs {
+            width: 25px;
+            height: 50%;
+            position: absolute;
+            left: 44%;
+            top: 50%;
+            border-radius: 15px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)),
+                var(--color-main);
+        }
+
+        .dog .legs:before {
+            content: '';
+            width: 25px;
+            height: 100%;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            border-radius: 15px;
+            z-index: -1;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
+                var(--color-main);
+        }
+
+        .dog .legs:after {
+            content: '';
+            width: 25px;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 15px;
+            transform-origin: right bottom;
+            transform: rotate(-90deg) translateX(100%);
+            background: var(--color-main);
+        }
+
+        /* .cat .head {
+            width: 35%;
+            height: 50%;
+            position: absolute;
+            bottom: 100px;
+            left: 62.5%;
+            border-radius: 0 8px 25px 0;
+            transform: translateX(-50%);
+            clip-path: polygon(0% 0%,25% 35%,75% 35%,101% 0%,0% 101%);
+            background:  var(--color-main);
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <ul>
+            <li><a href="#">首页</a></li>
+            <li><a href="#">关于</a></li>
+            <li><a href="#">服务与支持</a></li>
+            <li><a href="#">团队</a></li>
+            <li><a href="#">文件下载</a></li>
+            <li><a href="https://space.bilibili.com/32683063">联系我们</a></li>
+        </ul>
+    </div>
+
+<div class="content">
+    <div class="dog">
+        <div class="head"></div>
+        <div class="body"></div>
+        <div class="legs"></div>
+    </div>
+    <!-- <div class="cat">
+        <div class="head"></div>
+        <div class="body"></div>
+        <div class="legs"></div>
+    </div> -->
+    <h1>There is a text.</h1>
+
+    <template id="xcprogress">
+        <div class="xcprogress">
+            <div class="xcprogress-bar" :style="{'width': `${value}%`}">
+                <span class="xcprogress-bar-value">{{value}}</span>
+            </div>
+        </div>
+    </template>
+
+    <div id="app">
+        <xc-progress :value="value" @change="change"></xc-progress>
+    </div>
+
+    <div style="display: flex;">
+        <button class="button">Button</button>
+        <button class="button">Button</button>
+    </div>
+</div>
+
+
+    <script>
+        window.onload = () => {
+            const app = new Vue({
+                el: '#app',
+                data: {
+                    value: 15
+                },
+                methods: {
+                    change(value) {
+                        this.value = value;
+                    }
+                },
+                mounted() {
+                    setTimeout(() => {
+                        setInterval(() => {
+                            this.value += 20;
+                        }, 800)
+                    }, 1000)
+                },
+                components: {
+                    'xc-progress': {
+                        template: '#xcprogress',
+                        props: {
+                            value: {
+                                type: Number,
+                                default: 0
+                            }
+                        },
+                        watch: {
+                            value(newVal) {
+                                if (newVal > 100) {
+                                    this.value = 100
+                                } else if (newVal < 0) {
+                                    this.value = 0;
+                                }
+                                this.$emit('change', this.value);
+                            }
+                        }
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>单位信息</title>
+	<meta name="renderer" content="webkit">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+	<style>
+		.layui-unselect dl { max-height:200px; }
+	</style>
+</head>
+<body>
+
+<div class="layui-card layadmin-header">
+	<div class="layui-breadcrumb" lay-filter="breadcrumb">
+		<a lay-href="">主页</a>
+		<a><cite>组件</cite></a>
+		<a><cite>数据表格</cite></a>
+		<a><cite>用户信息</cite></a>
+	</div>
+</div>
+
+<div class="layui-fluid">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-md12">
+			<div class="layui-card">
+				<div class="layui-card-header">单位信息</div>
+				<div class="layui-card-body">
+					<div class="layui-form-item">
+						<label class="layui-form-label">关键字</label>
+						<div class="layui-input-inline">
+							<input type="text" name="whereName" placeholder="单位名/联系电话/邮箱" class="layui-input">
+						</div>
+						<button class="layui-btn" id="queryAdmin">查询</button>
+
+						<button class="layui-btn" id="btn-expand">全部展开</button>
+						<button class="layui-btn" id="btn-fold">全部折叠</button>
+
+						<button class="layui-btn" id="addAdmin">新增</button>
+					</div>
+
+					<table class="layui-hide" id="table-toolbar" lay-filter="table-toolbar">
+
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 编辑弹出层 -->
+<div id="adminLAY" style="display: none;">
+	<form class="layui-form" id="admin_from" action="" lay-filter="updateAdmin">
+		<div class="layui-form-item">
+
+			<div class="layui-inline" style="display: none;">
+				<input type="text" name="compId" class="layui-input">
+
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label">单位名</label>
+				<div class="layui-inline">
+					<input type="text" name="compName" autocomplete="off" required lay-verify="required" class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label">单位简称</label>
+				<div class="layui-inline">
+					<input type="text" name="compShortName" autocomplete="off" required lay-verify="required" class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label">联系人</label>
+				<div class="layui-inline">
+					<input type="text" name="compContact" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="layui-form-item">
+
+
+
+			<div class="layui-inline">
+				<label class="layui-form-label">联系电话</label>
+				<div class="layui-inline">
+					<input type="text" name="compContactCell" lay-verify="phone" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label">单位介绍</label>
+				<div class="layui-inline">
+					<input type="text" name="compDescription" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+
+
+			<div class="layui-inline">
+				<label class="layui-form-label">省</label>
+				<div class="layui-input-inline">
+					<select name="compProvinceName"  data-area="重庆市" lay-filter="compProvinceName"  class="layui-input">
+						<option value="">选择省</option>
+					</select>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="layui-form-item">
+
+			<div class="layui-inline">
+				<label class="layui-form-label">市</label>
+				<div class="layui-input-inline" >
+					<select name="compCityName"  data-area="市辖区" lay-filter="compCityName" class="layui-input">
+						<option value="">选择市</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label">区</label>
+				<div class="layui-input-inline"  >
+					<select name="compCountyName"  data-area="沙坪坝区" lay-filter="compCountyName" class="layui-input">
+						<option value="">选择区</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label">单位地址</label>
+				<div class="layui-inline">
+					<input type="text" name="compAddress" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+
+
+		</div>
+
+
+		<div class="layui-form-item">
+
+			<div class="layui-inline">
+				<label class="layui-form-label">备注</label>
+				<div class="layui-inline">
+					<input type="text" name="compComment" style="width: 838px;" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-form-item" style="margin-left: 50px">
+
+			<div class="layui-input-inline">
+				<div class="layui-upload-list" style="margin:0">
+					<img data-path="" src="../res/images/zhizhuan.png" id="srcimgurl" class="layui-upload-img">
+				</div>
+			</div>
+			<div class="layui-input-inline layui-btn-container" style="width: auto;">
+				<a class="layui-btn layui-btn-primary" id="editimg">修改图片</a >
+			</div>
+			<div class="layui-form-mid layui-word-aux">头像的尺寸限定150x150px,大小在50kb以内</div>
+		</div>
+
+
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit="" lay-filter="submitAdmin">立即提交</button>
+			</div>
+		</div>
+	</form>
+
+</div>
+
+
+
+
+
+<!--<script type="text/html" id="table-toolbar-bar">-->
+<!--	{{# if(d.level == '1'){  }}-->
+<!--		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+<!--		<a class="layui-btn layui-btn-danger layui-btn-xs " lay-event="del">删除</a>-->
+<!--	 {{#  } }}-->
+<!--	&lt;!&ndash;  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+<!--	 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a> &ndash;&gt;-->
+<!--</script>-->
+<!-- 格式化地址 -->
+<script type="text/html" id="templetAddress">
+	{{d.compProvinceName}} {{d.compCityName}}  {{d.compCountyName}}  {{d.compAddress}}
+</script>
+
+
+<script src="../../layuiadmin/layui/layui.js"></script>
+<script type="text/javascript" src="../../layuiadmin/lib/city-picker.js"></script>
+<script>
+	layui.config({
+		base: '../../layuiadmin/' //静态资源所在路径
+	}).extend({
+		index: 'lib/index', //主入口模块
+	}).use(['index', 'table', 'form', 'laydate'	,'address','treeTable','croppers','upload'], function() {
+		var admin = layui.admin,
+				table = layui.table,
+				form = layui.form,
+				laydate = layui.laydate,
+				address = layui.address,
+				croppers = layui.croppers,
+				upload = layui.upload,
+				$ = layui.$,
+				treeTable = layui.treeTable;
+
+		var adminIndex = 0;
+		// 渲染表格
+
+		var insTb = treeTable.render({
+			elem: '#table-toolbar',
+			tree: {
+				iconIndex: 1,  // 折叠图标显示在第几列
+				idName: 'compId',  // 自定义id字段的名称
+				pidName: 'compCompID'  // 自定义标识是否还有子节点的字段名称
+				// haveChildName: 'haveChild',  // 自定义标识是否还有子节点的字段名称
+				// isPidData: true  // 是否是pid形式数据
+			},
+			cols: [
+				{type: 'checkbox', title: 'compId'},
+				{field: 'compName', title: '单位名', width: 300},
+				{field: 'compShortName', title: '单位简称', width: 100},
+				{field: 'compContact', title: '联系人', width: 90},
+				{field: 'compContactCell', title: '联系电话', width: 120},
+				{field: 'compProvinceName', title: '单位地址',templet: '#templetAddress'},
+				{field: 'compDescription', title: '单位介绍'},
+				{field: 'compComment', title: '备注'},
+				{width:150,title: '操作', align:'center'/*toolbar: '#barDemo'*/
+					,templet: function(d){
+						if(layui.lserver.layAdminSession("layAdmin").level == 1 || layui.lserver.layAdminSession("layAdmin").level == "1"){
+							var html='\t<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>\n' +
+									'\t\t<a class="layui-btn layui-btn-danger layui-btn-xs " lay-event="del">删除</a>';
+
+							return html;
+						}else{
+							return ""
+						}
+
+					}
+				}
+				// {align: 'right', toolbar: '#table-toolbar-bar', title: '操作', width: 150}
+			],
+			reqData: function(data, callback) {
+				// 在这里写ajax请求，通过callback方法回调数据
+				$.post(layui.setter.url + 'comp/queryCompany',{compCompID : layui.lserver.layAdminSession("layAdmin").compId,
+					queryType : layui.lserver.layAdminSession("layAdmin").type,token : layui.lserver.layAdminSession("layAdmin").token,
+					compName:$("input[name='whereName']").val()}, function (res) {
+					for(var i=0;i<res.data.length;i++){
+						res.data[i]['queryType'] = layui.lserver.layAdminSession("layAdmin").type
+						res.data[i]['level'] = layui.lserver.layAdminSession("layAdmin").level
+					}
+					console.log(res.data)
+					callback(res.data);  // 参数是数组类型
+				});
+			}
+		});
+
+
+		/**
+		 *  点击新增单位
+		 **/
+		$("#addAdmin").click(function () {
+			document.getElementById("admin_from").reset(); //清空值
+			$("select[name='compProvinceName']").attr("data-area","重庆市")
+			$("select[name='compCityName']").attr("data-area","市辖区")
+			$("select[name='compCountyName']").attr("data-area","沙坪坝区")
+			address.showCity('compProvinceName', 'compCityName', 'compCountyName');
+			// $("#srcimgurl").attr("src","zhizhuan.png")
+			$("input[name='compShortName']").attr("readonly",false) // 单位简称
+			adminIndex = layer.open({
+				type: 1,
+				title: "单位信息",
+				area: '1000px',
+				id: "adminLayer",
+				shadeClose: true,
+				content: $('#adminLAY')
+			});
+		});
+
+
+		//监听行工具事件
+		treeTable.on('tool(table-toolbar)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'del') {
+				layer.confirm('是否确定删除？', function(index) {
+					layui.lserver.deleteTable(layui.setter.url + 'comp/delCompany', {
+						id: data.compId
+					}, function() {
+						layer.close(index);
+						insTb.refresh();  // 刷新(异步模式)
+					});
+				});
+			} else if (obj.event === 'edit') {
+
+				document.getElementById("admin_from").reset(); //清空值
+				//初始化从属单位信息
+				layui.lserver.getFormInput("updateAdmin",layui.setter.url + 'comp/queryCompanyById', {id:data.compId},function(data){
+					$("select[name='compProvinceName']").attr("data-area",data.data.compProvinceName)
+					$("select[name='compCityName']").attr("data-area",data.data.compCityName)
+					$("select[name='compCountyName']").attr("data-area",data.data.compCountyName)
+					var urlTemp = layui.setter.url;
+					$("#srcimgurl").attr("src",urlTemp.substring(0, urlTemp.indexOf("iflipManager/"))+data.data.compLogo)
+					$("#srcimgurl").attr("data-path",data.data.compLogo)
+					$("input[name='compShortName']").attr("readonly",true) // 单位简称只读
+
+					address.showCity('compProvinceName', 'compCityName', 'compCountyName');
+					adminIndex = layer.open({
+						type: 1,
+						title: "单位信息",
+						area: '1000px',
+						id: "adminLayer",
+						shadeClose: true,
+						content: $('#adminLAY')
+					});
+				});
+			}
+		});
+
+		//提交表单
+		form.on('submit(submitAdmin)', function(data) {
+			var obj = data.field;
+			obj.compProvinceName = $("select[name='compProvinceName']").find("option:selected").text()
+			obj.compCityName = $("select[name='compCityName']").find("option:selected").text()
+			obj.compCountyName = $("select[name='compCountyName']").find("option:selected").text()
+			obj.compCompID = layui.lserver.layAdminSession("layAdmin").compId;//默认登陆者从属单位
+			obj.compLogo = $("#srcimgurl").attr("data-path")
+			if(typeof(obj.compLogo) == undefined || obj.compLogo == undefined){
+				obj.compLogo = null
+			}
+			layui.lserver.submitForm(layui.setter.url + 'comp/doCompany', obj, function() {
+				layer.close(adminIndex)
+				insTb.refresh();  // 刷新(异步模式)
+			});
+			return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+		});
+
+
+		/**
+		 * 点击搜索
+		 */
+		$(document).on('click', '#queryAdmin', function() {
+			insTb.refresh();  // 刷新(异步模式)
+		});
+
+
+
+
+		//时间
+		laydate.render({
+			elem: '#time1'
+		});
+
+		//三级地址联动
+		address.showCity('compProvinceName', 'compCityName', 'compCountyName');
+
+		//初始化从属单位信息
+		// layui.lserver.getSelectList("compCompID",layui.setter.url + 'layuiModule/queryLayuiCompanyAll', {},function(){});
+
+
+		//全部展开
+		$('#btn-expand').click(function () {
+			insTb.expandAll('#permissionTable');
+		});
+
+		// 全部折叠
+		$('#btn-fold').click(function () {
+			insTb.foldAll('#permissionTable');
+		});
+
+		//创建一个头像上传组件
+		croppers.render({
+			elem: '#editimg'
+			,saveW:150     //保存宽度
+			,saveH:150
+			,mark:1/1    //选取比例
+			,area:'1200px'  //弹窗宽度
+			,url: layui.setter.url + 'comp/companyUploadImg'  //图片上传接口返回和（layui 的upload 模块）返回的JOSN一样
+			,done: function(data){ //上传完毕回调
+				console.log(data)
+				$("#srcimgurl").attr("src",data.data.pkgUrIos)
+				$("#srcimgurl").attr("data-path",data.data.wgtUrl)
+			}
+		});
+	});
+</script>
+</body>
+</html>

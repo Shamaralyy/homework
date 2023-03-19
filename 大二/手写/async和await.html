@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        async function fn() {
+            return new Promise((resolve,reject) => {
+                resolve('ee')
+            })
+        }
+
+        const result = fn();
+        result.then((res)=>{
+            console.log(res);
+        },(err) => {
+            console.log(err);
+        })
+        console.log(result);
+
+        const p = new Promise((resolve, reject) => {
+            // resolve('yes!!!');
+            reject('error!')
+        })
+
+        async function main() {
+            try {
+                let result = await p;
+                console.log(result);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        main();
+    </script>
+</body>
+
+</html>

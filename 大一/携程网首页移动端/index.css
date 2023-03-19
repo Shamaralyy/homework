@@ -1,0 +1,86 @@
+* {
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    color: black;
+}
+
+body {
+    max-width: 540px;
+    min-width: 320px;
+    margin: 0 auto;
+    font: normal 14px/1.5 Tahoma,"Lucida Grande",Verdana,"Microsoft,Yabei",STXihei,hei;
+    color: #000;
+    background: #f2f2f2;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+/* 搜索模块 */
+.search-index {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 540px;
+    min-width: 320px;
+    height: 44px;
+}
+
+.search {
+    position: relative;
+    flex: 1;
+    height: 26px;
+    border: 1px solid black;
+    margin: 7px 10px;
+    border-radius: 5px;
+    color: #666;
+    line-height: 24px;
+    padding-left: 25px;
+}
+
+.search::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 15px;
+    height: 15px;
+    background-color: aqua;
+    /* background: url(upload/sprite.png) no-repeat -31px -277px; 
+    background-size: 38px auto; */
+}
+
+.user {
+    width: 44px;
+    height: 44px;
+    background-color: purple;
+}
+
+/* nav */
+.main-nav-wrap {
+    display: flex;
+    margin-top: 60px;
+    width: 100%;
+    height: 200px;
+    background-color: antiquewhite;
+}
+
+
+.main-nav-wrap li {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border: 1px solid orange;
+}
+
+.main-nav-wrap ul li ul li {
+    flex: 1;
+    border: 1px solid orange;
+}

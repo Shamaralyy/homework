@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input id='ipt'>
+    <button>点击发送请求</button>
+    <div id='back'></div>
+
+    <script>
+        const ipt = document.getElementById('ipt');
+        const btn = document.querySelector('button');
+        const back = document.getElementById('back');
+        btn.addEventListener('click', function () {
+            const formdata = new FormData();
+            formdata.append("message", ipt.value);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://anonym.ink:8000/homework/fufubot_test/');
+            xhr.send(formdata);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        back.innerHTML = xhr.response;
+                    }
+                }
+            }
+
+        })
+
+    </script>
+</body>
+
+</html>

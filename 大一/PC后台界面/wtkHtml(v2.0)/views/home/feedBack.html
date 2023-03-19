@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>用户反馈</title>
+		<meta name="renderer" content="webkit">
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+	</head>
+	<body>
+
+		<div class="layui-card layadmin-header">
+			<div class="layui-breadcrumb" lay-filter="breadcrumb">
+				<a lay-href="">主页</a>
+				<a><cite>组件</cite></a>
+				<a><cite>数据表格</cite></a>
+				<a><cite>开启头部工具栏</cite></a>
+			</div>
+		</div>
+
+		<div class="layui-fluid">
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md12">
+					<div class="layui-card">
+						<div class="layui-card-header">用户反馈</div>
+						<div class="layui-card-body">
+							<div class="layui-form-item">
+								<label class="layui-form-label">关键字</label>
+								<div class="layui-input-inline">
+									<input type="text" name="checkUserName" placeholder="单位名称/用户姓名/用户手机号" class="layui-input">
+								</div>
+								<button class="layui-btn" id="queryAdmin">查询</button>
+							</div>
+
+							<table class="layui-hide" id="table-toolbar" lay-filter="table-toolbar">
+								<thead>
+									<tr>
+										<th lay-data="{type:'checkbox',align: 'center',field:'fbId'}">checkId</th>
+										<th lay-data="{field:'insertTime',sort: true,align: 'center',width:120}">新增时间</th>
+										<th lay-data="{field:'userTrueName',align: 'center',width:90}">姓名</th>
+										<th lay-data="{field:'userPhone',align: 'center',width:116}">电话号码</th>
+										<th lay-data="{field:'contact',align: 'center',width:116}">联系方式</th>
+										<th lay-data="{field:'content',align: 'left'}">意见内容</th>
+										<th lay-data="{field:'images',align: 'left'}">上传图片</th>
+										<th lay-data="{field:'app',templet : '#templetApp',align: 'center',width:100}">appid</th>
+										<th lay-data="{field:'plaform',templet : '#templetPlaform',align: 'center',width:120}">操作平台</th>
+									<!-- 	<th lay-data="{field:'appid',align: 'center',width:350}">appid</th>
+										<th lay-data="{field:'appName',align: 'center',width:350}">app名称</th>
+										<th lay-data="{field:'appVersion',align: 'center',width:350}">app版本</th>
+										<th lay-data="{field:'platForm',align: 'center',width:350}">操作平台</th>
+										<th lay-data="{field:'osVersion',align: 'center',width:350}">平台系统版本</th> -->
+										<th lay-data="{field:'type',templet : '#templetType',align: 'center',width:100}">分类</th>
+										
+										<!-- <th lay-data="{fixed: 'right',toolbar: '#table-toolbar-bar',width:100}">操作</th> -->
+									</tr>
+								</thead>
+							</table>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 编辑弹出层 -->
+		<div id="adminLAY" style="display: none;">
+			<form class="layui-form" id="admin_from" action="" lay-filter="updateAdmin">
+				<div class="layui-form-item">
+
+					<div class="layui-inline" style="display: none;">
+						<input type="text" name="adminId" class="layui-input">
+							
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">账户名</label>
+						<div class="layui-inline">
+							<input type="text" name="adminUserName" autocomplete="off" required lay-verify="required" class="layui-input">
+						</div>
+					</div>
+
+
+					<div class="layui-inline">
+						<label class="layui-form-label">登录密码</label>
+						<div class="layui-inline">
+							<input type="text" name="adminPassword" autocomplete="off" required lay-verify="required" class="layui-input">
+						</div>
+					</div>
+
+				</div>
+				<div class="layui-form-item">
+
+					<div class="layui-inline">
+						<label class="layui-form-label">性别</label>
+						<div class="layui-input-inline">
+							<select name="adminGender" lay-verify="">
+								<option value="">请选择</option>
+								<option value="1">男</option>
+								<option value="2">女</option>
+							</select>
+
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">出生日期</label>
+						<div class="layui-inline">
+							<input type="text" name="adminBirth" class="layui-input" id="time1" placeholder="yyyy-MM-dd">
+						</div>
+					</div>
+
+				</div>
+
+				<div class="layui-form-item">
+
+					<div class="layui-inline">
+						<label class="layui-form-label">手机号</label>
+						<div class="layui-input-inline">
+							<input type="text" name="adminPhone" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">邮箱</label>
+						<div class="layui-inline">
+							<input type="text" name="adminEmail" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+
+				</div>
+
+				<div class="layui-form-item">
+
+					<div class="layui-inline">
+						<label class="layui-form-label">真实姓名</label>
+						<div class="layui-inline">
+							<input type="text" name="adminTrueName" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">用户昵称</label>
+						<div class="layui-inline">
+							<input type="text" name="adminNickName" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="layui-form-item">
+
+					<label class="layui-form-label">头像</label>
+					<div class="layui-input-block">
+						<input type="text" name="adminPhoto" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label class="layui-form-label">备注</label>
+					<div class="layui-input-block">
+						<textarea placeholder="请输备注" class="layui-textarea" name="adminComment"></textarea>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit="" lay-filter="submitAdmin">立即提交</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+
+		<script type="text/html" id="table-toolbar-toolbar">
+			<div class="layui-btn-container">
+			<button class="layui-btn layui-btn-sm" lay-event="addAdmin">新增</button>
+		  </div>
+		</script>
+
+		<script type="text/html" id="templetType">
+			{{# if(d.checkUserGender == '1'){ }}
+	普通用户
+  {{# } else if(d.checkUserGender == '2'){ }}
+	单位用户
+ {{#  } else { }}
+    其他用户
+  {{#  } }}
+</script>
+<!-- 格式化 -->
+		<script type="text/html" id="templetApp">
+			{{d.appName}}  {{d.appVersion}}
+		</script>
+		<script type="text/html" id="templetPlaform">
+			{{d.platForm}} {{d.osVersion}}
+		</script>
+		<script type="text/html" id="table-toolbar-bar">
+			<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+	</script>
+		<script src="../../layuiadmin/layui/layui.js"></script>
+
+		<script>
+			layui.config({
+				base: '../../layuiadmin/' //静态资源所在路径
+			}).extend({
+				index: 'lib/index' //主入口模块
+			}).use(['index', 'table', 'form', 'laydate'], function() {
+				var admin = layui.admin,
+					table = layui.table,
+					form = layui.form,
+					laydate = layui.laydate,
+					$ = layui.$;
+					var adminIndex = 0;
+				table.init('table-toolbar', {
+					elem: "#table-toolbar" //指定原始 table 容器的选择器或 DOM
+						,
+					title: "用户反馈" //定义 table 的大标题（在文件导出等地方会用到）
+						,
+					limit: 20 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
+						,
+					url: layui.setter.url + 'comp/queryFeedBack' //异步数据接口相关参数
+						,
+					// toolbar: "#table-toolbar-toolbar",
+					page: true,
+					where:{
+						token : layui.lserver.layAdminSession("layAdmin").token
+					},
+				});
+
+
+				//头工具栏事件
+				table.on('toolbar(table-toolbar)', function(obj) {
+					var checkStatus = table.checkStatus(obj.config.id);
+					switch (obj.event) {
+						case 'addAdmin':
+						document.getElementById("admin_from").reset();//清空值
+							
+							
+							break;
+					};
+				});
+
+
+
+
+				/**
+				 * 点击搜索
+				 */
+				$(document).on('click', '#queryAdmin', function() {
+					reloadTable('table-toolbar', 1)
+				});
+
+
+
+				/**重新加载table
+				 * @param {Object} id table中的ID
+				 * @param {Object} data 条件数据
+				 */
+				function reloadTable(id, curr) {
+
+					if (curr == "" || curr == null) curr = 1
+					var data = {
+						adminUserName: $("input[name='whereName']").val()
+					};
+					table.reload(id, {
+						where: {
+							data
+						}, //设定异步数据接口的额外参数
+						page: {
+							curr: curr //重新从第 1 页开始
+						}
+					}); //只重载数据
+				}
+
+				//时间
+				laydate.render({
+					elem: '#time1'
+				});
+
+			});
+		</script>
+	</body>
+</html>

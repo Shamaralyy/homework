@@ -1,0 +1,69 @@
+* {
+    padding: 0;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 15px;
+    height: 15px;
+}
+
+.tabsbox {
+    margin-top: 60px;
+    width: 700px;
+    height: 350px;
+    border: 1px solid black;
+}
+
+.firstnav {
+    width: 700px;
+    height: 40px;
+    border: 1px solid black;
+}
+
+ul li {
+    position: relative;
+    list-style: none;
+    float: left;
+    width: 80px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border: 1px solid black;
+    font-size: 14px;
+}
+
+.tabadd {
+    float: right;
+    width: 25px;
+    height: 25px;
+    border: 1px solid black;
+    text-align: center;
+    line-height: 25px;
+}
+
+section {
+    display: none;
+    margin: 10px;
+    width: 100%;
+}
+
+.liactive {
+    color: red;
+    border: none;
+    background-color: rgb(255, 230, 230);
+}
+
+.contactive {
+    display: block;
+}
+
+input {
+    width: 70px;
+    height: 35px;
+    outline-color: rgb(49, 190, 255);
+}

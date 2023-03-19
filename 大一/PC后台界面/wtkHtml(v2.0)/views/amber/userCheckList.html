@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>赛事用户</title>
+	<meta name="renderer" content="webkit">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+	<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+
+</head>
+<body>
+
+<div class="layui-card layadmin-header">
+	<div class="layui-breadcrumb" lay-filter="breadcrumb">
+		<a lay-href="">主页</a>
+		<a><cite>组件</cite></a>
+		<a><cite>数据表格</cite></a>
+		<a><cite>开启头部工具栏</cite></a>
+	</div>
+</div>
+
+<div class="layui-fluid">
+	<div class="layui-row layui-col-space15">
+		<div class="layui-col-md12">
+			<div class="layui-card">
+				<div class="layui-card-header">赛事用户审核</div>
+				<div class="layui-card-body">
+					<div class="layui-form-item">
+						<label class="layui-form-label">用户</label>
+						<div class="layui-input-inline">
+							<input type="text" name="whereName" placeholder="名字/手机号" class="layui-input">
+						</div>
+
+						<label class="layui-form-label">赛事</label>
+						<div class="layui-form layui-input-inline" >
+							<select name="competitionId" tid="competitionId" id="competitionId"  lay-verify="required">
+
+							</select>
+						</div>
+
+						<label class="layui-form-label">状态</label>
+						<div class="layui-form layui-input-inline" >
+							<select name="selectState"  id="selectState"  lay-verify="required">
+								<option value="0">待审核</option>
+								<option value="1">审核通过</option>
+								<option value="9">审核不通过</option>
+							</select>
+						</div>
+
+						<button class="layui-btn" id="queryAdmin">查询</button>
+					</div>
+
+					<table class="layui-hide" id="table-toolbar" lay-filter="table-toolbar">
+						<thead>
+						<tr>
+							<th lay-data="{type:'radio',field:'id'}"></th>
+							<th lay-data="{field:'name',align: 'center',width:200,height: 'full-200', templet: '#imgtmp'}">资料</th>
+							<th lay-data="{field:'competitionName',align: 'center',width:350}">赛事名称</th>
+							<th lay-data="{field:'organizationName',align: 'center',sort: true,width:150}">武馆</th>
+							<th lay-data="{field:'name',align: 'center',sort: true,width:100}">姓名</th>
+							<th lay-data="{field:'cell',align: 'center',width:120}">电话</th>
+							<th lay-data="{field:'weight',align: 'center',width:120}">体重（KG）</th>
+							<th lay-data="{field:'birthday',align: 'center',width:190}">生日</th>
+							<th lay-data="{field:'age',align: 'center',width:100}">年龄</th>
+							<th lay-data="{field:'sex',align: 'center',templet : '#templetGender',width:80}">性别</th>
+
+							<th lay-data="{field:'sh_state',align: 'center',width:120,templet:'#templetState'}">状态</th>
+							<th lay-data="{field:'sh_time',align: 'center',width:180}">审核时间</th>
+							<th lay-data="{field:'sh_msg',align: 'center',width:200}">审核说明</th>
+
+							<th lay-data="{fixed: 'right',toolbar: '#table-toolbar-bar',align: 'center',width:150}">操作</th>
+						</tr>
+						</thead>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 编辑弹出层 -->
+<div id="adminLAY" style="display: none;">
+	<form class="layui-form" id="admin_from" action="" lay-filter="updateAdmin">
+		<div class="layui-form-item">
+
+			<div class="layui-inline" style="display: none;">
+				<input type="text" name="id" class="layui-input" >
+
+			</div>
+
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">姓名</label>
+				<div class="layui-inline">
+					<input type="text" name="name" autocomplete="off" class="layui-input" readonly lay-verify="required">
+					<input type="hidden" name="id" readonly>
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">审核</label>
+				<div class="layui-input-inline">
+					<select name="state" lay-verify="">
+						<option value="1">审核通过</option>
+						<option value="9">审核不通过</option>
+					</select>
+
+				</div>
+			</div>
+
+
+			<div class="layui-form-item">
+				<label class="layui-form-label">说明</label>
+				<div class="layui-input-block">
+					<textarea placeholder="请输审核说明" class="layui-textarea" name="msg"></textarea>
+				</div>
+			</div>
+
+
+		</div>
+
+
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit="" lay-filter="submitAdmin">立即提交</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+
+<script type="text/html" id="templetGender">
+	{{# if(d.sex == '1'){ }}
+	男
+	{{# } else if(d.sex == '2'){ }}
+	女
+	{{#  } else { }}
+	未知
+	{{#  } }}
+</script>
+
+
+<script type="text/html" id="templetState">
+	{{# if(d.sh_state == '0'){ }}
+	待审核
+	{{# } else if(d.sh_state == '1'){ }}
+	审核通过
+	{{#  } else { }}
+	审核不通过
+	{{#  } }}
+</script>
+
+<script type="text/html" id="imgtmp">
+	{{#
+	for(var j in d.accessory) {  }}
+	<div class="img_user" style="margin:0 10px; display:inline-block !important; display:inline;  width:120px;height:100px;">
+		<img style=" width:120px; height:100px;" src="{{layui.setter.url + d.accessory[j].path}}" />
+	</div>
+	{{# } }}
+</script>
+
+
+
+<script type="text/html" id="table-toolbar-bar">
+	<a class="layui-btn layui-btn-xs" lay-event="edit">审核</a>
+	<!--	  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+</script>
+<script src="../../layuiadmin/jquery.js"></script>
+<script src="../../layuiadmin/layui/layui.js"></script>
+<script src="../../layuiadmin/Jquery.md5.js"></script>
+<script>
+	layui.config({
+		base: '../../layuiadmin/' //静态资源所在路径
+	}).extend({
+		index: 'lib/index' //主入口模块
+	}).use(['index', 'table', 'form', 'laydate'], function() {
+		var admin = layui.admin,
+				table = layui.table,
+				form = layui.form,
+				laydate = layui.laydate,
+				$ = layui.$;
+		var adminIndex = 0;
+
+		layui.lserver.getSelectList("competitionId",layui.setter.url + 'admin/getCompetitionById', {type:"102"},function(){});
+
+			table.init('table-toolbar', {
+				elem: "#table-toolbar" //指定原始 table 容器的选择器或 DOM
+				,
+				title: "赛事用户列表" //定义 table 的大标题（在文件导出等地方会用到）
+				,
+				page: true,
+				limit: 20 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
+				,
+				url: layui.setter.url + 'admin/getCompetitionUserByName' //异步数据接口相关参数
+				,
+				toolbar: "#table-toolbar-toolbar",
+				where:{
+					name : $("input[name='whereName']").val(),
+					competitionId: $("select[name='competitionId']").val() == "" ? "123" : $("select[name='competitionId']").val(),
+					state:$("select[name='selectState']").val()
+				},
+				done:function (res,curr,count) {
+					layer.photos({
+						photos:'.img_user',
+						anim:0
+					})
+				}
+
+			});
+
+
+		//监听行工具事件
+		table.on('tool(table-toolbar)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'edit') {
+				form.val("updateAdmin", data)
+				laydate.render({
+					elem: '#time1'
+					,value: data.birthday
+					,isInitValue: true
+				});
+				adminIndex = layer.open({
+					type: 1,
+					title: "编辑/查看",
+					area: '700px',
+					id : "adminLayer",
+					shadeClose: true,
+					content: $('#adminLAY')
+				});
+			}
+		});
+
+		form.on('submit(submitAdmin)', function(data) {
+			layui.lserver.submitForm(layui.setter.url + 'admin/updateQualificationUserById', data.field, function() {
+				layer.close(adminIndex)
+				reloadTable('table-toolbar', 1)
+			});
+			return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+		});
+
+
+		/**
+		 * 点击搜索
+		 */
+		$(document).on('click', '#queryAdmin', function() {
+			reloadTable('table-toolbar', 1)
+		});
+
+
+
+		/**重新加载table
+		 * @param {Object} id table中的ID
+		 * @param {Object} data 条件数据
+		 */
+		function reloadTable(id, curr) {
+
+			if (curr == "" || curr == null) curr = 1
+			table.reload(id, {
+				where: {
+					name : $("input[name='whereName']").val(),
+					competitionId: $("select[name='competitionId']").val() == "" ? "123" : $("select[name='competitionId']").val(),
+					state:$("select[name='selectState']").val()
+				}, //设定异步数据接口的额外参数
+				page: {
+					curr: curr //重新从第 1 页开始
+				}
+			}); //只重载数据
+		}
+
+	});
+</script>
+
+</body>
+</html>

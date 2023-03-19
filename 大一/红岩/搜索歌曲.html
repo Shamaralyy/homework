@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <button style="width:60px;height:20px"></button>
+    <div style="height: 300px;width: 300px;background-color: darkseagreen;" id="app">
+        <input type="text" v-model="keywords" @keyup.enter="searchMusic" placeholder="大家都在搜 春风十里">
+        <h4>{{keywords}}</h4>
+        <ol>
+            <li v-for="song in list">{{song.name+' '+song.artist.name}}</li>
+        </ol>
+        <div v-show="isShow" style="background-color: pink;width: 50px;height: 50px;"></div>
+    </div>
+    <script>
+        var btn = document.querySelector('button').onclick = function () {
+            axios.get("http://redrock.udday.cn:2022/search/suggest?keywords=11")
+                .then(function (res) {
+                    console.log(res.data.result.albums)
+                })
+        }
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                keywords: "",
+                list: [],
+                isShow: false
+            }
+            ,
+            methods: {
+                searchMusic: function () {
+                    var that = this;
+                    axios.get("http://redrock.udday.cn:2022/search/suggest?keywords=" + this.keywords)
+                        .then((res) => {
+                            this.list = res.data.result.albums;
+                            this.isShow = true;
+                        })
+                }
+            }
+        })
+
+
+        // https://autumnfish.cn/api/joke/list?num=3
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function myPromise(excutor) {
+            let self = this;
+            self.status = 'pending';
+            self.value = null;
+            self.reason = null;
+            self.onFullfilledCallbacks = [];
+            self.onRejectedCallbacks = [];
+
+            function resolve(value) {
+                if(self.status === 'pending') {
+                    self.status = 'fullfilled';
+                    self.value = value;
+                    self.onFullfilledCallbacks.forEach(item => item(value));
+                }
+            }
+
+            function reject(reason) {
+                if(self.status === 'pending') {
+                    self.status = 'rejected';
+                    self.reason = reason;
+                    self.onRejectedCallbacks.forEach(item => item(reason));
+                }
+            }
+            
+            try {
+                excutor(resolve,reject)
+            } catch(err) {
+                reject(err)
+            }
+        }
+
+        myPromise.prototype.then = function(onFullfilled,onRejected) {
+            onFullfilled = typeof onFullfilled === 'function'?
+            onFullfilled:function(data) {resolve(data)};
+            onRejected = typeof onRejected === 'function'?
+            onRejected:function(err) {throw err};
+            if(this.status == 'pending') {
+                this.onFullfilledCallbacks.push(onFullfilled);
+                this.onRejectedCallbacks.push(onRejected);
+            }
+        }
+
+        myPromise.prototype.catch = function(fn) {
+            return self.then(null,fn);
+        }
+
+        let demo = new myPromise((resolve,reject) => {
+            console.log('明天会更好');
+
+            setTimeout(()=>{
+                resolve(123)
+            },1000)
+        })
+
+        demo.then((res) => {
+            console.log('then方法的res:',res);
+        })
+    </script>
+</body>
+</html>

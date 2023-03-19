@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p></p>
+
+    <script>
+        // const p = document.querySelector('p');
+        // const xhr = new XMLHttpRequest();
+        // xhr.open('get','http://127.0.0.1:8080/toplist');
+        // xhr.onreadystatechange = () => {
+        //     if(xhr.readyState === 4) {
+        //         if(xhr.state === 200) {
+        //             p.innerHTML = xhr.responseText;
+        //         }
+        //     }
+        // };
+        // xhr.send(null);
+
+        // fetch('http://127.0.0.1:8080/toplist')
+        //     .then((res) => res.json()) 
+        //     .then((data) => console.log(data.list[0].description))
+
+        fetch('http://127.0.0.1:8080/api/get')
+        .then(res => res.json())
+        .then(res => console.log(res))
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <button style="width:60px;height:20px"></button>
+    <div style="height: 300px;width: 300px;background-color: darkseagreen;" id="app">
+        <ul>
+            <li v-for="item in musicList">{{item.first}}</li>
+        </ul>
+    </div>
+    <script>
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                musicList: []
+            },
+            methods: {
+                getList: function () {
+                    axios.get("http://redrock.udday.cn:2022/search/hot")
+                        .then(function (res) {
+                            console.log(musicList);
+                            this.musicList = res.data.result.hots
+                        })
+                }
+            }
+        })
+        var btn = document.querySelector('button').onclick = function () {
+            axios.get("http://redrock.udday.cn:2022/search/hot")
+                .then(function (res) {
+                    app.musicList = res.data.result.hots
+                    console.log(app.musicList)
+                    console.log(res.data.result.hots)
+                })
+        }
+
+
+        // https://autumnfish.cn/api/joke/list?num=3
+    </script>
+</body>
+
+</html>

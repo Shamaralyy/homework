@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    按照价格查询：
+    <input type="text" /> - 
+    <input type="text" />
+    <button class="search">搜索</button>
+    <br />
+    按照商品名称查询：
+    <input type="text" />
+    <button class="inquire">查询</button>
+
+    <ul>
+
+    </ul>
+    <script>
+        let data = [{
+            id:1,
+            name:'oppo',
+            price:999
+        },
+        {
+            id:2,
+            name:'小米',
+            price:3999
+        },
+        {
+            id:3,
+            name:'荣耀',
+            price:1299
+        }
+    ]
+
+    const ul = document.querySelector('ul');
+
+    data.forEach(function(item) {
+        const li = document.createElement('li');
+        li.innerHTML = `<p>id：${item.id}</p><p>name：${item.name}</p><p>price：${item.price}</p>`;
+        ul.appendChild(li);
+    })
+
+    const ipt_l = document.querySelector('input:first-child');
+    const ipt_r = document.querySelector('input:nth-child(2)');
+    const search = document.querySelector('.search');
+    const inquire= document.querySelector('.inquire');
+
+    search.onclick = () => {
+        console.log('ipt_l',ipt_l.value);
+        console.log('ipt_r',ipt_r.value);
+        const newList = data.filter((item) => {
+            return item.price >= ipt_l.value && item.price <= ipt_r.value;
+        });
+        console.log('newList:',newList);
+    }
+
+    </script>
+</body>
+</html>

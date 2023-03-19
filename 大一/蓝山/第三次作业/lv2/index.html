@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0 auto;
+        }
+
+        .counter {
+            position: relative;
+            color: #fff;
+            width: 329px;
+            height: 550px;
+            background-color: black;
+        }
+
+        .counter span {
+            position: absolute;
+            right: 0;
+            margin-top: 70px;
+            font-size: 60px;
+        }
+
+        #demo {
+            display: grid;
+            position: absolute;
+            grid-gap: 3px;
+            grid-template-rows: repeat(5, 80px);
+            grid-template-columns: repeat(4, 80px);
+            width: 329px;
+            height: 400px;
+            background-color: #fff;
+            bottom: 0;
+        }
+
+        #demo div {
+            width: 80px;
+            height: 80px;
+            text-align: center;
+            line-height: 80px;
+            color: black;
+            background-color: rgb(249, 222, 242);
+        }
+
+        #demo div:nth-child(1) {
+            width: 162px;
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+
+        #demo div:last-child {
+            width: 162px;
+            grid-column-start: 3;
+            grid-column-end: 5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="counter">
+        <span class="screen"></span>
+        <div id="demo">
+            <div>AC</div>
+            <div>清除</div>
+            <div class="divide">/</div>
+            <div class="number">1</div>
+            <div class="number">2</div>
+            <div class="number">3</div>
+            <div class="multiply">*</div>
+            <div class="number">4</div>
+            <div class="number">5</div>
+            <div class="number">6</div>
+            <div class="add">+</div>
+            <div class="number">7</div>
+            <div class="number">8</div>
+            <div class="number">9</div>
+            <div class="subtract">-</div>
+            <div>.</div>
+            <div class="number">0</div>
+            <div class="equal">=</div>
+        </div>
+    </div>
+
+    <script>
+        const demo = document.querySelector('#demo');
+        const divs = demo.querySelectorAll('div');
+        const screen = document.querySelector('.screen');
+
+        const add = document.querySelector('.add');
+        const subtract = document.querySelector('.subtract');
+        const multiply = document.querySelector('.multiply');
+        const divide = document.querySelector('.divide');
+        const equal = document.querySelector('.equal');
+
+        let number = document.querySelectorAll('.number');
+
+        let arr = [];
+        let count = -1;
+        let result, a, b = 0;
+        let newArr = [];
+
+        let value = screen.innerText;
+
+        for (let i = 0; i < divs.length; i++) {
+            divs[i].onclick = function () {
+                arr.push(this.innerText);
+                newArr.push(this.innerText);
+                console.log(arr);
+                screen.innerText = arr.join("").toString();//数组转为字符串
+                [...arr];//字符串转为数组
+                count++;
+                console.log("count: " + count);
+                console.log("newArr: " + newArr);
+
+
+                switch (this.innerText) {
+                    case "AC":
+                        newArr.pop();
+                        count--;
+                        a = newArr[count];
+                        screen.innerText = "";
+                        newArr, arr = [];
+                        break;
+                    case "清除":
+                        arr.pop(); newArr.pop();
+                        arr.pop(); newArr.pop();
+                        screen.innerText = arr.join("").toString();
+                        break;
+                    case "+":
+                        newArr.pop();
+                        console.log("newArr: " + newArr);
+                        count--;
+                        console.log("此时的count: " + count);
+                        if (a == undefined) a = newArr[count];
+                        console.log("a:" + a);
+                        type = "+";
+                        break;
+                    case "-":
+                        newArr.pop();
+                        count--;
+                        a = newArr[count];
+                        type = "-";
+                        break;
+                    case "*":
+                        newArr.pop();
+                        count--;
+                        a = newArr[count];
+                        type = "*";
+                        break;
+                    case "/":
+                        newArr.pop();
+                        count--;
+                        a = newArr[count];
+                        type = "/";
+                        break;
+                    case "=":
+                        if (a !== undefined) {
+                            count--;
+                            b = newArr[count];
+                            console.log("b:" + b);
+                            if (type === "+") {
+                                result = parseFloat(a) + parseFloat(b);
+                            }
+                            if (type === "-") {
+                                result = parseFloat(a) - parseFloat(b);
+                            }
+                            if (type === "*") {
+                                result = parseFloat(a) * parseFloat(b);
+                            }
+                            if (type === "/") {
+                                result = parseFloat(a) / parseFloat(b);
+                            }
+                            a = result;
+                            console.log("result: " + result + "  a:" + a);
+                            screen.innerText = result;
+                            count--;
+                            newArr = []; arr = [];
+                            newArr.push(result); arr.push(result);
+                            console.log("newArr: " + newArr);
+
+                        }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

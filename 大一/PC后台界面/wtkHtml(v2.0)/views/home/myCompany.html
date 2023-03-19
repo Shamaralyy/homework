@@ -1,0 +1,207 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=UTF-8"utf-8">
+  <title>我的单位</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" tppabs="https://www.layui.com/admin/std/dist/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" tppabs="https://www.layui.com/admin/std/dist/layuiadmin/style/admin.css" media="all">
+  <style>
+	  .qrcode{
+		  position: absolute;
+		  top: 66px;
+          right: 25%;
+		  text-align: center;
+	  }
+	  #btn_submit{
+		  display: none;
+	  }
+  </style>
+</head>
+<body>
+
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card">
+          <div class="layui-card-header">我的单位信息</div>
+          <div class="layui-card-body" pad15>
+            
+            <div class="layui-form" lay-filter="updateAdmin">
+              <div class="layui-form-item">
+                <label class="layui-form-label">单位简称</label>
+                <div class="layui-input-inline">
+				   <input type="hidden" name="compId" value="" readonly class="layui-input">
+                  <input type="text" name="compShortName" value="" readonly class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">不可修改。</div>
+              </div>
+			  
+               <div class="layui-form-item">
+                <label class="layui-form-label">单位名</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="compName" value=""  autocomplete="off" placeholder="请输入单位名" class="layui-input">
+                </div>
+              </div>
+			  
+             <div class="layui-form-item">
+               <label class="layui-form-label">联系人</label>
+               <div class="layui-input-inline">
+                 <input type="text" name="compContact" value=""  autocomplete="off" placeholder="请输入联系人" class="layui-input">
+               </div>
+             </div>
+             
+              <div class="layui-form-item">
+                <label class="layui-form-label">联系电话</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="compContactCell" value="" lay-verify="phone" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+             
+			 
+			 <div class="layui-form-item">
+			 
+			 		<div class="layui-inline">
+			 		<label class="layui-form-label">省</label>
+			 		<div class="layui-input-inline">
+			 			<select name="compProvinceName"  data-area="重庆市" lay-filter="compProvinceName"  class="layui-input">
+			 					<option value="">选择省</option>
+			 				</select> 
+			 		</div>
+			 	</div>
+				
+				<div class="layui-inline">
+					<label class="layui-form-label">市</label>
+					<div class="layui-input-inline" >
+						<select name="compCityName"  data-area="市辖区" lay-filter="compCityName" class="layui-input">
+								<option value="">选择市</option>
+							</select> 
+					</div>
+				</div>
+				
+				<div class="layui-inline">
+					<label class="layui-form-label">区</label>
+					<div class="layui-input-inline"  >
+						<select name="compCountyName"  data-area="沙坪坝区" lay-filter="compCountyName" class="layui-input">
+								<option value="">选择区</option>
+							</select> 
+					</div>
+				</div>
+			 	
+			 </div>
+			  
+			  
+			  
+			  <div class="layui-form-item layui-form-text">
+			    <label class="layui-form-label">单位地址</label>
+			    <div class="layui-input-block">
+			      <textarea name="compAddress" placeholder="请输入内容" class="layui-textarea"></textarea>
+			    </div>
+			  </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">是否开启打印备</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="compPrintComment" value="1" title="开启" >
+                        <input type="radio" name="compPrintComment" value="0" title="关闭" checked="">
+                    </div>
+                </div>
+
+
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                  <textarea name="compComment" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+              </div>
+              <div class="layui-form-item" id="btn_submit">
+                <div class="layui-input-block">
+                  <button class="layui-btn" lay-submit lay-filter="setmyinfo">确认修改</button>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="qrcode">
+	<div id="qrcode">
+		
+	</div>
+	单位二维码
+</div>
+
+<script type="text/javascript" src="../../layuiadmin/jquery.js"></script>
+<script type="text/javascript" src="../../layuiadmin/lib/qrcode.min.js"></script>
+  <script src="../../layuiadmin/layui/layui.js" tppabs="https://www.layui.com/admin/std/dist/layuiadmin/layui/layui.js"></script>  
+   <script type="text/javascript" src="../../layuiadmin/lib/city-picker.js"></script>
+  <script>
+  layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form','laydate','address'],function(){
+		var form = layui.form,
+		$ = layui.$,
+		laydate = layui.laydate,
+		 address = layui.address;
+		var layAdmin = JSON.parse(sessionStorage.getItem("layAdmin"));
+		
+		//初始化从属单位信息
+		layui.lserver.getFormInput("updateAdmin",layui.setter.url + 'comp/queryCompanyById', {id:layAdmin.compId},function(data){
+				
+				$("select[name='compProvinceName']").attr("data-area",data.data.compProvinceName)
+				$("select[name='compCityName']").attr("data-area",data.data.compCityName)
+				$("select[name='compCountyName']").attr("data-area",data.data.compCountyName)
+
+            $("input[name='compPrintComment'][value="+data.data.compPrintComment+"]").prop("checked","true");
+			address.showCity('compProvinceName', 'compCityName', 'compCountyName');
+			
+			//生成二维码
+			var qrcode = new QRCode('qrcode', {
+			  text: layAdmin.compId,
+			  width: 160,
+			  height: 160,
+			  colorDark: '#000000',
+			  colorLight: '#ffffff',
+			  correctLevel: QRCode.CorrectLevel.H
+			});
+			
+			if(layAdmin.level == 1){
+				$("#btn_submit").show()
+			}else{
+				$("input").attr("readonly","readonly")
+				$("select").attr("readonly","readonly")
+				$("textarea").attr("readonly","readonly")
+				$("#btn_submit").hide()
+			}
+			
+		});
+		
+		
+		form.on('submit(setmyinfo)', function(data) {
+				if(layAdmin.level != 1){
+					return false;
+				}
+				var obj = data.field;
+				obj.compProvinceName = $("select[name='compProvinceName']").find("option:selected").text()
+				obj.compCityName = $("select[name='compCityName']").find("option:selected").text()
+				obj.compCountyName = $("select[name='compCountyName']").find("option:selected").text()
+				console.log(obj)
+				layui.lserver.submitForm(layui.setter.url + 'comp/doCompany', obj, function() {
+				});
+			return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+		});
+		
+		
+  });
+  </script>
+</body>
+</html>

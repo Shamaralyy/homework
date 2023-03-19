@@ -1,0 +1,43 @@
+.logo{
+    width: 2160px;
+    height: 100px;
+    /* 左右居中 */
+    margin: 0 auto;
+    background-color: black;
+}
+#nav {
+
+    height: 58px;
+    background: black;
+}
+
+#nav .nav_con {
+    width: 1002px;
+    height: 58px;
+    background: black;
+    margin: 0 auto;
+}
+
+/* 导航横向排列 */
+
+#nav .nav_con li {
+    width: 118px;
+    height: 58px;
+    float: right;
+    background: black;
+    /* 左右居中 */
+    text-align: center;
+    /* 上下居中 */
+    line-height: 58px;
+    border-left: 1px solid #4a4a4a;
+    font-size: 16px;
+}
+
+.nav_con li a {
+    color: white;
+}
+.margin-left {
+    margin-left: 25px;
+    border-left: none!important;
+}
+

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>商品轮播</title>
+		<meta name="renderer" content="webkit">
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+	</head>
+	<body>
+
+		<div class="layui-card layadmin-header">
+			<div class="layui-breadcrumb" lay-filter="breadcrumb">
+				<a lay-href="">主页</a>
+				<a><cite>组件</cite></a>
+				<a><cite>数据表格</cite></a>
+				<a><cite>开启头部工具栏</cite></a>
+			</div>
+		</div>
+
+		<div class="layui-fluid">
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md12">
+					<div class="layui-card">
+						<div class="layui-card-header">首页轮播管理</div>
+						<div class="layui-card-body">
+							<table class="layui-hide" id="table-toolbar" lay-filter="table-toolbar">
+								<thead>
+									<tr>
+										<th lay-data="{type:'radio',field:'id'}"></th>
+										<th lay-data="{field:'fujian',align: 'center',templet:'#fujian', width:120,style:'height:110px'}">轮播图片</th>
+										<!-- <th lay-data="{field:'setTime',align: 'center',width:120}">时间</th> -->
+										<!-- <th lay-data="{field:'status',align: 'center',width:80,templet : '#templetStatus'}">状态</th> -->
+										<!-- <th lay-data="{field:'comment',align: 'center',width:180}">备注</th> -->
+										<th lay-data="{fixed: 'right',toolbar: '#table-toolbar-bar',align: 'center',width:150}">操作</th>
+									</tr>
+								</thead>
+							</table>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 编辑弹出层 -->
+		<div id="adminLAY" style="display: none;">
+			<form class="layui-form" id="admin_from" action="" lay-filter="updateAdmin">
+				<div class="layui-inline" style="display: none;">
+					<input type="text" name="id" class="layui-input" >
+				</div>
+
+				<div class="layui-form-item layui-inline" style="margin-top: 10px;">
+						<label class="layui-form-label">产品图片</label>
+						<div class="layui-inline" style="float: left;">
+							<button type="button" class="layui-btn" id="test1">
+							  <i class="layui-icon">&#xe67c;</i>上传图片
+							</button>
+						</div>
+						<div class="icon_box" style="float: left;">
+							<div style="width: 80px;position: relative;">
+								<img name="fujian" class="icon_box_chan_tu" style="width: 80px;height: 80px;" src="#" />
+							</div>
+						</div>
+				</div>
+
+				<!-- <div class="layui-form-item">
+					<label class="layui-form-label">备注</label>
+					<div class="layui-input-block">
+						<textarea placeholder="请输备注" class="layui-textarea" name="comment"></textarea>
+					</div>
+				</div> -->
+
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit="" lay-filter="submitAdmin">立即提交</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+		
+		<script type="text/html" id="fujian">
+			<img style="width: 60px;height: 60px;" src="{{layui.setter.url + d.fujian}}" />
+		</script>
+		
+		<script type="text/html" id="table-toolbar-toolbar">
+			<div class="layui-btn-container">
+			<button class="layui-btn layui-btn-sm" lay-event="addAdmin">新增</button>
+			<!-- <button class="layui-btn layui-btn-sm" style="background-color:#FF5722" lay-event="blockUp">停用</button>
+			<button class="layui-btn layui-btn-sm" style="background-color:#5FB878" lay-event="blockStart">启用</button> -->
+		  </div>
+		</script>
+
+		<script type="text/html" id="templetStatus">
+			{{# if(d.status == '1'){ }}
+			正常
+		 {{#  } else { }}
+			停用
+		  {{#  } }}
+		</script>
+		
+		
+<script type="text/html" id="imgtmp">
+			<img src="{{d.img}}" />
+		</script>
+		<script type="text/html" id="table-toolbar-bar">
+			<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+<!--	  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+	</script>
+<script src="../../layuiadmin/jquery.js"></script>
+<script src="../../layuiadmin/layui/layui.js"></script>
+<script src="../../layuiadmin/Jquery.md5.js"></script>
+		<script>
+			layui.config({
+				base: '../../layuiadmin/' //静态资源所在路径
+			}).extend({
+				index: 'lib/index' //主入口模块
+			}).use(['index', 'table', 'form', 'laydate','upload'], function() {
+				var upload = layui.upload;
+				var img = '';
+				  //执行实例
+				  var uploadInst = upload.render({
+				    elem: '#test1' //绑定元素
+				    ,url: layui.setter.url+'base/fileupload' //上传接口
+				    ,done: function(res){
+				      //上传完毕回调
+				  		console.log(res.data)
+				  		img = res.data
+				  		if(res.data.indexOf('http') != -1){
+				  						  
+				  		}else{
+				  			res.data = layui.setter.url + res.data
+				  		}
+				  		$('.icon_box_chan_tu').attr("src",res.data)
+				    }
+				    ,error: function(){
+				      //请求异常回调
+				    }
+				  });
+				var admin = layui.admin,
+					table = layui.table,
+					form = layui.form,
+					laydate = layui.laydate,
+					$ = layui.$;
+					var adminIndex = 0;
+				table.init('table-toolbar', {
+					elem: "#table-toolbar" //指定原始 table 容器的选择器或 DOM
+						,
+					title: "商品分类列表" //定义 table 的大标题（在文件导出等地方会用到）
+						,
+                    page: true,
+					limit: 20 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
+						,
+					url: layui.setter.url + 'shopAdmin/queryGoodsAdverti' //异步数据接口相关参数
+						,
+					toolbar: "#table-toolbar-toolbar",
+					where:{
+						jigouID:'01',
+						
+					},
+
+				});
+
+				//头工具栏事件
+				table.on('toolbar(table-toolbar)', function(obj) {
+					var checkStatus = table.checkStatus(obj.config.id);
+					 var data = checkStatus.data;  //获取选中行数据
+					switch (obj.event) {
+						case 'addAdmin':
+						document.getElementById("admin_from").reset();//清空值
+						$('input[name="adminUserName"]').attr("readonly",false)//将input元素设置为readonly
+							adminIndex = layer.open({
+								type: 1,
+								title: "新增",
+								area: '700px',
+								id : "adminLayer",
+								shadeClose: true,
+								content: $('#adminLAY')
+							});
+							
+							break;
+							
+					case 'blockUp': //停用
+					
+					 if(data.length == 0){
+						 layer.msg("请选择一行数据")
+						 return false;
+					 }
+					layer.confirm('是否停用该用户？', {
+						  btn: ['确定','取消'] //按钮
+						}, function(){
+						 layui.lserver.submitForm(layui.setter.url + 'admin/updateSpecificationStateByid',{id:data[0].id,status:0}, function() {
+						 	reloadTable('table-toolbar', 1)
+						 });
+						});
+						
+						break;
+						
+						
+					case 'blockStart': //启用
+					if(data.length == 0){
+							 layer.msg("请选择一行数据")
+							 return false;
+						}
+						layer.confirm('是否启用该用户？', {
+							  btn: ['确定','取消'] //按钮
+							}, function(){
+							 layui.lserver.submitForm(layui.setter.url + 'admin/updateSpecificationStateByid',{id:data[0].id,status:1}, function() {
+							 	reloadTable('table-toolbar', 1)
+							 });
+							});
+						
+						break;
+					};
+				});
+
+				//监听行工具事件
+				table.on('tool(table-toolbar)', function(obj) {
+					var data = obj.data;
+					if (obj.event === 'edit') {
+						form.val("updateAdmin", data)
+						$('input[name="adminUserName"]').attr("readonly",true)//将input元素设置为readonly
+						adminIndex = layer.open({
+							type: 1,
+							title: "编辑/查看",
+							area: '700px',
+							id : "adminLayer",
+							shadeClose: true,
+							content: $('#adminLAY')
+						});
+					}
+				});
+
+				form.on('submit(submitAdmin)', function(data) {
+					console.log(data.field)
+					var fujian = img
+					layui.lserver.submitForm(layui.setter.url + 'shopAdmin/doGoodsAdverti',{fujian:fujian,jigouID:'01'} , function() {
+						layer.close(adminIndex)
+						reloadTable('table-toolbar', 1)
+					});
+					return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+				});
+
+
+
+
+
+
+				/**重新加载table
+				 * @param {Object} id table中的ID
+				 * @param {Object} data 条件数据
+				 */
+				function reloadTable(id, curr) {
+
+					if (curr == "" || curr == null) curr = 1
+					table.reload(id, {
+						where: {
+
+						}, //设定异步数据接口的额外参数
+						page: {
+							curr: curr //重新从第 1 页开始
+						}
+					}); //只重载数据
+				}
+
+				//时间
+				laydate.render({
+					elem: '#time1'
+				});
+
+			});
+		</script>
+		<style>
+			.icon_box{
+				float: left;
+			}
+			.icon_box_list{
+				width: 80px;
+				position: relative;
+				float: left;
+				margin-right: 10px;
+			}
+			.layui-table-cell{
+				height: auto;
+			}
+		</style>
+	</body>
+</html>

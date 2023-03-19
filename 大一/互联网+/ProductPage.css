@@ -1,0 +1,544 @@
+.wrap_process_name{
+    position: absolute;
+    height: 100px;
+    width: 100%;
+}
+
+.wrap_model_material{
+    position: absolute;
+    top: 100px;
+    height: 250px;
+    width: 100%;
+}
+
+.wrap_process{
+    position: absolute;
+    top: 350px;
+    height: 200px;
+    width: 100%;
+}
+
+.wrap_model_size{
+    position: absolute;
+    top: 550px;
+    height: 250px;
+    width: 100%;
+}
+
+.wrap_tex{
+    position: absolute;
+    top: 800px;
+    height: 250px;
+    width: 100%;
+}
+
+.wrap_output{
+    position: absolute;
+    top: 1200px;
+    height: 200px;
+    width: 100%;
+}
+
+.process_name{
+    position: absolute;
+    top: 50px;
+    left: 100px;
+    font-size: 40px;
+    width: 400px;
+    color: black;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.model_material{
+    position: absolute;
+    top: 50px;
+    left: 100px;
+    font-size: 25px;
+    width: 150px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.Xiamodi{
+    position: absolute;
+    top: 110px;
+    left: 100px;
+    font-size: 20px;
+    width: 100px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.Xiamodi_input{
+    width:150px;
+    position: absolute;
+    top: 100px;
+    left: 200px;
+}
+
+.Xiamoti{
+    position: absolute;
+    top: 110px;
+    left: 440px;
+    font-size: 20px;
+    width: 100px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.Xiamoti_input{
+    width:150px;
+    position: absolute;
+    top: 100px;
+    left: 540px;
+}
+
+.Shangmodi{
+    position: absolute;
+    top: 110px;
+    left: 780px;
+    font-size: 20px;
+    width: 100px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.Shangmodi_input{
+    width:150px;
+    position: absolute;
+    top: 100px;
+    left: 880px;
+}
+
+.Yabianquan{
+    position: absolute;
+    top: 200px;
+    left: 100px;
+    font-size: 20px;
+    width: 100px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.Yabianquan_input{
+    width:150px;
+    position: absolute;
+    top: 190px;
+    left: 200px;
+}
+
+.Daokuai{
+    position: absolute;
+    top: 200px;
+    left: 440px;
+    font-size: 20px;
+    width: 100px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.Daokuai_input{
+    width:150px;
+    position: absolute;
+    top: 190px;
+    left: 540px;
+}
+
+.medal_piece{
+    position: absolute;
+    top: 50px;
+    left: 100px;
+    font-size: 25px;
+    width: 150px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.xiangkuai{
+    position: absolute;
+    top: 110px;
+    left: 100px;
+    font-size: 25px;
+    width: 150px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.xiangkuai_input{
+    width:150px;
+    position: absolute;
+    top: 100px;
+    left: 190px;
+}
+
+.heat_treatment{
+    position: absolute;
+    top: 110px;
+    left: 370px;
+    font-size: 25px;
+    width: 150px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.wrap_checkbox{
+    position: absolute;
+    left: 480px;
+    top: 110px;
+    height: 16px;
+    width: 240px;
+}
+
+.face_treatment{
+    position: absolute;
+    top: 110px;
+    left: 780px;
+    font-size: 25px;
+    width: 150px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.wrap_checkbox2{
+    position: absolute;
+    left: 920px;
+    top: 110px;
+    height: 16px;
+    width: 240px;
+}
+
+.model_size{
+    position: absolute;
+    top: 50px;
+    left: 100px;
+    font-size: 25px;
+    width: 150px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.model_size_input_l{
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    width: 150px;
+}
+.model_size_input_w{
+    position: absolute;
+    top: 100px;
+    left: 280px;
+    width: 150px;
+}
+.model_size_input_h{
+    position: absolute;
+    top: 100px;
+    left: 460px;
+    width: 150px;
+}
+
+.model_size_input_density{
+    position: absolute;
+    top: 100px;
+    left: 640px;
+    width: 150px;
+}
+
+.model_size_input_num{
+    position: absolute;
+    top: 180px;
+    left: 100px;
+    width: 150px;
+}
+.model_size_input_weight{
+    position: absolute;
+    top: 180px;
+    left: 280px;
+    width: 150px;
+}
+.model_size_input_mweight{
+    position: absolute;
+    top: 180px;
+    left: 460px;
+    width: 150px;
+}
+
+.tex{
+    position: absolute;
+    top: 60px;
+    left: 100px;
+    font-size: 25px;
+    width: 200px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.tex_input{
+    position: absolute;
+    top: 50px;
+    left: 300px;
+    width: 150px;
+}
+
+.design_fee{
+    position: absolute;
+    top: 130px;
+    left: 100px;
+    font-size: 20px;
+    width: 200px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.design_fee_input{
+    position: absolute;
+    top: 120px;
+    left: 190px;
+    width: 110px;
+}
+
+.programming_fee{
+    position: absolute;
+    top: 130px;
+    left: 390px;
+    font-size: 20px;
+    width: 200px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.programming_fee_input{
+    position: absolute;
+    top: 120px;
+    left: 480px;
+    width: 110px;
+}
+
+.jijiazuli_fee{
+    position: absolute;
+    top: 130px;
+    left: 680px;
+    font-size: 20px;
+    width: 200px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.jijiazuli_fee_input{
+    position: absolute;
+    top: 120px;
+    left: 790px;
+    width: 110px;
+}
+
+.S_jijia_fee{
+    position: absolute;
+    top: 130px;
+    left: 970px;
+    font-size: 20px;
+    width: 200px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.S_jijia_fee_input{
+    position: absolute;
+    top: 120px;
+    left: 1060px;
+    width: 110px;
+}
+
+.L_jijia_fee{
+    position: absolute;
+    top: 200px;
+    left: 100px;
+    font-size: 20px;
+    width: 200px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.L_jijia_fee_input{
+    position: absolute;
+    top: 190px;
+    left: 190px;
+    width: 110px;
+}
+
+.assemble_fee{
+    position: absolute;
+    top: 200px;
+    left: 390px;
+    font-size: 20px;
+    width: 200px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.assemble_fee_input{
+    position: absolute;
+    top: 190px;
+    left: 500px;
+    width: 110px;
+}
+
+.test_material_fee{
+    position: absolute;
+    top: 200px;
+    left: 680px;
+    font-size: 20px;
+    width: 200px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.test_material_fee_input{
+    position: absolute;
+    top: 190px;
+    left: 790px;
+    width: 110px;
+}
+
+.test_model_fee{
+    position: absolute;
+    top: 200px;
+    left: 970px;
+    font-size: 20px;
+    width: 200px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.test_model_fee_input{
+    position: absolute;
+    top: 190px;
+    left: 1060px;
+    width: 110px;
+}
+
+.wrap_fee{
+    position: absolute;
+    top: 270px;
+    left: 100px;
+    font-size: 20px;
+    width: 200px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.wrap_fee_input{
+    position: absolute;
+    top: 260px;
+    left: 190px;
+    width: 110px;
+}
+
+.price{
+    position: absolute;
+    top: 20px;
+    left: 100px;
+    font-size: 25px;
+    width: 150px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.single_price{
+    position: absolute;
+    top: 70px;
+    left: 100px;
+    font-size: 25px;
+    width: 150px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.main_price{
+    position: absolute;
+    top: 70px;
+    left: 400px;
+    font-size: 25px;
+    width: 150px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.profit{
+    position: absolute;
+    top: 70px;
+    left: 700px;
+    font-size: 25px;
+    width: 150px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}
+
+.profit_input{
+    position: absolute;
+    top: -10px;
+    left: 100px;
+    width: 150px;
+}
+
+.output{
+    position: absolute;
+    top: 130px;
+    left: 100px;
+    font-size: 25px;
+    width: 150px;
+    color: #000000;
+    line-height: 18px;
+    font-weight: bold;
+    font-family: "微软雅黑";
+}

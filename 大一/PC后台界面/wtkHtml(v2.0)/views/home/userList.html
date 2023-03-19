@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>训练管理</title>
+		<meta name="renderer" content="webkit">
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+		<style>
+			.layui-unselect dl { max-height:200px; }
+            .downpanel .layui-select-title span {
+                line-height: 38px;
+            }
+
+            /*继承父类颜色*/
+            .downpanel dl dd:hover {
+                background-color: inherit;
+            }
+		</style>
+	</head>
+	<body>
+
+		<div class="layui-card layadmin-header">
+			<div class="layui-breadcrumb" lay-filter="breadcrumb">
+				<a lay-href="">主页</a>
+				<a><cite>组件</cite></a>
+				<a><cite>数据表格</cite></a>
+				<a><cite>用户信息</cite></a>
+			</div>
+		</div>
+
+		<div class="layui-fluid">
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md12">
+					<div class="layui-card">
+						<div class="layui-card-header">用户列表</div>
+						<div class="layui-card-body">
+							<div class="layui-form-item">
+								<label class="layui-form-label">关键字</label>
+								<div class="layui-input-inline" style="width: 260px">
+									<input type="text" name="whereName"  placeholder="单位名/用户名/手机号/设备名称" class="layui-input">
+								</div>
+								<button class="layui-btn" id="queryAdmin">查询</button>
+							</div>
+
+							<table class="layui-hide" id="table-toolbar" lay-filter="table-toolbar">
+								<thead>
+									<tr>
+										<th lay-data="{type:'checkbox',field:'userId',fixed: 'left'}">ID</th>
+										<th lay-data="{field:'userTrueName',align: 'center',width:90}">姓名</th>
+										<th lay-data="{field:'userPhone',align: 'center',width:116}">电话</th>
+										<th lay-data="{field:'userGender',align: 'center',width:58,templet : '#templetGender'}">性别</th>
+										<th lay-data="{field:'userBirth',align: 'center',width:110}">出生日期</th>
+										<th lay-data="{field:'rightDelicacy',align: 'center',width:90}">右眼CPM</th>
+										<th lay-data="{field:'rightTrainForward',align: 'center',width:98}">右眼AT/RT</th>
+										<th lay-data="{field:'leftDelicacy',align: 'center',width:90}">左眼CPM</th>
+										<th lay-data="{field:'leftTrainForward',align: 'center',width:98}">左眼AT/RT</th>
+										<th lay-data="{field:'binoculusDelicacy',align: 'center',width:90}">双眼CPM</th>
+										<th lay-data="{field:'binoculusTrainForward',align: 'center',width:98}">双眼AT/RT</th>
+										<th lay-data="{field:'trainTime',align: 'center',width:110}">最近训练</th>
+										<th lay-data="{field:'compShortName',align: 'center',width:90, event: 'setCompName', style:'cursor: pointer;'}">单位名称</th>
+										<th lay-data="{field:'deviceName',align: 'center',width:130}">设备名称</th>
+										<th lay-data="{field:'userCreateTime',align: 'center',width:160}">注册时间</th>
+										
+										
+										<!-- <th lay-data="{field:'userEmail',align: 'center',width:150}">邮箱</th>
+										<th lay-data="{field:'userTrueName',align: 'center',width:100}">姓名</th>
+										<th lay-data="{field:'userNickName',align: 'center',width:100}">用户昵称</th>
+										<th lay-data="{field:'userGender',align: 'center',templet : '#templetGender'}">性别</th>
+										<th lay-data="{field:'userPhoto',align: 'center',width:100}">用户头像</th>
+										<th lay-data="{field:'userBirth',align: 'center',width:150}">生日</th>
+										<th lay-data="{field:'userProvinceName',width:300,templet : '#templetAddress'}">地址</th> -->
+										<th lay-data="{fixed: 'right',toolbar: '#table-toolbar-bar',align: 'center',width:180}">操作</th>
+									</tr>
+								</thead>
+							</table>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 编辑弹出层 -->
+		<div id="adminLAY" style="display: none;">
+			<form class="layui-form" id="admin_from" action="" lay-filter="updateAdmin">
+				<div class="layui-form-item">
+
+					<div class="layui-input-inline" style="display: none;">
+						<input type="text" name="userId" class="layui-input">
+
+					</div>
+	<div class="layui-inline">
+						<label class="layui-form-label">姓名</label>
+						<div class="layui-input-inline">
+							<input type="text" name="userTrueName" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					
+
+					<div class="layui-inline">
+						<label class="layui-form-label">性别</label>
+						<div class="layui-input-inline">
+							<select name="userGender" lay-verify="">
+								<option value="1">男</option>
+								<option value="2">女</option>
+							</select>
+
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">手机号</label>
+						<div class="layui-input-inline">
+							<input type="text" name="userPhone" lay-verify="phone" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">出生日期</label>
+						<div class="layui-input-inline">
+							<input type="text" name="userBirth" lay-verify="required" class="layui-input" id="time1" placeholder="yyyy-MM-dd">
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">屈光异常</label>
+						<div class="layui-input-inline">
+							<select name="userRefractive" lay-verify="">
+								<option value="">请选择</option>
+								<option value="0">没有异常</option>
+								<option value="1">有异常</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-inline">
+						<label class="layui-form-label">是否配镜</label>
+						<div class="layui-input-inline">
+							<select name="userShortsighted" lay-verify="">
+								<option value="">请选择</option>
+								<option value="0">无配镜</option>
+								<option value="1">已配镜</option>
+							</select>
+						
+						</div>
+					</div>
+
+				</div>
+
+				<div class="layui-form-item">
+
+					<label class="layui-form-label">单位地址</label>
+					<div class="layui-input-inline">
+						<select name="userProvinceName" lay-verify="required" data-area="重庆市" lay-filter="userProvinceName"  class="layui-input">
+							<option value="">选择省</option>
+						</select>
+					</div>
+
+					<div class="layui-input-inline" >
+						<select name="userCityName" lay-verify="required"  data-area="市辖区" lay-filter="userCityName" class="layui-input">
+							<option value="">选择市</option>
+						</select>
+					</div>
+
+					<div class="layui-input-inline"  >
+						<select name="userCountyName" lay-verify="required"  data-area="沙坪坝区" lay-filter="userCountyName" class="layui-input">
+							<option value="">选择区</option>
+						</select>
+					</div>
+				</div>
+
+
+				<div class="layui-form-item">
+<!--						<label class="layui-form-label"> 从属单位</label>-->
+<!--						<div class="layui-input-block">-->
+<!--							<input type="text" name="userCompName" autocomplete="off" class="layui-input">-->
+<!--						</div>-->
+
+
+					<label class="layui-form-label">从属单位</label>
+					<div class="layui-input-inline" style="width: 84%;">
+						<div class="layui-unselect layui-form-select downpanel">
+							<div class="layui-select-title" id="selectComp">
+								<span class="layui-input layui-unselect" id="treeclass">选择单位</span>
+								<input type="hidden" name="userCompId" value=""  autocomplete="off" class="layui-input">
+								<input type="hidden" name="userCompName" value=""  autocomplete="off" class="layui-input">
+								<i class="layui-edge"></i>
+							</div>
+							<dl class="layui-anim layui-anim-upbit">
+								<dd>
+									<ul id="classtree"></ul>
+								</dd>
+							</dl>
+						</div>
+					</div>
+				</div>
+				
+
+				  <div class="layui-form-item">
+				    <label class="layui-form-label">详细地址</label>
+				    <div class="layui-input-block">
+				     <input type="text" name="userAddress" autocomplete="off" class="layui-input">
+				    </div>
+				  </div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit="" lay-filter="submitAdmin">立即提交</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+
+		<!-- <script type="text/html" id="table-toolbar-toolbar">
+			<div class="layui-btn-container">
+			<button class="layui-btn layui-btn-sm btn_add" lay-event="addAdmin">新增</button>
+		  </div>
+		</script> -->
+
+		<!-- 格式化性别 -->
+		<script type="text/html" id="templetGender">
+			{{# if(d.userGender == '1'){ }}
+	男
+  {{# } else if(d.userGender == '2'){ }}
+	女
+ {{#  } else { }}
+    未知
+  {{#  } }}
+</script>
+
+
+		<script type="text/html" id="table-toolbar-bar">
+			
+			<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+			{{# if(d.level == '1' && d.queryType == '2'){  }}
+				<a class="layui-btn layui-btn-xs " lay-event="edit">编辑</a>
+				<a class="layui-btn layui-btn-danger layui-btn-xs  " lay-event="del">删除</a>
+			 {{#  } }}
+			
+	</script>
+		<!-- 格式化地址 -->
+		<script type="text/html" id="templetAddress">
+			{{d.userProvinceName}} {{d.userCityName}}  {{d.userCountyName}}  {{d.userAddress}}
+		</script>
+		
+		
+		<script src="../../layuiadmin/layui/layui.js"></script>
+		<script type="text/javascript" src="../../layuiadmin/lib/city-picker.js"></script>
+		<script>
+			layui.config({
+				base: '../../layuiadmin/' //静态资源所在路径
+			}).extend({
+				index: 'lib/index' //主入口模块
+			}).use(['index', 'table', 'form', 'laydate'	,'address','tree'], function() {
+				var admin = layui.admin,
+					table = layui.table,
+					form = layui.form,
+					laydate = layui.laydate,
+					address = layui.address,
+					tree = layui.tree,
+					$ = layui.$;
+				var adminIndex = 0;
+				
+				layui.lserver.isTokenPastDue();
+				
+				table.init('table-toolbar', {
+					elem: "#table-toolbar" //指定原始 table 容器的选择器或 DOM
+						,
+					title: "用户列表" //定义 table 的大标题（在文件导出等地方会用到）
+						,
+					limit: 20 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
+						,
+					url: layui.setter.url + 'user/queryUser' //异步数据接口相关参数
+						,
+					toolbar: "#table-toolbar-toolbar",
+					minWidth: 60,
+					page: true,
+					where:{
+						userCompId : layui.lserver.layAdminSession("layAdmin").compId,
+						queryType : layui.lserver.layAdminSession("layAdmin").type,
+						token : layui.lserver.layAdminSession("layAdmin").token
+					},
+					parseData : function(res){//添加元素
+							res.data.forEach(item => {
+								item.level = layui.lserver.layAdminSession("layAdmin").level;
+								item.queryType = layui.lserver.layAdminSession("layAdmin").type;
+							  })
+						//三级地址联动
+						address.showCity('userProvinceName', 'userCityName', 'userCountyName');
+						
+						//初始化从属单位信息
+						// layui.lserver.getSelectList("userCompId",layui.setter.url + 'layuiModule/queryLayuiCompanyAll', {},function(){});
+						return res;
+					}
+				});
+
+
+				// //头工具栏事件
+				// table.on('toolbar(table-toolbar)', function(obj) {
+				// 	var checkStatus = table.checkStatus(obj.config.id);
+				// 	switch (obj.event) {
+				// 		case 'addAdmin':
+				// 			document.getElementById("admin_from").reset(); //清空值
+						
+				// 			adminIndex = layer.open({
+				// 				type: 1,
+				// 				title: "新增",
+				// 				area: '1000px',
+				// 				id: "adminLayer",
+				// 				shadeClose: true,
+				// 				content: $('#adminLAY')
+				// 			});
+				// 			break;
+				// 	};
+				// });
+
+				//监听行工具事件
+				table.on('tool(table-toolbar)', function(obj) {
+					var data = obj.data;
+					if (obj.event === 'del') {
+						layer.confirm('是否确定删除？', function(index) {
+							layui.lserver.deleteTable(layui.setter.url + 'user/delUserPo', {
+								id: data.userId,loginName:""
+							}, function() {
+								layer.close(index);
+								reloadTable('table-toolbar', 1)
+							});
+						});
+					} else if (obj.event === 'edit') {
+						document.getElementById("admin_from").reset(); //清空值
+						//初始化从属单位信息
+						layui.lserver.getFormInput("updateAdmin",layui.setter.url + 'user/queryUserById', {id:data.userId},function(data){
+							console.log(data.data)
+								$("select[name='userProvinceName']").attr("data-area",data.userProvinceName)
+								$("select[name='userCityName']").attr("data-area",data.userCityName)
+								$("select[name='userCountyName']").attr("data-area",data.userCountyName)
+								address.showCity('userProvinceName', 'userCityName', 'userCountyName');
+							// 陈一
+							$("#treeclass").html(data.data.userCompName);
+							adminIndex = layer.open({
+								type: 1, 
+								title: "编辑/查看",
+								area: ['1000px','500px'],
+								id: "adminLayer",
+								shadeClose: true,
+								content: $('#adminLAY')
+							});
+						});
+					}else if(obj.event == 'detail'){//查看用户的训练记录
+						adminIndex = layer.open({
+							type: 2, 
+							title: data.userTrueName+" 训练记录",
+							area: ['1000px', '650px'],
+							id: "userTrain",
+							shadeClose: true,
+							content: "../iframe/userTrain.html?id="+data.userId
+						});
+					}else if( obj.event == 'setCompName'){
+						if(data.userCompName != null && data.userCompName != ""){
+							layer.alert(data.userCompName)
+						}
+						
+					}
+				});
+
+				//提交表单
+				form.on('submit(submitAdmin)', function(data) {
+					var obj = data.field;
+					obj.userProvinceName = $("select[name='userProvinceName']").find("option:selected").text()
+					obj.userCityName = $("select[name='userCityName']").find("option:selected").text()
+					obj.userCountyName = $("select[name='userCountyName']").find("option:selected").text()
+					
+					// obj.userCompId = layui.lserver.layAdminSession("layAdmin").compId;//默认登陆者从属单位
+					layui.lserver.submitForm(layui.setter.url + 'user/doUserPo', obj, function() {
+						layer.close(adminIndex)
+						reloadTable('table-toolbar', 1)
+					});
+					return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+				});
+
+
+				/**
+				 * 点击搜索
+				 */
+				$(document).on('click', '#queryAdmin', function() {
+					reloadTable('table-toolbar', 1)
+				});
+
+
+
+				/**重新加载table
+				 * @param {Object} id table中的ID
+				 * @param {Object} data 条件数据
+				 */
+				function reloadTable(id, curr) {
+
+					if (curr == "" || curr == null) curr = 1
+					table.reload(id, {
+						where: {
+							userName: $("input[name='whereName']").val()
+						}, //设定异步数据接口的额外参数
+						page: {
+							curr: curr //重新从第 1 页开始
+						}
+					}); //只重载数据
+				}
+				function Format(datetime,fmt) {
+				  if (parseInt(datetime)==datetime) {
+					if (datetime.length==10) {
+					  datetime=parseInt(datetime)*1000;
+					} else if(datetime.length==13) {
+					  datetime=parseInt(datetime);
+					}
+				  }
+				  datetime=new Date(datetime);
+				  var o = {
+				  "M+" : datetime.getMonth()+1,                 //月份   
+				  "d+" : datetime.getDate(),                    //日   
+				  "h+" : datetime.getHours(),                   //小时   
+				  "m+" : datetime.getMinutes(),                 //分   
+				  "s+" : datetime.getSeconds(),                 //秒   
+				  "q+" : Math.floor((datetime.getMonth()+3)/3), //季度   
+				  "S"  : datetime.getMilliseconds()             //毫秒   
+				  };   
+				  if(/(y+)/.test(fmt))   
+				  fmt=fmt.replace(RegExp.$1, (datetime.getFullYear()+"").substr(4 - RegExp.$1.length));   
+				  for(var k in o)   
+				  if(new RegExp("("+ k +")").test(fmt))   
+				  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+				  return fmt;
+				}
+				//时间
+				laydate.render({
+					elem: '#time1'
+				});
+
+
+				layui.lserver.getAajxData(layui.setter.url + 'comp/queryCompany', {queryType:layui.lserver.layAdminSession("layAdmin").type},function(data){
+					console.log(data.data)
+					tree.render({
+						elem: '#classtree'
+						,data: data.data
+						,showCheckbox: false
+						,click: function(node){
+							$("input[name=userCompId]").val(node.data.compId);
+							$("input[name=userCompName]").val(node.data.compName);
+							var $select = $($(this)[0].elem).parents(".layui-form-select");
+							$select.removeClass("layui-form-selected").find(".layui-select-title span").html(node.data.compName);
+						}
+					});
+				});
+
+
+
+				$(".downpanel").on("click", "#selectComp", function (e) {
+					$(".layui-form-select").not($(this).parents(".layui-form-select")).removeClass("layui-form-selected");
+					$(this).parents(".downpanel").toggleClass("layui-form-selected");
+					layui.stope(e);
+				}).on("click", "dl i", function (e) {
+					layui.stope(e);
+				});
+				$(document).on("click", function (e) {
+					$(".downpanel").removeClass("layui-form-selected");
+				});
+
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .focus {
+            /* position: relative; */
+            background-color: yellow;
+            margin-left: 230px;
+            width: 650px;
+            height: 270px;
+        }
+
+        .arrow_l {
+            float: left;
+            display: none;
+            /* position: absolute; */
+            text-decoration: none;
+            top: 50%;
+            margin-top: -20px;
+            width: 24px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, .3);
+            text-align: center;
+            line-height: 40px;
+            color: #fff;
+            font-family: 'icommon';
+            font-size: 18px;
+        }
+
+        .arrow_r {
+            float: right;
+            display: none;
+            /* position: absolute; */
+            text-decoration: none;
+            top: 50%;
+            margin-top: -20px;
+            width: 24px;
+            height: 40px;
+            background: rgb(0, 0, 0, .3);
+            text-align: center;
+            line-height: 40px;
+            color: #fff;
+            font-family: 'icomoon';
+            font-size: 18px;
+        }
+
+        ol {
+            position: absolute;
+            float: center;
+            background-color: indianred;
+            width: 4140px;
+            /* height: 200px; */
+            height: 200px;
+        }
+
+        ol li {
+            float: left;
+            list-style: none;
+        }
+
+        ol li img {
+            width: 460px;
+            height: 200px;
+        }
+
+
+        ul {
+            margin-left: 420px;
+        }
+
+        .circle li {
+            float: left;
+            list-style: none;
+            background-color: rgb(112, 0, 0);
+            border-radius: 50%;
+            width: 8px;
+            height: 8px;
+        }
+        
+        .current {
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="focus">
+        <a href="#" class="arrow_l">&lt;</a>
+        <a href="#" class="arrow_r">&gt;</a>
+        <ol class="focus_ol">
+            <li><img src="C:\Users\lenovo\Pictures\qq图片\轮播1.png" /></li>
+            <li><img src="C:\Users\lenovo\Pictures\qq图片\轮播2.png" /></li>
+            <li><img src="C:\Users\lenovo\Pictures\qq图片\轮播3.png" /></li>
+            <li><img src="C:\Users\lenovo\Pictures\qq图片\轮播4.png" /></li>
+            <li><img src="C:\Users\lenovo\Pictures\qq图片\轮播5.png" /></li>
+            <li><img src="C:\Users\lenovo\Pictures\qq图片\轮播6.png" /></li>
+            <li><img src="C:\Users\lenovo\Pictures\qq图片\轮播7.png" /></li>
+            <li><img src="C:\Users\lenovo\Pictures\qq图片\轮播8.png" /></li>
+            <li><img src="C:\Users\lenovo\Pictures\qq图片\轮播9.png" /></li>
+        </ol>
+        <ul class="circle">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul><br>
+    </div>
+    <script>
+        var arrow_l = document.querySelector('.arrow_l');
+        var arrow_r = document.querySelector('.arrow_r');
+                var focus_ol = document.querySelector('.focus_ol');
+        var focus = document.querySelector('.focus');
+        focus_ol.addEventListener('mouseenter', function () {
+            arrow_l.style.display = 'block';
+            arrow_r.style.display = 'block'
+        })
+        // focus_ol.addEventListner('mouseleave',function(){
+        //     arrow_l.style.display = 'none';
+        //     arrow_r.style.display = 'none';
+        // })
+        var ul = focus.querySelector('ul');
+        console.log(ul.children.length);
+        for(var i = 0;i < ul.children.length;i++){
+            var li = document.createElement('li');
+            ul.appendChild(li);
+        }
+        ul.children[0].className = 'current';
+    </script>
+</body>
+
+</html>

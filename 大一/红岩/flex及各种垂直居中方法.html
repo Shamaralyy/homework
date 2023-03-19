@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/vue/2.6.6/vue.min.js"></script>
+  <style>
+    div {
+      background-color: coral;
+      width: 100px;
+      height: 100px;
+      margin-left: 10px;
+      margin-top: 10px;
+    }
+
+    /* 1.居中 */
+    /* .main {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      background-color: aquamarine;
+      width: 400px;
+      height: 400px;
+
+      position: absolute;
+      margin: auto;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+    } */
+
+    /* 2.transform居中 */
+    /* .main {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      background-color: aquamarine;
+      width: 400px;
+      height: 400px;
+
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+    } */
+
+    /* 3.flex居中 */
+    /* .main {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-content: center; */
+      /* align-items针对单行元素 align-content针对多行元素，对单行元素不起作用 */
+      /* background-color: aquamarine;
+      width: 400px;
+      height: 400px;
+      position: absolute;
+      margin: auto;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+    } */
+
+    body{
+    /* 弹性布局，让页面元素水平+垂直居中 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+</body>
+
+</html>

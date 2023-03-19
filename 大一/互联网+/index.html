@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+    <link type="text/css" rel="stylesheet" href="body.css">
+    <link type="text/css" rel="stylesheet" href="login.css">
+    <link type="text/css" rel="stylesheet" href="operation.css">
+    <link type="text/css" rel="stylesheet" href="sidebar.css">
+    <link type="text/css" rel="stylesheet" href="ProductPage.css">
+<style>
+    #r1{
+        display: none;
+    }
+    #r2{
+        display: none;
+    }
+    #r3{
+        display: none;
+    }
+    #r4 {
+margin-top: 80px;
+    }
+    #result{
+        margin-top: 40px;
+    }
+/*#result1{*/
+/*    display: none;*/
+/*}*/
+.r4-word{
+    color: red;
+}
+
+</style>
+<head>
+    <meta charset="utf-8">
+    <title>Index</title>
+</head>
+<body>
+<form name="f1" action="ConSer" method="post" align="center">
+    输入长宽高<br>
+    长<input type="text" name="length"><br>
+    宽<input type="text" name="width"><br>
+    高<input type="text" name="height"><br>
+    <div>
+        <input type="radio"  name="radio0" value="1">一般拉延<br>
+        <input type="radio"  name="radio0" value="2">落料成型 <br>
+        <input type="radio"  name="radio0" value="3">落梁开发拉延<br>
+    </div><br>
+    <br>选择功能<br>
+
+    <input type="checkbox" id="c1" name="ss" value="a"  onchange="fun(this);fun1()">拉延成型模<br>
+
+    <div name="n" id="r1" >
+        <input type="radio" name="radio1" value="1">手工<input type="radio" name="radio1" value="2">自动<br>
+        <input type="radio" name="radio2" value="1">有镶块<input type="radio" name="radio2" value="2">无镶块<br>
+        <input type="checkbox" name="radio3"  id="a1" value="1" onchange="afun(this);afun1()">拉延<input type="checkbox" name="radio3" id="a2" value="2"onchange="afun(this);afun2()">切边冲孔
+        <input type="checkbox" name="radio3" id="a3" value="3"onchange="afun(this);afun3()">翻边切行<br>
+        <div id="a11">
+            <!-- <%--            //选拉延就显示，不选就隐藏--%> -->
+            <input type="radio" name="radio6" value="1">一般结构<input type="radio" name="radio6" value="2">箱体结构
+            <input type="radio" name="radio6" value="3">标准CAM<input type="radio" name="radio6" value="4">非标准CAM<br>
+        </div><br>
+        <div id="a22">
+            <!-- <%--            选切边冲孔显示--%> -->
+            <input type="radio" name="radio10" value="1">一般结构<input type="radio" name="radio10" value="2">压料板穿刀
+            <input type="radio" name="radio10" value="3">CAM<br>
+        </div><br>
+        <div id="a33">
+            <!-- <%--            选翻边整形显示--%> -->
+            <input type="radio" name="radio11" value="1" class="z1">1.一般结构
+            <input type="radio" name="radio11" value="2">    2.压料板穿刀
+            <input type="radio" name="radio11" value="3">    3.一般CAM方法
+            <input type="radio" name="radio11" value="4">4.互动CAM方法<br>
+        </div><br>
+    </div><br>
+
+    <input type="checkbox" name="ss" onchange="fun(this);fun2()" id="c2" value="b">落料成型模<br>
+
+    <!-- <%--    如果选择落料成型模就显示不选择就隐藏 --%> -->
+    <div name="d1" id="r2" >
+        <input type="checkbox" name="radio4" value="2" id="b1" onchange="bfun(this); bfun1()">后成型 <input type="checkbox" name="radio4" value="1" id="b2" onchange="bfun(this);bfun1()">冲孔<br>
+        <div id="b22">
+            <!-- <%--          如果选择冲孔就显示这行 --%> -->
+            <input type="radio" name="radio12" value="1">自动<input type="radio" name="radio12" value="2">手工<br>
+        </div><br>
+    </div><br>
+
+    <input type="checkbox" name="ss"onchange="fun(this);fun3()" id="c3" value="c">多工位T/F<br>
+    <!-- <%--    如果选择多工位T/F就显示不选择就隐藏--%> -->
+    <div id="r3">
+        <input type="radio" name="radio5" value="1">导柱导向<input type="radio" name="radio5" value="2">导板导柱复合导向<br>
+    </div><br>
+
+    <input type="checkbox" name="ss" onchange="fun(this);fun4()"id="c4" value="d">PRG模具<br>
+    <!-- <%--   这个div不用隐藏一直都有--%> -->
+    <div id="r4">
+        <span class="r4-word">此两行必须选</span>
+        <input type="radio" name="radio7" value="1">高强度板
+        <input type="radio" name="radio7" value="2">外覆盖件<input type="radio" name="radio7" value="3">内板件<br>
+        <input type="radio" name="radio8" value="1">BL
+        <input type="radio" name="radio8" value="2">DR<input type="radio" name="radio8" value="3">TR/PI
+        <input type="radio" name="radio8" value="4">FL/REST<input type="radio" name="radio8" value="5">CAM<br>
+    </div><br>
+    请输入人工成本<input type="text" name="laborCosts" required="required"><br>
+    请输入利润<input type="text" name="profit" required="required"><br>
+    <input type="submit" value="提交"
+               onclick="return check(this.form)">
+    <input type="reset" value="重置">
+</form>
+<form action="ExConRead" enctype="multipart/form-data" method="post">
+    <input type="file" name="file"><br>
+    <input type="submit" value="上传">
+</form>
+</body>
+<script>
+    var a1 = document.getElementById("a1");
+    var a11 = document.getElementById("a11");
+    var a2 = document.getElementById("a2");
+    var a22 = document.getElementById("a22");
+    var a3 = document.getElementById("a3");
+    var a33 = document.getElementById("a33");
+    var b1 = document.getElementById("b1");
+    var b2 = document.getElementById("b2");
+    var b22 = document.getElementById("b22");
+    var div1 = document.getElementById("c1");
+    var div2 = document.getElementById("c2");
+    var div3 = document.getElementById("c3");
+    var div4 = document.getElementById("c4");
+    var r1=document.getElementById("r1")
+    var r2=document.getElementById("r2")
+    var r3=document.getElementById("r3")
+    // var r4=document.getElementById("r4")
+    // var ss= document.getElementsByName("ss");
+    var aa= document.getElementsByName("radio3");
+    var bb= document.getElementsByName("radio4");
+    var result1=document.getElementById("result1");
+
+// function show(){
+//
+//     result1.style.display="block"
+//
+// }
+    function check(form) {
+        // if（form.length.value==''||form.width.value==''||form.height.value==''||form.radio0.value==''||form.ss.value ==''  ||form.radio7.value==''||form.radio8.value==''）
+        // {
+
+    if(form.length.value=='') {
+        alert("请输入长度!");
+        return false;
+    }
+        if(form.width.value=='') {
+            alert("请输入宽度");
+            return false;
+        }
+            if(form.height.value=='') {
+                alert("请输入高度");
+                return false;
+            }
+
+
+                if(form.radio0.value=='') {
+                    alert("请选择类型!");
+
+                    return false;
+                }
+                    if(!div1.checked&&!div2.checked&&!div3.checked&&!div4.checked) {
+                        alert("请选择功能");
+                        return false;
+                    }
+                        if(form.radio7.value=='') {
+                            alert("请选择最后两行");
+
+                            return false;
+                        }
+                            if(form.radio8.value=='') {
+                                alert("请选择最后两行");
+                                return false;
+                            }
+
+        return  true;
+
+
+
+    }
+
+
+    function fun(obj) {
+
+        div1.checked=false;
+        div2.checked=false;
+        div3.checked=false;
+        div4.checked=false;
+        r1.style.display = "none"
+        r2.style.display = "none"
+        r3.style.display = "none"
+        //   r4.style.display = "none"
+        obj.checked = true;
+    }
+    function afun(obj) {
+
+        for (var i = 0; i < aa.length; i++) {
+            aa[i].checked = false;
+            a11.style.display = "none"
+            a22.style.display = "none"
+            a33.style.display = "none"
+        }
+
+        obj.checked = true;
+    }
+    function bfun(obj) {
+
+        for (var i = 0; i < bb.length; i++) {
+            bb[i].checked = false;
+
+            b22.style.display = "none"
+
+        }
+
+        obj.checked = true;
+    }
+
+    function fun1(){
+        if(div1.checked) {
+            r1.style.display = "block"
+            a22.style.display="none"
+            a33.style.display="none"
+            a11.style.display="none"
+        } else{
+            r1.style.display = "none"
+        }
+    }
+
+    function fun2(){
+        if(div2.checked) {
+            r2.style.display = "block"
+            b22.style.display="none"
+        } else{
+            r2.style.display = "none"
+        }
+    }
+
+    function fun3(){
+        if(div3.checked) {
+            r3.style.display = "block"
+        } else{
+            r3.style.display = "none"
+        }
+    }
+
+    // function fun4(){
+    //     if(div4.checked) {
+    //         r4.style.display = "block"
+    //     } else{
+    //         r4.style.display = "none"
+    //     }
+    // }
+    function afun1() {
+        if (a1.checked) {
+            a11.style.display = "block"
+        } else {
+            a11.style.display = "none"
+        }
+    }
+    function afun2() {
+        if (a2.checked) {
+            a22.style.display = "block"
+        } else {
+            a22.style.display = "none"
+        }
+    }
+    function afun3() {
+        if (a3.checked) {
+            a33.style.display = "block"
+        } else {
+            a33.style.display = "none"
+        }
+    }
+
+    function bfun1() {
+        if (b2.checked) {
+            b22.style.display = "block"
+        } else {
+            b22.style.display = "none"
+        }
+
+    }
+
+
+
+</script>
+
+</html>

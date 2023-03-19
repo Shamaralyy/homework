@@ -1,0 +1,84 @@
+* {
+    padding: 0;
+    margin: 0 auto;
+    list-style: none;
+    text-decoration: none;
+}
+
+h1 {
+    color: white;
+}
+
+.wrapper {
+    width: 350px;
+    height: 500px;
+    background-color: rgb(255,192,203);
+    border-radius: 15px;
+    text-align: center;
+}
+
+.wrapper input {
+    width: 250px;
+    height: 30px;
+    outline: none;
+    border: 0px;
+    border-radius: 10px;
+    margin-top: 8px;
+}
+
+.wrapper .add {
+    width: 50px;
+    height: 30px;
+    border-radius: 10px;
+    border: 0px;
+    color: rgb(136, 40, 40);
+    background-color: rgb(231,118,137);
+    margin-top: 8px;
+}
+
+.list {
+    width: 350px;
+    height: 437px;
+    margin-top: 25px;
+    /* background-color: azure; */
+}
+
+.list ul li {
+    display: block;
+    text-align: left;
+    width: 350px;
+    height: 40px;
+    line-height: 40px;
+    background-color: rgb(249,249,249);
+    font-size: 20px;
+    font-family: YouYuan;
+}
+
+.list ul li:hover {
+    background-color: rgb(238,238,238);
+}
+
+.list ul li span {
+    float: left;
+    display: block;
+    line-height: 40px;
+    margin-left: 8px;
+}
+
+.list ul li .remove {
+    float: right;
+    color: black;
+    margin-right: 20px;
+    line-height: 40px;
+}
+
+input[type="checkbox"] {
+    float: left;
+    display: block;
+    width: 27px;
+    line-height: 40px;
+}
+
+input[type="checkbox"]:checked + span {
+    text-decoration: line-through;
+}

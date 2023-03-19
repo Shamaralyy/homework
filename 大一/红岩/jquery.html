@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery.js"></script>
+    <style>
+        .box {
+            background-color: bisque;
+            width: 600px;
+            height: 600px;
+            margin-top: 20px;
+        }
+
+        .big {
+            border: 1px solid black;
+            width: 1000px;
+            height: 1900px;
+        }
+
+        .tool {
+            position: fixed;
+            display: none;
+        }
+
+        .btn {
+            width: 50px;
+            height: 50px;
+        }
+
+        .btn:hover {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="checkbox" id="check1">全选
+    <input type="checkbox" class="check" />
+    <input type="checkbox" class="check" />
+    <input type="checkbox" class="check" />
+
+    <button class="cut" style="width: 20px; height: 20px;">-</button>
+    <input type="text" class="num" value="1">
+    <button class="add" style="width: 20px; height: 20px;">+</button>
+
+    <div class="big">
+        <ul class="tool" style="list-style: none;">
+            <li><button class="btn">1</button></li>
+            <li><button class="btn">2</button></li>
+            <li><button class="btn">3</button></li>
+        </ul>
+        <div class="box">1</div>
+        <div class="box" id="two">2</div>
+        <div class="box">3</div>
+    </div>
+
+    <input type="text" class="search">
+
+
+    <script>
+        $(function () {
+            $("#check1").change(function () {
+                console.log($(this).prop("checked"));
+                $(".check").prop("checked", $(this).prop("checked"));
+            });
+            $('.check').change(function () {
+                if ($(".check:checked").length === $(".check").length) {
+                    $("#check1").prop("checked", true)
+                } else {
+                    $("#check1").prop("checked", false)
+                }
+            });
+            $(".add").click(function () {
+                let n = $(".num").val(); //为什么用$(".add").siblings(".num").val()就不行?
+                n++;
+                $(".num").val(n);
+            });
+            $(".cut").click(function () {
+                let n = $(".num").val();
+                if (n == 1) return false;
+                n--;
+                $(".num").val(n);
+            });
+            let arr = ["red", "green", "blue"];
+            let sum = 0;
+            $("div").each((function (index, domEle) {
+                console.log(index);
+                $(domEle).css("color", arr[index]);
+                sum += parseInt($(domEle).text());
+            }));
+            console.log(sum);
+            let top = $(".two").offset().top;
+            $(window).scroll(function () {
+                if ($(document).scrollTop() >= top) {
+                    $(".tool").fadeIn();
+                } else {
+                    $(".tool").fadeOut();
+                }
+            });
+            // $(".search").focus(function() {
+            //     $(".search").css("background-color","red")
+            // });
+            // $(".search").blur(function() {
+            //     $(".search").css("background-color","red")
+            // });
+            // $(".search").click(function() {
+            //     $(".search").css("background-color","red")
+            //     console.log(1);
+            // });
+            //没有效果？？
+        })
+    </script>
+</body>
+
+</html>

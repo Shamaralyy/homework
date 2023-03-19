@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box1 {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: darksalmon;
+            border-radius: 100px;
+        }
+
+        .box2 {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: palevioletred;
+            border-radius: 100px;
+            top: 200px;
+        }
+
+        .box3 {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: thistle;
+            border-radius: 100px;
+            top: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box1"></div>
+    <div class="box2"></div>
+    <div class="box3"></div>
+    <script>
+        let div = document.querySelectorAll('div');
+
+        function animate(obj, target) {
+            obj.timer = setInterval(() => {
+                if (obj.offsetLeft >= target) clearInterval(obj.timer);
+                obj.style.left = obj.offsetLeft + 1 + 'px';
+            }, 1);
+        }
+
+        let p = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(animate(div[0], 200));
+            }, 1000);
+        });
+        p.then(() => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(animate(div[1], 200));
+                    //一定要有resolve/return后面才可.then操作，可以resolve(div[2])，在下一个then传data
+                }, 1000);
+            })
+        })
+        .then(() => {
+            setTimeout(() => {
+                    animate(div[2], 200);
+                }, 1000);
+        });
+    </script>
+</body>
+
+</html>

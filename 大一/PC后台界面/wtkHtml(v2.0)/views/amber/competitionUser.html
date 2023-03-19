@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=UTF-8"utf-8">
+  <title>模拟报名</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+
+</head>
+<body>
+
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-body">
+          <div class="layui-form-item">
+            <label class="layui-form-label">赛事</label>
+            <div class="layui-form layui-input-inline" >
+              <select name="competitionId" tid="competitionId" id="competitionId"  lay-verify="required">
+
+              </select>
+            </div>
+
+            <button class="layui-btn" id="addUser">确定加入</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="layui-col-md12" style="width: 45%;float: left;">
+  <div class="layui-card">
+    <div class="layui-card-header">用户信息</div>
+    <div class="layui-card-body" style="height: 650px;">
+
+        <div class="layui-form-item">
+          <label class="layui-form-label">导入数据</label>
+          <input type="file" class="layui-btn layui-btn-primary" id="excl_user" multiple="multiple">
+
+          <button class="layui-btn" id="downloadExcl">下载excl模板</button>
+        </div>
+
+        <table class="layui-hide" id="all_user" lay-filter="table-toolbar">
+          <thead>
+          <tr>
+            <th lay-data="{type:'checkbox',field:'id'}"></th>
+            <th lay-data="{field:'id',align: 'center',width:150}">编码</th>
+            <th lay-data="{field:'name',align: 'center',sort: true,width:120}">真实姓名</th>
+            <th lay-data="{field:'weight',align: 'center',width:150}">体重</th>
+            <th lay-data="{field:'birthday',align: 'center',width:150}">出生日期</th>
+            <th lay-data="{field:'sex',align: 'center',width:80}">性别</th>
+          </tr>
+          </thead>
+        </table>
+
+
+    </div>
+  </div>
+</div>
+
+<div style="float: left;">
+  <button class="layui-btn" id="user_left">》》</button>
+  <br> <br> <br>
+  <button class="layui-btn" id="user_right">《《</button>
+  <br> <br> <br>
+  <button class="layui-btn" id="user_all">全部移除</button>
+</div>
+
+<div class="layui-col-md12" style="width: 45%;float: right;">
+  <div class="layui-card">
+    <div class="layui-card-header">选中用户</div>
+    <div class="layui-card-body" style="height: 650px;">
+      <table id="select_user" lay-filter="select_user">
+        <thead>
+        <tr>
+          <th lay-data="{type:'checkbox',field:'id'}"></th>
+          <th lay-data="{field:'id',align: 'center',width:150}">编码</th>
+          <th lay-data="{field:'name',align: 'center',sort: true,width:120}">真实姓名</th>
+          <th lay-data="{field:'weight',align: 'center',width:150}">体重</th>
+          <th lay-data="{field:'birthday',align: 'center',width:150}">出生日期</th>
+          <th lay-data="{field:'sex',align: 'center',width:80}">性别</th>
+        </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+<!--<script src="../../layuiadmin/jquery.js"></script>-->
+<script src="../../layuiadmin/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: '../../layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table', 'form', 'laydate','excel'], function() {
+    var admin = layui.admin,
+            table = layui.table,
+            form = layui.form,
+            laydate = layui.laydate,
+            $ = layui.$,
+            excel = layui.excel;
+
+
+    layui.lserver.getSelectList("competitionId",layui.setter.url + 'admin/getCompetitionById', {},function(){});
+
+
+    /***
+     * 确定加入
+     */
+    $("#addUser").click(function () {
+    if($("select[name='competitionId']").val() == null || $("select[name='competitionId']").val() == ""){
+      layer.msg("请选择比赛信息")
+      return
+    }
+      var competitionName = $("#competitionId option:selected").text()
+      layer.confirm('是否将选中用户加入到<br/> '+competitionName+" <br/>模拟对战中", {
+        btn: ['确认','取消'] //按钮
+      }, function(){
+        var objAll = table.cache["select_user"]
+
+        layui.lserver.getAajxData(layui.setter.url + 'admin/doCompetitionTest', {cId:$("select[name='competitionId']").val(),jsonuserStr:JSON.stringify(objAll)},function(data){
+          if(data.code == 0 || data.code == 200){
+            layer.msg("成功", {
+              icon: 1
+            });
+
+          }else{
+            layer.msg("修改失败", {
+              icon: 2
+            });
+          }
+
+        });
+
+      });
+    })
+
+
+
+    $('#excl_user').change(function(e) {
+      var files = e.target.files;
+      try {
+        // 方式二：可以在读取过程中梳理数据
+        excel.importExcel(files, {
+          fields: {
+            'id': 'A'
+            ,'name': 'B'
+            ,'weight': 'C'
+            ,'birthday': 'D'
+            ,'sex': 'E'
+          }
+        }, function(data) {
+          var objTemp = data[0]
+          var key = Object.keys(objTemp)[0]
+          var dataObj = [];
+          for(var i=1;i<objTemp[key].length;i++){
+            dataObj.push(objTemp[key][i])
+          }
+          table.reload('all_user',{
+            data :dataObj
+          });
+
+        });
+      } catch (e) {
+        layer.alert(e.message);
+      }
+    });
+
+    table.init('table-toolbar', {
+      elem: "#all_user", //指定原始 table 容器的选择器或 DOM
+      title: "导入用户", //定义 table 的大标题（在文件导出等地方会用到）
+      page: false,
+      limit: 10000,
+      height: 600,
+    });
+
+
+    table.init('select_user', {
+      elem: "#select_user", //指定原始 table 容器的选择器或 DOM
+      title: "导入用户", //定义 table 的大标题（在文件导出等地方会用到）
+      page: false,
+      limit: 10000,
+      height: 650,
+
+    });
+
+    /**
+     * 加入
+     */
+    $("#user_left").click(function () {
+      var checkStatus = table.checkStatus('all_user'); //idTest 即为基础参数 id 对应的值
+      var oldDataObj = table.cache["select_user"]
+
+      var map = new Map();
+     for(var i=0;i<oldDataObj.length;i++){
+       map.set(oldDataObj[i].id,oldDataObj[i]);
+     }
+
+      for(var i=0;i<checkStatus.data.length;i++){
+        map.set(checkStatus.data[i].id,checkStatus.data[i]);
+      }
+
+      var objTemp= [];
+      map.forEach(function(value,key){
+        objTemp.push(value)
+      });
+
+      table.reload('select_user',{
+        data :objTemp
+      });
+    })
+
+    /**
+     * 删除
+     */
+    $("#user_right").click(function () {
+      var oldDataObj = table.checkStatus("select_user").data
+      var objAll = table.cache["select_user"]
+
+      for(var i=0;i<objAll.length;i++){
+        for(var j=0;j<oldDataObj.length;j++){
+          if(oldDataObj[j].id == objAll[i].id){
+            objAll.splice(i,1)
+          }
+        }
+      }
+
+      table.reload('select_user',{
+        data :objAll
+      });
+    })
+
+    /**
+     * 全部移除
+     */
+    $("#user_all").click(function () {
+      table.reload('select_user',{
+        data :[]
+      });
+    })
+
+    /**
+     *  下载模板
+     */
+    $("#downloadExcl").click(function () {
+      window.open("用户信息.xls")
+    })
+
+
+    /**重新加载table
+     * @param {Object} id table中的ID
+     * @param {Object} data 条件数据
+     */
+    function reloadTable(id, curr) {
+
+      if (curr == "" || curr == null) curr = 1
+      table.reload(id, {
+        where: {
+          name : $("input[name='whereName']").val(),
+        }, //设定异步数据接口的额外参数
+        page: {
+          curr: curr //重新从第 1 页开始
+        }
+      }); //只重载数据
+    }
+
+  });
+</script>
+
+</body>
+</html>

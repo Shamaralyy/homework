@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>训练APP管理</title>
+		<meta name="renderer" content="webkit">
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+	</head>
+	<body>
+
+		<div class="layui-card layadmin-header">
+			<div class="layui-breadcrumb" lay-filter="breadcrumb">
+				<a lay-href="">主页</a>
+				<a><cite>组件</cite></a>
+				<a><cite>数据表格</cite></a>
+				<a><cite>开启头部工具栏</cite></a>
+			</div>
+		</div>
+
+		<div class="layui-fluid">
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md12">
+					<div class="layui-card">
+						<div class="layui-card-header">训练APP版本</div>
+						<div class="layui-card-body">
+							<table class="layui-hide" id="table-toolbar" lay-filter="table-toolbar">
+								<thead>
+									<tr>
+										<th lay-data="{field:'version',sort: true,width:150}">版本号</th>
+										<th lay-data="{field:'wgtUrl',width:150}">wat包位置</th>
+										<th lay-data="{field:'pkgUrIos',width:200}">IOS发布地址</th>
+										<th lay-data="{field:'pkgUrlAndriod',width:150}">Andriod发布地址</th>
+										<th lay-data="{field:'description',width:200}">更新日志</th>
+										<th lay-data="{fixed: 'right',toolbar: '#table-toolbar-bar',width:150}">操作</th>
+									</tr>
+								</thead>
+							</table>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 编辑弹出层 -->
+		<div id="adminLAY" style="display: none;">
+			<form class="layui-form" id="admin_from" action="" lay-filter="updateAdmin">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">版本号</label>
+						<div class="layui-inline">
+							<input type="text" style="width: 330px;" name="version" autocomplete="off" required lay-verify="required" class="layui-input">
+						</div>
+						<div class="layui-form-mid layui-word-aux" style="float: right;">根据版本号修改，不能为空</div>
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+				
+					<div class="layui-inline">
+						<label class="layui-form-label">apk包路径</label>
+						<div class="layui-input-inline">
+							<input type="text" name="pkgUrlAndriod" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+				
+					<div class="layui-inline">
+						<label class="layui-form-label">ipa包路径</label>
+						<div class="layui-inline">
+							<input type="text" name="pkgUrIos" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+				
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label">更新内容</label>
+					<div class="layui-input-block">
+						<textarea placeholder="app更新内容" class="layui-textarea" name="description"></textarea>
+					</div>
+				</div>
+				<div class="layui-form-item" style="margin-left: 107px;">
+
+					<div class="layui-upload-drag" id="wat">
+					  <i class="layui-icon"></i>
+					  <p>点击上传wgt包，或将文件拖拽到此处</p>
+					  <input type="text" readonly name="wgtName" class="layui-input">
+					  <input type="hidden" readonly name="wgtUrl" class="layui-input">
+					</div>
+
+				</div>
+
+				
+
+				<div class="layui-form-item" >
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit="" lay-filter="submitAdmin">立即提交</button>
+					</div>
+				</div>
+			</form>
+
+		</div>
+
+		<script type="text/html" id="table-toolbar-toolbar">
+			<div class="layui-btn-container">
+			<button class="layui-btn layui-btn-sm" lay-event="addAdmin">新增</button>
+		  </div>
+		</script>
+
+
+
+		<script type="text/html" id="table-toolbar-bar">
+			<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+	  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	</script>
+		<script src="../../layuiadmin/layui/layui.js"></script>
+
+		<script>
+			layui.config({
+				base: '../../layuiadmin/' //静态资源所在路径
+			}).extend({
+				index: 'lib/index' //主入口模块
+			}).use(['index', 'table', 'form', 'laydate','upload'], function() {
+				var admin = layui.admin,
+					table = layui.table,
+					form = layui.form,
+					laydate = layui.laydate,
+					upload = layui.upload,
+					$ = layui.$;
+					var adminIndex = 0,loadIndex = 0;
+					
+				table.init('table-toolbar', {
+					elem: "#table-toolbar" //指定原始 table 容器的选择器或 DOM
+						,
+					title: "训练APP版本" //定义 table 的大标题（在文件导出等地方会用到）
+						,
+					limit: 20 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
+						,
+					url: layui.setter.url + 'layuiModule/getAppXml?type=0' //异步数据接口相关参数
+						,
+					toolbar: "#table-toolbar-toolbar",
+					page: true,
+					where:{
+						token : layui.lserver.layAdminSession("layAdmin").token
+					}
+				});
+
+
+				//头工具栏事件
+				table.on('toolbar(table-toolbar)', function(obj) {
+					var checkStatus = table.checkStatus(obj.config.id);
+					switch (obj.event) {
+						case 'addAdmin':
+						document.getElementById("admin_from").reset();//清空值
+							adminIndex = layer.open({
+								type: 1,
+								title: "新增",
+								area: '700px',
+								id : "adminLayer",
+								shadeClose: true,
+								content: $('#adminLAY')
+							});
+							
+							break;
+					};
+				});
+
+				//监听行工具事件
+				table.on('tool(table-toolbar)', function(obj) {
+					var data = obj.data;
+					if (obj.event === 'del') {
+						layer.confirm('是否确定删除？', function(index) {
+							layui.lserver.deleteTable(layui.setter.url + 'layuiModule/deleteAppXml', {version:data.version,type:0}, function() {
+								layer.close(index);
+								reloadTable('table-toolbar', 1)
+							});
+						});
+					} else if (obj.event === 'edit') {
+						var wgtNameTemp = data.wgtUrl;
+						data.wgtName = wgtNameTemp.substr(wgtNameTemp.lastIndexOf("/")+1, wgtNameTemp.length);
+						form.val("updateAdmin", data)
+						adminIndex = layer.open({
+							type: 1,
+							title: "app版本信息",
+							area: '700px',
+							id : "adminLayer",
+							shadeClose: true,
+							content: $('#adminLAY')
+						});
+					}
+				});
+
+				form.on('submit(submitAdmin)', function(data) {
+					if($("input[name=wgtName]").val() == "" || $("input[name=wgtName]").val() == null){
+						data.field.wgtUrl = "";
+					}
+					layui.lserver.submitForm(layui.setter.url + 'layuiModule/updateAppXml?type=0', data.field, function() {
+						layer.close(adminIndex)
+						reloadTable('table-toolbar', 1)
+					});
+					return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+				});
+
+
+			
+
+				/**重新加载table
+				 * @param {Object} id table中的ID
+				 * @param {Object} data 条件数据
+				 */
+				function reloadTable(id, curr) {
+
+					if (curr == "" || curr == null) curr = 1
+					var data = {
+						adminUserName: $("input[name='whereName']").val()
+					};
+					table.reload(id, {
+						where: {
+							data
+						}, //设定异步数据接口的额外参数
+						page: {
+							curr: curr //重新从第 1 页开始
+						}
+					}); //只重载数据
+				}
+			 //拖拽上传
+			  upload.render({
+				elem: '#wat'
+				,url: layui.setter.url+'/layuiModule/uploadingFile'
+				 ,accept: 'file' //普通文件
+				,exts: 'wgt' //只允许上传压缩文件
+				,before : function(){
+					loadIndex = layer.msg('上传中。。。', {
+					  icon: 16
+					  ,shade: 0.5
+					  ,time:0
+					});
+				}
+				,done: function(res){
+					 layer.close(loadIndex);
+					if(res.code == 0){
+													  layer.msg('上传成功',{icon: 6});
+													   $("input[name=wgtName]").val(res.data.wgtUrl);
+													   $("input[name=wgtUrl]").val(res.data.pkgUrIos);
+					}else{
+													  layer.msg('上传失败',{icon: 5});
+					}
+				}
+			  });
+			  
+			});
+		</script>
+	</body>
+</html>
